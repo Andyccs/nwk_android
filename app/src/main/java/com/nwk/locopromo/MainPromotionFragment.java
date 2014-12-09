@@ -73,14 +73,14 @@ public class MainPromotionFragment extends Fragment {
     }
 
     private void initializeData() {
-        ParseQuery promotionQuery = ParseQuery.getQuery("Promotion");
-        promotionQuery.include("retail");
+        ParseQuery promotionQuery = ParseQuery.getQuery("Retail");
+        promotionQuery.include("user");
         promotionQuery.findInBackground(new FindCallback() {
             @Override
-            public void done(List promotions, ParseException e) {
-                Timber.d("Size: " + promotions.size());
+            public void done(List retail, ParseException e) {
+                Timber.d("Size: " + retail.size());
                 if (e == null) {
-                    mGridAdapter.addItems(promotions);
+                    mGridAdapter.addItems(retail);
                     mProgress.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                 }

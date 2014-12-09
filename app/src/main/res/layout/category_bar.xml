@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp">
@@ -8,33 +9,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
-        <Button
+        <com.nwk.locopromo.widget.SelectableButton
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:text="Food"
-            android:background="@drawable/category_background_leftmost"
             android:id="@+id/category_food"
-            android:layout_weight="2"/>
-        <Button
+            android:layout_weight="2"
+            custom:position="left"/>
+        <com.nwk.locopromo.widget.SelectableButton
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:text="Fashion"
             android:id="@+id/category_fashion"
-            android:background="@drawable/category_background"
-            android:layout_weight="2"/>
-        <Button
+            android:layout_weight="2"
+            custom:position="middle"/>
+        <com.nwk.locopromo.widget.SelectableButton
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:text="Lifestyle"
             android:id="@+id/category_lifestyle"
-            android:background="@drawable/category_background"
-            android:layout_weight="2"/>
-        <Button
+            android:layout_weight="2"
+            custom:position="middle"/>
+        <com.nwk.locopromo.widget.SelectableButton
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:text="Other"
             android:id="@+id/category_other"
-            android:background="@drawable/category_background_rightmost"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            custom:position="right"/>
     </LinearLayout>
 </RelativeLayout>
