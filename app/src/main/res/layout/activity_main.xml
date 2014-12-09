@@ -1,0 +1,60 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--Start of Toolbar Section-->
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+        <ImageButton
+            android:src="@drawable/user"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:background="@drawable/image_button_background"
+            android:layout_weight="0.2"
+            android:id="@+id/profile"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="6">
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <ImageButton
+            android:src="@drawable/shopping_cart"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:background="@drawable/image_button_background"
+            android:layout_weight="0.2"
+            android:id="@+id/shopping_cart"/>
+    </LinearLayout>
+
+    <!--End of Toolbar section-->
+
+    <include
+        layout="@layout/category_bar"/>
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
