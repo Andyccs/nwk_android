@@ -25,5 +25,9 @@
     <color name="step_pager_selected_tab_color">#e91e63</color>
     <color name="step_pager_selected_last_tab_color">#ff3f51b5</color>
     <color name="step_pager_next_tab_color">#10000000</color>
-    
+
+    <color name="promotion_item_title">#1589C9</color>
+    <color name="promotion_item_secondary">#9B9B9B</color>
+    <color name="promotion_item_price">#F1812D</color>
+
 </resources>

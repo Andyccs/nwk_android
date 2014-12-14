@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:src="@drawable/like"
+        android:scaleType="fitCenter"
+        android:layout_weight="2"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:padding="8dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:text="Summer Discount Paradise - Reduction for RM 10000"
+            android:textColor="@color/promotion_item_title"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:textSize="18sp"
+            android:id="@+id/promotion_title"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="Offer Expires in: 2h 20m"
+            android:textColor="@color/promotion_item_secondary"
+            android:textSize="14sp"
+            android:id="@+id/promotion_expiry"/>
+
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="$400"
+                android:textColor="@color/promotion_item_secondary"
+                android:textSize="14sp"
+                android:id="@+id/promotion_original_price"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="$100"
+                android:textColor="@color/promotion_item_price"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/promotion_price"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
