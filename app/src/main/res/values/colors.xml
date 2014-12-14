@@ -10,6 +10,8 @@
     <color name="deep_purple_500">#5950A1</color>
     <color name="deep_purple_800">#4527a0</color>
 
+    <color name="background">#F0EED7</color>
+
     <color name="orange_800">#ef6c00</color>
 
     <color name="button_text_color">#ffffff</color>

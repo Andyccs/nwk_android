@@ -6,8 +6,8 @@
     <string name="action_settings">Settings</string>
     <string-array name="main_activity_spinner">
         <item>All Shops</item>
-        <item>Shops with Promotions</item>
+        <item>All Shops with Promotions</item>
         <item>All Promotions</item>
-        <item>Favourite Shops</item>
+        <item>My Favourite Shops</item>
     </string-array>
 </resources>
