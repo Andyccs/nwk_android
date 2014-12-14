@@ -9,4 +9,39 @@
             <enum name="right" value="2"/>
         </attr>
     </declare-styleable>
+
+    <!-- PaperButton Attribute -->
+    <declare-styleable name="PaperButton">
+        <attr name="paper_raised" format="boolean" />
+        <attr name="paper_text" format="string" />
+        <attr name="paper_text_size" format="dimension" />
+        <attr name="paper_text_color" format="color" />
+        <attr name="paper_font" format="string" />
+        <attr name="paper_color" format="color" />
+        <attr name="paper_corner_radius" format="dimension" />
+        <attr name="paper_shadow_radius" format="float" />
+        <attr name="paper_shadow_offset_x" format="float" />
+        <attr name="paper_shadow_offset_y" format="float" />
+        <attr name="paper_shadow_color" format="color" />
+    </declare-styleable>
+
+
+    <attr name="aspectRatio" format="float" />
+    <attr name="aspectRatioEnabled" format="boolean" />
+    <attr name="dominantMeasurement">
+        <enum name="width" value="0" />
+        <enum name="height" value="1" />
+    </attr>
+
+    <declare-styleable name="AspectRatioImageView">
+        <attr name="aspectRatio" />
+        <attr name="aspectRatioEnabled" />
+        <attr name="dominantMeasurement" />
+    </declare-styleable>
+
+    <declare-styleable name="AspectRatioTextView">
+        <attr name="aspectRatio" />
+        <attr name="aspectRatioEnabled" />
+        <attr name="dominantMeasurement" />
+    </declare-styleable>
 </resources>

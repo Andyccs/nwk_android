@@ -2,6 +2,7 @@ package com.nwk.locopromo;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.nwk.locopromo.adapter.PromotionGridViewAdapter;
@@ -16,6 +18,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -89,11 +93,6 @@ public class MainPromotionFragment extends Fragment {
 
     }
 
-    private void onClickPromotion(ParseObject parseObject) {
-
-//        context.startActivity(intent);
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -101,6 +100,40 @@ public class MainPromotionFragment extends Fragment {
         mGridView.setAdapter(mGridAdapter);
 
         initializeData();
+
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                ParseQuery<ParseObject> promotedQuery = ParseQuery.getQuery("Promotion");
+                promotedQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> list, ParseException e) {
+                        Intent intent = new Intent(getActivity(), PromotionDetailActivity.class);
+
+                        ParseObject object = list.get(0);
+                        Promotion promotion = new Promotion();
+                        promotion.setId(object.getObjectId());
+                        promotion.setTitle(object.getString("title"));
+                        promotion.setDescription(object.getString("description"));
+                        promotion.setImage(object.getParseFile("image").getUrl());
+                        promotion.setQuantity(object.getInt("quantity"));
+                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
+                        promotion.setDiscountPrice(object.getInt("discountPrice"));
+                        promotion.setOriginalPrice(object.getInt("originalPrice"));
+                        promotion.setPercentage(object.getInt("percentage"));
+                        promotion.setType(object.getInt("type"));
+                        promotion.setRetail(object.getParseObject("retail").getObjectId());
+
+                        intent.putExtra("promotion", Parcels.wrap(promotion));
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        };
+
+        mGridView.setOnItemClickListener(onItemClickListener);
     }
 
     @Override

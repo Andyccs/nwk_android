@@ -25,7 +25,6 @@ public class PromotionGridViewAdapter extends BaseAdapter {
     private List<com.parse.ParseObject> mPromotionList;
     private Context mContext;
 
-
     public PromotionGridViewAdapter(Context context) {
         mContext = context;
         mPromotionList = new ArrayList<com.parse.ParseObject>();

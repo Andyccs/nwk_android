@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.nwk.locopromo.widget.AspectRatioImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:aspectRatio="0.5"
+                    app:aspectRatioEnabled="true"
+                    app:dominantMeasurement="width" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/image"
+                    android:layout_alignParentTop="true"
+                    android:background="#88000000"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/image"
+                    android:padding="8dp"
+                    android:textColor="@color/primary_text_default_material_dark"
+                    android:textSize="@dimen/large_font_size"
+                    tools:text="Summer Discount Paradise - Reduction in T-Shirt and Crop Tops" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="Location: Jurong Point, Level 2, #225"
+                    android:textSize="@dimen/medium_font_size" />
+
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="@dimen/medium_font_size"
+                    android:visibility="gone"
+                    tools:text="Text1" />
+
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:textColor="@color/orange_800"
+                    android:textSize="@dimen/medium_font_size"
+                    tools:text="$100" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Description"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/large_font_size" />
+
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                tools:text="Description" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#77ffffff"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/offer_expired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:text="OFFER EXPIRES IN"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/tiny_font_size" />
+
+            <TextView
+                android:id="@+id/count_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/medium_font_size"
+                tools:text="2h 20m" />
+        </LinearLayout>
+
+        <com.nwk.locopromo.widget.PaperButton
+            android:id="@+id/grab_button"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            app:paper_color="@color/button_background_color"
+            app:paper_text="Checking..."
+            app:paper_text_color="@android:color/white" />
+    </LinearLayout>
+</RelativeLayout>
