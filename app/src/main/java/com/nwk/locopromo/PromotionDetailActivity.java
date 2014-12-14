@@ -134,7 +134,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
                         .append(elapsedMinutes > 0 ? elapsedMinutes + "m" : "");
                 mCountDown.setText(sb.toString());
             } else {
-                mOfferExpired.setVisibility(View.GONE);
+                mOfferExpired.setVisibility(View.INVISIBLE);
                 mCountDown.setText("Expired!");
             }
 
