@@ -109,23 +109,26 @@ public class MainPromotionFragment extends Fragment {
                 promotedQuery.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> list, ParseException e) {
-                        Intent intent = new Intent(getActivity(), PromotionDetailActivity.class);
+//                        Intent intent = new Intent(getActivity(), PromotionDetailActivity.class);
+//
+//                        ParseObject object = list.get(0);
+//                        Promotion promotion = new Promotion();
+//                        promotion.setId(object.getObjectId());
+//                        promotion.setTitle(object.getString("title"));
+//                        promotion.setDescription(object.getString("description"));
+//                        promotion.setImage(object.getParseFile("image").getUrl());
+//                        promotion.setQuantity(object.getInt("quantity"));
+//                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
+//                        promotion.setDiscountPrice(object.getInt("discountPrice"));
+//                        promotion.setOriginalPrice(object.getInt("originalPrice"));
+//                        promotion.setPercentage(object.getInt("percentage"));
+//                        promotion.setType(object.getInt("type"));
+//                        promotion.setRetail(object.getParseObject("retail").getObjectId());
+//
+//                        intent.putExtra("promotion", Parcels.wrap(promotion));
+//                        startActivity(intent);
 
-                        ParseObject object = list.get(0);
-                        Promotion promotion = new Promotion();
-                        promotion.setId(object.getObjectId());
-                        promotion.setTitle(object.getString("title"));
-                        promotion.setDescription(object.getString("description"));
-                        promotion.setImage(object.getParseFile("image").getUrl());
-                        promotion.setQuantity(object.getInt("quantity"));
-                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
-                        promotion.setDiscountPrice(object.getInt("discountPrice"));
-                        promotion.setOriginalPrice(object.getInt("originalPrice"));
-                        promotion.setPercentage(object.getInt("percentage"));
-                        promotion.setType(object.getInt("type"));
-                        promotion.setRetail(object.getParseObject("retail").getObjectId());
-
-                        intent.putExtra("promotion", Parcels.wrap(promotion));
+                        Intent intent = new Intent(getActivity(), PromotionListActivity.class);
                         startActivity(intent);
                     }
                 });
