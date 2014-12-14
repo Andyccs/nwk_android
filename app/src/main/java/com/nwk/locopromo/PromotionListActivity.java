@@ -7,17 +7,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 public class PromotionListActivity extends ActionBarActivity {
+    @InjectView(R.id.promotion_list)
+    ListView promotionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promotion_list);
+        ButterKnife.inject(this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_CUSTOM|ActionBar.DISPLAY_HOME_AS_UP);
+
 
 
     }
