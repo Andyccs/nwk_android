@@ -139,6 +139,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        //TODO if this is user's first time, then
+        Intent intent = new Intent(this, OnboardingActivity.class);
+        startActivity(intent);
     }
 
     @Override

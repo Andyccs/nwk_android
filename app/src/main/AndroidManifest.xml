@@ -44,6 +44,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nwk.locopromo.MainActivity" />
         </activity>
+        <activity
+            android:name=".OnboardingActivity"
+            android:label="@string/title_activity_onboarding"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nwk.locopromo.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
