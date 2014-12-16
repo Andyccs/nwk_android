@@ -2,6 +2,7 @@ package com.nwk.locopromo;
 
 
 import android.app.Notification;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,6 +33,12 @@ public class MainActivity extends ActionBarActivity {
 
     @InjectView(R.id.shopping_cart)
     ImageButton shoppingCart;
+
+    @OnClick(R.id.shopping_cart)
+    public void clickShoppingCart(){
+        Intent intent = new Intent(this,ShoppingCartActivity.class);
+        startActivity(intent);
+    }
 
     @InjectView(R.id.profile)
     ImageButton profile;
