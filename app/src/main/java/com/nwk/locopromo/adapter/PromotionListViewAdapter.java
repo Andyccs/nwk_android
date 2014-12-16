@@ -1,6 +1,7 @@
 package com.nwk.locopromo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.Promotion;
+import com.nwk.locopromo.PromotionDetailActivity;
 import com.nwk.locopromo.R;
 import com.parse.ParseFile;
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -54,7 +57,7 @@ public class PromotionListViewAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.normal_item, null);
+            view = LayoutInflater.from(context).inflate(R.layout.promotion_item, null);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         } else {
@@ -62,7 +65,7 @@ public class PromotionListViewAdapter extends BaseAdapter {
         }
 
         if (promotions.get(i) != null) {
-            Promotion promotion = promotions.get(i);
+            final Promotion promotion = promotions.get(i);
             viewHolder.title.setText(promotion.getTitle());
 
             Picasso.with(context)
@@ -95,6 +98,15 @@ public class PromotionListViewAdapter extends BaseAdapter {
                 viewHolder.originalPrice.setVisibility(View.GONE);
             }
             viewHolder.price.setText(text2);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PromotionDetailActivity.class);
+                    intent.putExtra("promotion",Parcels.wrap(promotion));
+                    context.startActivity(intent);
+                }
+            });
         }
         return view;
     }

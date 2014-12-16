@@ -1,8 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.nwk.locopromo.PromotionListActivity">
 
     <fr.castorflex.android.circularprogressbar.CircularProgressBar
@@ -10,9 +10,14 @@
         style="@style/MyProgressBarStyle"
         android:layout_gravity="center" />
 
-    <ListView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/promotion_list"/>
-
-</LinearLayout>
+        android:visibility="gone">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/promotion_list"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</FrameLayout>

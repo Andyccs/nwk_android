@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -54,9 +55,6 @@ public class PromotionDetailActivity extends ActionBarActivity {
     @InjectView(R.id.count_down)
     TextView mCountDown;
 
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
-
     @InjectView(R.id.offer_expired)
     View mOfferExpired;
 
@@ -73,8 +71,8 @@ public class PromotionDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_promotion_detail);
         ButterKnife.inject(this);
 
-        setSupportActionBar(mToolbar);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
 
         Bundle bundle = getIntent().getExtras();
         mPromotion = Parcels.unwrap(bundle.getParcelable("promotion"));
@@ -105,9 +103,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
             mTitle.setText(promotion.getTitle());
             mDescription.setText(promotion.getDescription());
 
-            getSupportActionBar().setTitle("");
-            mToolbar.setTitle(promotion.getTitle());
-
+            getSupportActionBar().setTitle(promotion.getTitle());
 
             long diff = mPromotion.getTimeExpiry().getTime() - Calendar.getInstance().getTime().getTime();
 
