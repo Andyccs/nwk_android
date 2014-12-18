@@ -13,10 +13,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.nwk.locopromo.adapter.RetailGridViewAdapter;
+import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class MainPromotionFragment extends Fragment {
     @InjectView(R.id.progress)
     View mProgress;
 
-    private RetailGridViewAdapter mGridAdapter;
+    private RetailSquareGridViewAdapter mGridAdapter;
 
     private Context context;
 
@@ -94,7 +93,7 @@ public class MainPromotionFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mGridAdapter = new RetailGridViewAdapter(getActivity());
+        mGridAdapter = new RetailSquareGridViewAdapter(getActivity());
         mGridView.setAdapter(mGridAdapter);
 
         initializeData();

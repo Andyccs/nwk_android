@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".MainActivity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentTop="true">
 
         <!--Start of Toolbar Section-->
         <RelativeLayout
@@ -45,10 +47,12 @@
                 android:layout_marginRight="32dp"/>
         </RelativeLayout>
 
-        <GridLayout
+        <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"/>
+            android:id="@+id/retail_list"
+            android:numColumns="2"
+            android:layout_margin="16dp"/>
     </LinearLayout>
 
 
@@ -57,7 +61,8 @@
         android:layout_height="wrap_content"
         android:background="@color/secondary_button_background_color"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout">
 
         <Button
             android:layout_width="wrap_content"

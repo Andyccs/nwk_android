@@ -21,11 +21,11 @@ import butterknife.InjectView;
 import timber.log.Timber;
 
 
-public class RetailGridViewAdapter extends BaseAdapter {
+public class RetailSquareGridViewAdapter extends BaseAdapter {
     private List<com.parse.ParseObject> mPromotionList;
     private Context mContext;
 
-    public RetailGridViewAdapter(Context context) {
+    public RetailSquareGridViewAdapter(Context context) {
         mContext = context;
         mPromotionList = new ArrayList<com.parse.ParseObject>();
     }
@@ -62,7 +62,7 @@ public class RetailGridViewAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (view == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.normal_item, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.shop_square_item, null);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         } else {
