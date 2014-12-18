@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.GridView;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 
@@ -25,6 +27,22 @@ public class OnboardingActivity extends ActionBarActivity {
 
     @InjectView(R.id.retail_list)
     GridView retailList;
+
+    @InjectView(R.id.skip_button)
+    Button skipButton;
+
+    @InjectView(R.id.next_button)
+    Button nextButton;
+
+    @OnClick(R.id.skip_button)
+    public void clickSkipButton(){
+        finish();
+    }
+
+    @OnClick(R.id.next_button)
+    public void clickNextButton(){
+        finish();
+    }
 
     RetailRectangleGridViewAdapter adapter;
     @Override
