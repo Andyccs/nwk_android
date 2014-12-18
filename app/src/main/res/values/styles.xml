@@ -27,7 +27,7 @@
         <item name="android:textSize">@dimen/small_font_size</item>
         <item name="android:textColor">@color/button_text_color</item>
         <item name="android:ellipsize">marquee</item>
-        <item name="android:background">@drawable/button_background</item>
+        <item name="android:background">@drawable/action_bar_button_background</item>
         <item name="android:padding">4.0dip</item>
         <item name="android:minWidth">88.0dip</item>
         <item name="android:minHeight">36.0dip</item>
