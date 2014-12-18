@@ -139,7 +139,7 @@
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            app:paper_color="@color/button_background_color"
+            app:paper_color="@color/primary_button_background_color"
             app:paper_text="Checking..."
             app:paper_text_color="@android:color/white" />
     </LinearLayout>

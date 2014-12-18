@@ -25,7 +25,7 @@
 
     <style name="DialogButtonStyle" parent="@android:style/Widget.Holo.Light.Button">
         <item name="android:textSize">@dimen/small_font_size</item>
-        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:textColor">@color/primary_button_text_color</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:background">@drawable/action_bar_button_background</item>
         <item name="android:padding">4.0dip</item>
