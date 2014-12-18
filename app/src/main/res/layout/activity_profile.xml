@@ -1,0 +1,131 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AboutUsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/about_us_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.nwk.locopromo.widget.ParallaxImageView
+                    android:id="@+id/about_us_cover_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_background" />
+
+            </LinearLayout>
+            <com.makeramen.RoundedImageView
+                android:id="@+id/profile_picture"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="30dip"
+                app:riv_border_width="4dip"
+                app:riv_border_color="@color/background"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/profile_background"/>
+
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Steve Jobs"
+                    android:textSize="18sp"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black"
+                    android:id="@+id/name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="stevie@apple.com"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:id="@+id/email"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerInParent="true"
+                    android:gravity="right">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1000"
+                        android:textSize="24sp"
+                        android:singleLine="true"
+                        android:textColor="@color/promotion_item_price"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/point"
+                        />
+
+                    <ImageView
+                        android:layout_width="24sp"
+                        android:layout_height="24sp"
+                        android:src="@drawable/star"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Point History"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:layout_gravity="left"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/history_list"/>
+
+    </LinearLayout>
+
+</ScrollView>

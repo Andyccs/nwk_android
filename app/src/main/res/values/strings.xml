@@ -16,5 +16,6 @@
     <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
     <string name="title_activity_onboarding">OnboardingActivity</string>
     <string name="title_activity_redeem_detail">RedeemDetailActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

@@ -43,6 +43,12 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.profile)
     ImageButton profile;
 
+    @OnClick(R.id.profile)
+    public void clickProfile(){
+        Intent intent = new Intent(this,ProfileActivity.class);
+        startActivity(intent);
+    }
+
     @InjectView(R.id.category_food)
     SelectableButton foodButton;
 

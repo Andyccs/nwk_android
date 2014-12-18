@@ -60,6 +60,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nwk.locopromo.ShoppingCartActivity" />
         </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nwk.locopromo.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
