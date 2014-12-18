@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nwk.locopromo.Promotion;
 import com.nwk.locopromo.PromotionDetailActivity;
 import com.nwk.locopromo.R;
+import com.nwk.locopromo.RedeemDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -77,7 +78,7 @@ public class ShoppingCartListViewAdapter extends BaseAdapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, PromotionDetailActivity.class);
+                    Intent intent = new Intent(context, RedeemDetailActivity.class);
                     intent.putExtra("promotion",Parcels.wrap(promotion));
                     context.startActivity(intent);
                 }

@@ -52,6 +52,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nwk.locopromo.MainActivity" />
         </activity>
+        <activity
+            android:name=".RedeemDetailActivity"
+            android:label="@string/title_activity_redeem_detail"
+            android:parentActivityName=".ShoppingCartActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nwk.locopromo.ShoppingCartActivity" />
+        </activity>
     </application>
 
 </manifest>
