@@ -39,4 +39,5 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.1.4'
     compile 'com.github.frankiesardo:icepick:2.3.6'
     provided 'com.github.frankiesardo:icepick-processor:2.3.6'
+    compile 'com.squareup.retrofit:retrofit:1.8.0'
 }

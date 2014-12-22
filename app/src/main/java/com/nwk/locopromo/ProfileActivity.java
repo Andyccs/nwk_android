@@ -3,12 +3,10 @@ package com.nwk.locopromo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 
 import com.nwk.locopromo.adapter.RedeemHistoryListViewAdapter;
+import com.nwk.locopromo.model.Promotion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

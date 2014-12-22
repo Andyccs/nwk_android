@@ -1,4 +1,4 @@
-package com.nwk.locopromo;
+package com.nwk.locopromo.model;
 
 import org.parceler.Parcel;
 

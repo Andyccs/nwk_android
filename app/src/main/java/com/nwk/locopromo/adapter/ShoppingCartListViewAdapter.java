@@ -2,7 +2,6 @@ package com.nwk.locopromo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nwk.locopromo.Promotion;
-import com.nwk.locopromo.PromotionDetailActivity;
+import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.R;
 import com.nwk.locopromo.RedeemDetailActivity;
 import com.squareup.picasso.Picasso;

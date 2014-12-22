@@ -4,18 +4,14 @@ import android.graphics.Paint;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.widget.AspectRatioImageView;
-import com.nwk.locopromo.widget.PaperButton;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
-
-import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

@@ -1,40 +1,23 @@
 package com.nwk.locopromo;
 
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.nwk.locopromo.widget.PaperButton;
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import timber.log.Timber;
 
 public class PromotionDetailActivity extends ActionBarActivity {
     @InjectView(R.id.title)

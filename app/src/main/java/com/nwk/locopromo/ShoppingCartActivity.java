@@ -7,8 +7,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ListView;
 
-import com.nwk.locopromo.adapter.PromotionListViewAdapter;
 import com.nwk.locopromo.adapter.ShoppingCartListViewAdapter;
+import com.nwk.locopromo.model.Promotion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

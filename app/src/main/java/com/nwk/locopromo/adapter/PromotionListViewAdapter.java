@@ -10,14 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nwk.locopromo.Promotion;
+import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.PromotionDetailActivity;
 import com.nwk.locopromo.R;
-import com.parse.ParseFile;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
