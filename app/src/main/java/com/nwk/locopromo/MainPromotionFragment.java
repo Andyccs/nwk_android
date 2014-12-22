@@ -101,16 +101,16 @@ public class MainPromotionFragment extends Fragment {
 
         initializeData();
 
-        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), PromotionListActivity.class);
-                //TODO add extra intent here
-                startActivity(intent);
-            }
-        };
+//        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(getActivity(), PromotionListActivity.class);
+//                //TODO add extra intent here
+//                startActivity(intent);
+//            }
+//        };
 
-        mGridView.setOnItemClickListener(onItemClickListener);
+//        mGridView.setOnItemClickListener(onItemClickListener);
     }
 
     @Override

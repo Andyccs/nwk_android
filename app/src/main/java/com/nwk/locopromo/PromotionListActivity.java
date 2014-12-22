@@ -11,11 +11,15 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.nwk.locopromo.adapter.PromotionListViewAdapter;
+import com.nwk.locopromo.model.OldPromotion;
 import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.Retail;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,9 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 
@@ -37,6 +44,8 @@ public class PromotionListActivity extends ActionBarActivity {
     SwipeRefreshLayout swipeRefreshLayout;
 
     PromotionListViewAdapter adapter;
+
+    Retail retail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,40 +68,56 @@ public class PromotionListActivity extends ActionBarActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        retail = Parcels.unwrap((android.os.Parcelable) getIntent().getExtras().get("retail"));
         initializeData();
     }
 
     private void initializeData() {
         //TODO remove this part
-        ParseQuery<ParseObject> promotionQuery = ParseQuery.getQuery("Promotion");
-        promotionQuery.include("retail");
-        promotionQuery.findInBackground(new FindCallback<ParseObject>() {
+//        ParseQuery<ParseObject> promotionQuery = ParseQuery.getQuery("Promotion");
+//        promotionQuery.include("retail");
+//        promotionQuery.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> promotions, ParseException e) {
+//                Timber.d("Size: " + promotions.size());
+//                if (e == null) {
+//                    List<OldPromotion> promotionList = new ArrayList<OldPromotion>();
+//                    for(ParseObject object : promotions){
+//                        OldPromotion promotion = new OldPromotion();
+//                        promotion.setId(object.getObjectId());
+//                        promotion.setTitle(object.getString("title"));
+//                        promotion.setDescription(object.getString("description"));
+//                        promotion.setImage(object.getParseFile("image").getUrl());
+//                        promotion.setQuantity(object.getInt("quantity"));
+//                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
+//                        promotion.setDiscountPrice(object.getInt("discountPrice"));
+//                        promotion.setOriginalPrice(object.getInt("originalPrice"));
+//                        promotion.setPercentage(object.getInt("percentage"));
+//                        promotion.setType(object.getInt("type"));
+//                        promotion.setRetail(object.getParseObject("retail").getObjectId());
+//                        promotionList.add(promotion);
+//                    }
+//                    adapter.setPromotions(promotionList);
+//                    progressBar.setVisibility(View.GONE);
+//                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+        ((PromoApplication)getApplication()).getService().listPromotionsByRetail(retail.getId(),new Callback<List<Promotion>>() {
             @Override
-            public void done(List<ParseObject> promotions, ParseException e) {
-                Timber.d("Size: " + promotions.size());
-                if (e == null) {
-                    List<Promotion> promotionList = new ArrayList<Promotion>();
-                    for(ParseObject object : promotions){
-                        Promotion promotion = new Promotion();
-                        promotion.setId(object.getObjectId());
-                        promotion.setTitle(object.getString("title"));
-                        promotion.setDescription(object.getString("description"));
-                        promotion.setImage(object.getParseFile("image").getUrl());
-                        promotion.setQuantity(object.getInt("quantity"));
-                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
-                        promotion.setDiscountPrice(object.getInt("discountPrice"));
-                        promotion.setOriginalPrice(object.getInt("originalPrice"));
-                        promotion.setPercentage(object.getInt("percentage"));
-                        promotion.setType(object.getInt("type"));
-                        promotion.setRetail(object.getParseObject("retail").getObjectId());
-                        promotionList.add(promotion);
-                    }
-                    adapter.setPromotions(promotionList);
-                    progressBar.setVisibility(View.GONE);
-                    swipeRefreshLayout.setVisibility(View.VISIBLE);
-                }
+            public void success(List<Promotion> promotions, Response response) {
+                adapter.setPromotions(promotions);
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
             }
         });
+
     }
 
 

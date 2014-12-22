@@ -2,21 +2,23 @@ package com.nwk.locopromo.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Andy on 12/22/2014.
  */
 public class Wrapper<I extends Object> {
     @SerializedName("count")
-    private Integer count;
+    Integer count;
 
     @SerializedName("next")
-    private String next;
+    String next;
 
     @SerializedName("previous")
-    private String previous;
+    String previous;
 
     @SerializedName("results")
-    private I results;
+    I results;
 
     public Integer getCount() {
         return count;

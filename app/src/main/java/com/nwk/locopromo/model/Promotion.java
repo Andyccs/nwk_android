@@ -1,29 +1,35 @@
 package com.nwk.locopromo.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.parceler.Parcel;
 
-import java.util.Date;
-
+/**
+ * Created by Andy on 12/23/2014.
+ */
 @Parcel
 public class Promotion {
-    String id;
-    String title;
-    String description;
-    int quantity;
-    Date timeExpiry;
-    String image;
-    int discountPrice;
-    int originalPrice;
-    int percentage;
+    @SerializedName("retail")
     String retail;
-    int type;
 
-    public String getId() {
-        return id;
+    @SerializedName("title")
+    String title;
+
+    @SerializedName("description")
+    String description;
+
+    @SerializedName("time_expiry")
+    String timeExpiry;
+
+    @SerializedName("image_url")
+    String imageUrl;
+
+    public String getRetail() {
+        return retail;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setRetail(String retail) {
+        this.retail = retail;
     }
 
     public String getTitle() {
@@ -42,67 +48,20 @@ public class Promotion {
         this.description = description;
     }
 
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Date getTimeExpiry() {
+    public String getTimeExpiry() {
         return timeExpiry;
     }
 
-    public void setTimeExpiry(Date timeExpiry) {
+    public void setTimeExpiry(String timeExpiry) {
         this.timeExpiry = timeExpiry;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public int getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(int discountPrice) {
-        this.discountPrice = discountPrice;
-    }
-
-    public int getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(int originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public int getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-    }
-
-    public String getRetail() {
-        return retail;
-    }
-
-    public void setRetail(String retail) {
-        this.retail = retail;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 }

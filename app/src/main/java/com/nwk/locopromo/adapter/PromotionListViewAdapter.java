@@ -10,9 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.OldPromotion;
 import com.nwk.locopromo.PromotionDetailActivity;
 import com.nwk.locopromo.R;
+import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.PromotionDiscount;
+import com.nwk.locopromo.model.PromotionGeneral;
+import com.nwk.locopromo.model.PromotionReduction;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -67,25 +71,26 @@ public class PromotionListViewAdapter extends BaseAdapter {
             viewHolder.title.setText(promotion.getTitle());
 
             Picasso.with(context)
-                    .load(promotion.getImage())
+                    .load(promotion.getImageUrl())
                     .into(viewHolder.image);
 
             viewHolder.expiry.setText("Offer expires in: "+"2h 20m");
 
             String text1 = null;
             String text2 = "";
-            switch (promotion.getType()) {
-                case 1:
-                    text1 = "$" + promotion.getOriginalPrice();
-                    text2 = "$" + promotion.getDiscountPrice();
-                    break;
-                case 2:
-                    text1 = null;
-                    text2 = promotion.getPercentage() + "%";
-                    break;
-                case 3:
-                    text1 = null;
-                    text2 = "" + promotion.getOriginalPrice();
+            if(promotion instanceof PromotionReduction) {
+                PromotionReduction pr = (PromotionReduction) promotion;
+                text1 = "$" + pr.getOriginalPrice();
+                text2 = "$" + pr.getDiscountPrice();
+            }
+            else if(promotion instanceof PromotionDiscount) {
+                PromotionDiscount pd = (PromotionDiscount) promotion;
+                text1 = null;
+                text2 = pd.getDiscount() + "%";
+            }
+            else if(promotion instanceof PromotionGeneral) {
+                text1 = null;
+                text2 = "" + ((PromotionGeneral) promotion).getPrice();
             }
 
             if (text1 != null) {

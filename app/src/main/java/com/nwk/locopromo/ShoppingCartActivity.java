@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.nwk.locopromo.adapter.ShoppingCartListViewAdapter;
-import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.OldPromotion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -69,9 +69,9 @@ public class ShoppingCartActivity extends ActionBarActivity {
             public void done(List<ParseObject> promotions, ParseException e) {
                 Timber.d("Size: " + promotions.size());
                 if (e == null) {
-                    List<Promotion> promotionList = new ArrayList<Promotion>();
+                    List<OldPromotion> promotionList = new ArrayList<OldPromotion>();
                     for (ParseObject object : promotions) {
-                        Promotion promotion = new Promotion();
+                        OldPromotion promotion = new OldPromotion();
                         promotion.setId(object.getObjectId());
                         promotion.setTitle(object.getString("title"));
                         promotion.setDescription(object.getString("description"));

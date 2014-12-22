@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.OldPromotion;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +30,7 @@ public class RedeemDetailActivity extends ActionBarActivity {
     @InjectView(R.id.image)
     AspectRatioImageView mImage;
 
-    private Promotion mPromotion;
+    private OldPromotion mPromotion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class RedeemDetailActivity extends ActionBarActivity {
     }
 
 
-    private void initializePromotion(Promotion promotion) {
+    private void initializePromotion(OldPromotion promotion) {
         if (promotion != null) {
             mTitle.setText(promotion.getTitle());
 

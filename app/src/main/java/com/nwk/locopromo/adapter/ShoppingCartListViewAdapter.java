@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.OldPromotion;
 import com.nwk.locopromo.R;
 import com.nwk.locopromo.RedeemDetailActivity;
 import com.squareup.picasso.Picasso;
@@ -25,7 +25,7 @@ import butterknife.InjectView;
  * Created by Andy on 12/14/2014.
  */
 public class ShoppingCartListViewAdapter extends BaseAdapter {
-    private List<Promotion> promotions;
+    private List<OldPromotion> promotions;
     private Context context;
 
     public ShoppingCartListViewAdapter(Context context) {
@@ -62,7 +62,7 @@ public class ShoppingCartListViewAdapter extends BaseAdapter {
         }
 
         if (promotions.get(i) != null) {
-            final Promotion promotion = promotions.get(i);
+            final OldPromotion promotion = promotions.get(i);
             viewHolder.title.setText(promotion.getTitle());
 
             Picasso.with(context)
@@ -85,7 +85,7 @@ public class ShoppingCartListViewAdapter extends BaseAdapter {
         return view;
     }
 
-    public void setPromotions(List<Promotion> promotions) {
+    public void setPromotions(List<OldPromotion> promotions) {
         this.promotions = promotions;
     }
 

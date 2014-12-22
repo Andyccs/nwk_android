@@ -2,27 +2,44 @@ package com.nwk.locopromo.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Andy on 12/22/2014.
  */
+@Parcel
 public class Retail {
     @SerializedName("user")
-    private String user;
+    String user;
 
     @SerializedName("shop_name")
-    private String shop_name;
+    String shop_name;
 
     @SerializedName("mall")
-    private String mall;
+    String mall;
 
     @SerializedName("logo_url")
-    private String logo_url;
+    String logo_url;
 
     @SerializedName("location_level")
-    private String location_level;
+    String location_level;
 
     @SerializedName("location_unit")
-    private String location_unit;
+    String location_unit;
+
+    @SerializedName("id")
+    Integer id;
+
+    public Retail() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUser() {
         return user;

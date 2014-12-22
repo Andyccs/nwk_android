@@ -1,6 +1,8 @@
 package com.nwk.locopromo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +10,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nwk.locopromo.PromotionListActivity;
 import com.nwk.locopromo.R;
 import com.nwk.locopromo.model.Retail;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcel;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +65,7 @@ public class RetailSquareGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Retail retail = (Retail) getItem(i);
+        final Retail retail = (Retail) getItem(i);
         ViewHolder viewHolder;
 
         if (view == null) {
@@ -77,6 +83,16 @@ public class RetailSquareGridViewAdapter extends BaseAdapter {
                     .load(retail.getLogo_url())
                     .into(viewHolder.image);
         }
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, PromotionListActivity.class);
+                Parcelable retailParcel = Parcels.wrap(retail);
+                intent.putExtra("retail",retailParcel);
+                mContext.startActivity(intent);
+            }
+        });
         return view;
     }
 

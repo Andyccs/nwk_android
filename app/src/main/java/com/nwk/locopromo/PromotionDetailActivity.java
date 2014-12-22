@@ -7,7 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.OldPromotion;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.nwk.locopromo.widget.PaperButton;
 import com.squareup.picasso.Picasso;
@@ -44,7 +44,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
     @InjectView(R.id.grab_button)
     PaperButton mGrabButton;
 
-    private Promotion mPromotion;
+    private OldPromotion mPromotion;
     private String grabId;
     boolean canGrab = true;
 
@@ -81,7 +81,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
     }
 
-    private void initializePromotion(Promotion promotion) {
+    private void initializePromotion(OldPromotion promotion) {
         if (promotion != null) {
             mTitle.setText(promotion.getTitle());
             mDescription.setText(promotion.getDescription());
