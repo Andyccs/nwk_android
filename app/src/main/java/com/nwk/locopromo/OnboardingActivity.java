@@ -11,6 +11,8 @@ import android.widget.GridLayout;
 import android.widget.GridView;
 
 import com.nwk.locopromo.adapter.RetailRectangleGridViewAdapter;
+import com.nwk.locopromo.model.Retail;
+import com.nwk.locopromo.model.Wrapper;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -20,6 +22,9 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 
@@ -62,15 +67,16 @@ public class OnboardingActivity extends ActionBarActivity {
     }
 
     private void initializeData() {
-        ParseQuery promotionQuery = ParseQuery.getQuery("Retail");
-        promotionQuery.include("user");
-        promotionQuery.findInBackground(new FindCallback() {
+        ((PromoApplication)(getApplication())).getService().listRetails(new Callback<Wrapper<List<Retail>>>() {
             @Override
-            public void done(List retail, ParseException e) {
-                Timber.d("Size: " + retail.size());
-                if (e == null) {
-                    adapter.addItems(retail);
-                }
+            public void success(Wrapper<List<Retail>> retails, Response response) {
+                Timber.d("Size: " + retails.getResults().size());
+                adapter.addItems(retails.getResults());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Timber.e(error.getMessage());
             }
         });
 

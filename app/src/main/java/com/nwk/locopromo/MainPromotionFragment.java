@@ -76,20 +76,6 @@ public class MainPromotionFragment extends Fragment {
     }
 
     private void initializeData() {
-//        ParseQuery promotionQuery = ParseQuery.getQuery("Retail");
-//        promotionQuery.include("user");
-//        promotionQuery.findInBackground(new FindCallback() {
-//            @Override
-//            public void done(List retail, ParseException e) {
-//                Timber.d("Size: " + retail.size());
-//                if (e == null) {
-//                    mGridAdapter.addItems(retail);
-//                    mProgress.setVisibility(View.GONE);
-//                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-
         ((PromoApplication)(getActivity().getApplication())).getService().listRetails(new Callback<Wrapper<List<Retail>>>() {
             @Override
             public void success(Wrapper<List<Retail>> retails, Response response) {
