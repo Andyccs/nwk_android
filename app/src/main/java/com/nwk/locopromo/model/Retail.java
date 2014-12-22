@@ -1,13 +1,74 @@
 package com.nwk.locopromo.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Andy on 12/22/2014.
  */
 public class Retail {
+    @SerializedName("user")
     private String user;
+
+    @SerializedName("shop_name")
     private String shop_name;
+
+    @SerializedName("mall")
     private String mall;
+
+    @SerializedName("logo_url")
     private String logo_url;
+
+    @SerializedName("location_level")
     private String location_level;
+
+    @SerializedName("location_unit")
     private String location_unit;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getShop_name() {
+        return shop_name;
+    }
+
+    public void setShop_name(String shop_name) {
+        this.shop_name = shop_name;
+    }
+
+    public String getMall() {
+        return mall;
+    }
+
+    public void setMall(String mall) {
+        this.mall = mall;
+    }
+
+    public String getLogo_url() {
+        return logo_url;
+    }
+
+    public void setLogo_url(String logo_url) {
+        this.logo_url = logo_url;
+    }
+
+    public String getLocation_level() {
+        return location_level;
+    }
+
+    public void setLocation_level(String location_level) {
+        this.location_level = location_level;
+    }
+
+    public String getLocation_unit() {
+        return location_unit;
+    }
+
+    public void setLocation_unit(String location_unit) {
+        this.location_unit = location_unit;
+    }
 }

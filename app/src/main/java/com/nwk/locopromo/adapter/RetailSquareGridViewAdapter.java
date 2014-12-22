@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.R;
+import com.nwk.locopromo.model.Retail;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.squareup.picasso.Picasso;
@@ -22,23 +23,23 @@ import timber.log.Timber;
 
 
 public class RetailSquareGridViewAdapter extends BaseAdapter {
-    private List<com.parse.ParseObject> mPromotionList;
+    private List<Retail> mPromotionList;
     private Context mContext;
 
     public RetailSquareGridViewAdapter(Context context) {
         mContext = context;
-        mPromotionList = new ArrayList<com.parse.ParseObject>();
+        mPromotionList = new ArrayList<Retail>();
     }
 
     public void addItems(List list) {
         Timber.d("Size: " + list.size());
 
-            mPromotionList.addAll(list);
-            notifyDataSetChanged();
+        mPromotionList.addAll(list);
+        notifyDataSetChanged();
     }
 
     public void clearItems(){
-        mPromotionList = new ArrayList<com.parse.ParseObject>();
+        mPromotionList = new ArrayList<Retail>();
     }
 
     @Override
@@ -58,7 +59,7 @@ public class RetailSquareGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ParseObject retail = (ParseObject) getItem(i);
+        Retail retail = (Retail) getItem(i);
         ViewHolder viewHolder;
 
         if (view == null) {
@@ -70,11 +71,10 @@ public class RetailSquareGridViewAdapter extends BaseAdapter {
         }
 
         if (retail != null) {
-            viewHolder.title.setText(retail.get("shopName").toString());
+            viewHolder.title.setText(retail.getShop_name());
 
-            ParseFile file = retail.getParseFile("logo");
             Picasso.with(mContext)
-                    .load(file.getUrl())
+                    .load(retail.getLogo_url())
                     .into(viewHolder.image);
         }
         return view;

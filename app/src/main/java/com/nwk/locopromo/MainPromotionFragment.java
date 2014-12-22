@@ -14,14 +14,16 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+import com.nwk.locopromo.model.Retail;
+import com.nwk.locopromo.model.Wrapper;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 
@@ -74,17 +76,32 @@ public class MainPromotionFragment extends Fragment {
     }
 
     private void initializeData() {
-        ParseQuery promotionQuery = ParseQuery.getQuery("Retail");
-        promotionQuery.include("user");
-        promotionQuery.findInBackground(new FindCallback() {
+//        ParseQuery promotionQuery = ParseQuery.getQuery("Retail");
+//        promotionQuery.include("user");
+//        promotionQuery.findInBackground(new FindCallback() {
+//            @Override
+//            public void done(List retail, ParseException e) {
+//                Timber.d("Size: " + retail.size());
+//                if (e == null) {
+//                    mGridAdapter.addItems(retail);
+//                    mProgress.setVisibility(View.GONE);
+//                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+
+        ((PromoApplication)(getActivity().getApplication())).getService().listRetails(new Callback<Wrapper<List<Retail>>>() {
             @Override
-            public void done(List retail, ParseException e) {
-                Timber.d("Size: " + retail.size());
-                if (e == null) {
-                    mGridAdapter.addItems(retail);
-                    mProgress.setVisibility(View.GONE);
-                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                }
+            public void success(Wrapper<List<Retail>> retails, Response response) {
+                Timber.d("Size: " + retails.getResults().size());
+                mGridAdapter.addItems(retails.getResults());
+                mProgress.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Timber.e(error.getMessage());
             }
         });
 
