@@ -23,10 +23,13 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import icepick.Icepick;
+import icepick.Icicle;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -45,11 +48,14 @@ public class PromotionListActivity extends ActionBarActivity {
 
     PromotionListViewAdapter adapter;
 
-    Retail retail;
+    @Icicle
+    int retailId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+
         setContentView(R.layout.activity_promotion_list);
         ButterKnife.inject(this);
 
@@ -65,26 +71,29 @@ public class PromotionListActivity extends ActionBarActivity {
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
                 initializeData();
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        retail = Parcels.unwrap((android.os.Parcelable) getIntent().getExtras().get("retail"));
+        if(retailId==0) {
+            Object retailObject = getIntent().getExtras().get("retail");
+            Retail retail = Parcels.unwrap((android.os.Parcelable) retailObject);
+            retailId = retail.getId();
+        }
         initializeData();
     }
 
     private void initializeData() {
-        ((PromoApplication)getApplication()).getService().listPromotionsByRetail(retail.getId(),new Callback<List<Promotion>>() {
+        ((PromoApplication)getApplication()).getService().listPromotionsByRetail(retailId,new Callback<List<Promotion>>() {
             @Override
             public void success(List<Promotion> promotions, Response response) {
                 adapter.setPromotions(promotions);
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -137,5 +146,11 @@ public class PromotionListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 }

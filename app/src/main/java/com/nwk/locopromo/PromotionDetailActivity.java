@@ -7,11 +7,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.OldPromotion;
+import com.nwk.locopromo.model.Promotion;
+import com.nwk.locopromo.model.PromotionDiscount;
+import com.nwk.locopromo.model.PromotionGeneral;
+import com.nwk.locopromo.model.PromotionReduction;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.nwk.locopromo.widget.PaperButton;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
 import org.parceler.Parcels;
 
 import java.util.Calendar;
@@ -44,7 +48,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
     @InjectView(R.id.grab_button)
     PaperButton mGrabButton;
 
-    private OldPromotion mPromotion;
+    private Promotion mPromotion;
     private String grabId;
     boolean canGrab = true;
 
@@ -59,7 +63,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
         Bundle bundle = getIntent().getExtras();
         mPromotion = Parcels.unwrap(bundle.getParcelable("promotion"));
-        initializePromotion(mPromotion);
+        initializePromotion();
 
         final View.OnClickListener claimOffer = new View.OnClickListener() {
             @Override
@@ -81,14 +85,15 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
     }
 
-    private void initializePromotion(OldPromotion promotion) {
-        if (promotion != null) {
-            mTitle.setText(promotion.getTitle());
-            mDescription.setText(promotion.getDescription());
+    private void initializePromotion() {
+        if (mPromotion != null) {
+            mTitle.setText(mPromotion.getTitle());
+            mDescription.setText(mPromotion.getDescription());
 
-            getSupportActionBar().setTitle(promotion.getTitle());
+            getSupportActionBar().setTitle(mPromotion.getTitle());
 
-            long diff = mPromotion.getTimeExpiry().getTime() - Calendar.getInstance().getTime().getTime();
+            DateTime exprityTime = new DateTime(mPromotion.getTimeExpiry());
+            long diff = exprityTime.getMillis() - Calendar.getInstance().getTime().getTime();
 
             if (diff > 0) {
 
@@ -98,14 +103,10 @@ public class PromotionDetailActivity extends ActionBarActivity {
                 long daysInMilli = hoursInMilli * 24;
 
                 long elapsedDays = diff / daysInMilli;
-                diff = diff % daysInMilli;
 
                 long elapsedHours = diff / hoursInMilli;
-                diff = diff % hoursInMilli;
 
                 long elapsedMinutes = diff / minutesInMilli;
-                diff = diff % minutesInMilli;
-
 
                 StringBuilder sb = new StringBuilder();
                 sb.append(elapsedDays > 0 ? elapsedDays + "d " : "")
@@ -117,25 +118,24 @@ public class PromotionDetailActivity extends ActionBarActivity {
                 mCountDown.setText("Expired!");
             }
 
-            int type = promotion.getType();
-
             String text1 = null, text2 = "";
 
-            switch (type) {
-                case 1:
-                    text1 = "$" + promotion.getOriginalPrice();
-                    text2 = "$" + promotion.getDiscountPrice();
-                    break;
-                case 2:
-                    text1 = null;
-                    text2 = promotion.getPercentage() + "%";
-                    break;
-                case 3:
-                    text1 = null;
-                    text2 = "" + promotion.getOriginalPrice();
+            if(mPromotion instanceof PromotionReduction) {
+                PromotionReduction pr = (PromotionReduction) mPromotion;
+                text1 = "$" + pr.getOriginalPrice();
+                text2 = "$" + pr.getDiscountPrice();
+            }
+            else if(mPromotion instanceof PromotionDiscount) {
+                PromotionDiscount pd = (PromotionDiscount) mPromotion;
+                text1 = null;
+                text2 = pd.getDiscount() + "%";
+            }
+            else if(mPromotion instanceof PromotionGeneral) {
+                text1 = null;
+                text2 = "" + ((PromotionGeneral) mPromotion).getPrice();
             }
             Picasso.with(this)
-                    .load(promotion.getImage())
+                    .load(mPromotion.getImageUrl())
                     .into(mImage);
 
             if (text1 != null) {

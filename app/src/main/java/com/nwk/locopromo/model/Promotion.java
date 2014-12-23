@@ -2,7 +2,9 @@ package com.nwk.locopromo.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.DateTime;
 import org.parceler.Parcel;
+import org.parceler.Transient;
 
 /**
  * Created by Andy on 12/23/2014.
@@ -23,6 +25,9 @@ public class Promotion {
 
     @SerializedName("image_url")
     String imageUrl;
+
+    @SerializedName("created_at")
+    String createdAt;
 
     public String getRetail() {
         return retail;
@@ -64,4 +69,11 @@ public class Promotion {
         this.imageUrl = imageUrl;
     }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 }

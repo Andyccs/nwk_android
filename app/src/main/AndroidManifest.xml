@@ -25,7 +25,8 @@
             android:name=".MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name=".PromotionDetailActivity" />
+        <activity android:name=".PromotionDetailActivity"
+            android:parentActivityName=".PromotionListActivity"/>
         <activity
             android:name=".PromotionListActivity"
             android:label="@string/title_activity_promotion_list"
