@@ -17,14 +17,24 @@ import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.model.PromotionDiscount;
 import com.nwk.locopromo.model.PromotionGeneral;
 import com.nwk.locopromo.model.PromotionReduction;
+import com.ocpsoft.pretty.time.PrettyTime;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.DurationFieldType;
+import org.joda.time.Interval;
+import org.joda.time.ReadablePeriod;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 import org.parceler.Parcels;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import timber.log.Timber;
 
 /**
  * Created by Andy on 12/14/2014.
@@ -74,7 +84,30 @@ public class PromotionListViewAdapter extends BaseAdapter {
                     .load(promotion.getImageUrl())
                     .into(viewHolder.image);
 
-            viewHolder.expiry.setText("Offer expires in: "+"2h 20m");
+            DateTime expiry = new DateTime(promotion.getCreatedAt());
+            expiry = expiry.plusMinutes(30);
+            if(expiry.isBeforeNow()){
+                viewHolder.expiry.setText("Expired");
+            }else{
+                Timber.d("Promotion Created At: "+new DateTime(promotion.getCreatedAt()));
+                Timber.d("Current Time: "+DateTime.now());
+                Timber.d("Expiry Time: "+expiry);
+                Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
+                PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
+                        .appendDays()
+                        .appendSuffix("d", "d")
+                        .appendSeparator(" ")
+                        .appendMinutes()
+                        .appendSuffix("m", "m")
+                        .appendSeparator(" ")
+                        .appendSeconds()
+                        .appendSuffix("s", "s")
+                        .toFormatter();
+                String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
+                Timber.d("Expiry in: "+ expiryIntervalString);
+                viewHolder.expiry.setText("Offer expires in: " + expiryIntervalString);
+            }
+
 
             String text1 = null;
             String text2 = "";
