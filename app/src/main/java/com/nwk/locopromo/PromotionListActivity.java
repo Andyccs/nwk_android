@@ -74,36 +74,6 @@ public class PromotionListActivity extends ActionBarActivity {
     }
 
     private void initializeData() {
-        //TODO remove this part
-//        ParseQuery<ParseObject> promotionQuery = ParseQuery.getQuery("Promotion");
-//        promotionQuery.include("retail");
-//        promotionQuery.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> promotions, ParseException e) {
-//                Timber.d("Size: " + promotions.size());
-//                if (e == null) {
-//                    List<OldPromotion> promotionList = new ArrayList<OldPromotion>();
-//                    for(ParseObject object : promotions){
-//                        OldPromotion promotion = new OldPromotion();
-//                        promotion.setId(object.getObjectId());
-//                        promotion.setTitle(object.getString("title"));
-//                        promotion.setDescription(object.getString("description"));
-//                        promotion.setImage(object.getParseFile("image").getUrl());
-//                        promotion.setQuantity(object.getInt("quantity"));
-//                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
-//                        promotion.setDiscountPrice(object.getInt("discountPrice"));
-//                        promotion.setOriginalPrice(object.getInt("originalPrice"));
-//                        promotion.setPercentage(object.getInt("percentage"));
-//                        promotion.setType(object.getInt("type"));
-//                        promotion.setRetail(object.getParseObject("retail").getObjectId());
-//                        promotionList.add(promotion);
-//                    }
-//                    adapter.setPromotions(promotionList);
-//                    progressBar.setVisibility(View.GONE);
-//                    swipeRefreshLayout.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
         ((PromoApplication)getApplication()).getService().listPromotionsByRetail(retail.getId(),new Callback<List<Promotion>>() {
             @Override
             public void success(List<Promotion> promotions, Response response) {
@@ -129,8 +99,6 @@ public class PromotionListActivity extends ActionBarActivity {
         MenuItem menuItem = menu.findItem(R.id.action_favorite);
 
         //TODO check if the shop has been favorite
-//        menuItem.collapseActionView();
-//        menuItem.setActionView(null);
         MenuItemCompat.setOnActionExpandListener(menuItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
