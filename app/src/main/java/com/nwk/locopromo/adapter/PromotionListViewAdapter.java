@@ -120,7 +120,7 @@ public class PromotionListViewAdapter extends BaseAdapter {
             }
             else if(promotion instanceof PromotionGeneral) {
                 text1 = null;
-                text2 = "" + ((PromotionGeneral) promotion).getPrice();
+                text2 = "$" + ((PromotionGeneral) promotion).getPrice();
             }
 
             if (text1 != null) {

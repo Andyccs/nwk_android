@@ -155,7 +155,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
         }
         else if(mPromotion instanceof PromotionGeneral) {
             text1 = null;
-            text2 = "" + ((PromotionGeneral) mPromotion).getPrice();
+            text2 = "$" + ((PromotionGeneral) mPromotion).getPrice();
         }
         if (text1 != null) {
             mText1.setVisibility(View.VISIBLE);
