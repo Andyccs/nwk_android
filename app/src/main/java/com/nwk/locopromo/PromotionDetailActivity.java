@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nwk.locopromo.model.Promotion;
@@ -16,6 +17,9 @@ import com.nwk.locopromo.widget.PaperButton;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 import org.parceler.Parcels;
 
 import java.util.Calendar;
@@ -47,6 +51,9 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
     @InjectView(R.id.grab_button)
     PaperButton mGrabButton;
+
+    @InjectView(R.id.offer_expired_layout)
+    LinearLayout offerExpiredLayout;
 
     private Promotion mPromotion;
     private String grabId;
@@ -92,30 +99,26 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
             getSupportActionBar().setTitle(mPromotion.getTitle());
 
-            DateTime exprityTime = new DateTime(mPromotion.getTimeExpiry());
-            long diff = exprityTime.getMillis() - Calendar.getInstance().getTime().getTime();
-
-            if (diff > 0) {
-
-                long secondsInMilli = 1000;
-                long minutesInMilli = secondsInMilli * 60;
-                long hoursInMilli = minutesInMilli * 60;
-                long daysInMilli = hoursInMilli * 24;
-
-                long elapsedDays = diff / daysInMilli;
-
-                long elapsedHours = diff / hoursInMilli;
-
-                long elapsedMinutes = diff / minutesInMilli;
-
-                StringBuilder sb = new StringBuilder();
-                sb.append(elapsedDays > 0 ? elapsedDays + "d " : "")
-                        .append(elapsedHours > 0 ? elapsedHours + "h " : "")
-                        .append(elapsedMinutes > 0 ? elapsedMinutes + "m" : "");
-                mCountDown.setText(sb.toString());
-            } else {
-                mOfferExpired.setVisibility(View.INVISIBLE);
-                mCountDown.setText("Expired!");
+            DateTime expiry = new DateTime(mPromotion.getCreatedAt());
+            expiry = expiry.plusMinutes(30);
+            if(expiry.isBeforeNow()){
+                mOfferExpired.setVisibility(View.GONE);
+                mCountDown.setVisibility(View.GONE);
+                offerExpiredLayout.setVisibility(View.GONE);
+            }else{
+                Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
+                PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
+                        .appendDays()
+                        .appendSuffix("d", "d")
+                        .appendSeparator(" ")
+                        .appendMinutes()
+                        .appendSuffix("m", "m")
+                        .appendSeparator(" ")
+                        .appendSeconds()
+                        .appendSuffix("s", "s")
+                        .toFormatter();
+                String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
+                mCountDown.setText(expiryIntervalString);
             }
 
             String text1 = null, text2 = "";
