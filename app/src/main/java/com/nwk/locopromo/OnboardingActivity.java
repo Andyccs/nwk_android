@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -49,6 +50,9 @@ public class OnboardingActivity extends ActionBarActivity {
         finish();
     }
 
+    @InjectView(R.id.progress)
+    CircularProgressBar progressBar;
+
     RetailRectangleGridViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +76,13 @@ public class OnboardingActivity extends ActionBarActivity {
             public void success(Wrapper<List<Retail>> retails, Response response) {
                 Timber.d("Size: " + retails.getResults().size());
                 adapter.addItems(retails.getResults());
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Timber.e(error.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
 

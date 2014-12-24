@@ -47,12 +47,21 @@
                 android:layout_marginRight="32dp"/>
         </RelativeLayout>
 
-        <GridView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/retail_list"
-            android:numColumns="2"
-            android:layout_margin="16dp"/>
+            android:layout_height="fill_parent">
+            <fr.castorflex.android.circularprogressbar.CircularProgressBar
+                android:id="@+id/progress"
+                style="@style/MyProgressBarStyle"
+                android:layout_gravity="center" />
+
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/retail_list"
+                android:numColumns="2"
+                android:layout_margin="16dp"/>
+        </FrameLayout>
     </LinearLayout>
 
 
