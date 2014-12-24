@@ -94,7 +94,7 @@
                         android:singleLine="true"
                         android:textColor="@color/promotion_item_price"
                         android:layout_gravity="bottom"
-                        android:id="@+id/point"
+                        android:id="@+id/total_point"
                         />
 
                     <ImageView

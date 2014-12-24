@@ -3,14 +3,19 @@ package com.nwk.locopromo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.RedeemHistoryListViewAdapter;
+import com.nwk.locopromo.model.CredentialPreferences;
 import com.nwk.locopromo.model.OldPromotion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,18 @@ public class ProfileActivity extends ActionBarActivity {
 
     @InjectView(R.id.history_list)
     ListView historyList;
+
+    @InjectView(R.id.name)
+    TextView name;
+
+    @InjectView(R.id.email_address)
+    TextView emailAddress;
+
+    @InjectView(R.id.total_point)
+    TextView point;
+
+    @InjectView(R.id.profile_picture)
+    ImageView profilePicture;
 
     RedeemHistoryListViewAdapter adapter;
     @Override
@@ -40,6 +57,11 @@ public class ProfileActivity extends ActionBarActivity {
 
         adapter = new RedeemHistoryListViewAdapter(this);
         historyList.setAdapter(adapter);
+
+        name.setText(CredentialPreferences.getUsername(this));
+        emailAddress.setText(CredentialPreferences.getEmail(this));
+        point.setText(""+CredentialPreferences.getPoint(this));
+        Picasso.with(this).load(CredentialPreferences.getPicture(this)).into(profilePicture);
 
         initializeData();
     }
@@ -75,5 +97,20 @@ public class ProfileActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
