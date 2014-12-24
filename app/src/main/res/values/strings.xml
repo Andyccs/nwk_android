@@ -18,6 +18,7 @@
     <string name="title_activity_redeem_detail">RedeemDetailActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
 
-    <string name="placeholder">Please come back again later for more deals.</string>
+    <string name="placeholder_general">Please come back again later for more deals.</string>
+    <string name="placeholder_history">You haven\'t received any point yet. Grab some deals today! </string>
 
 </resources>

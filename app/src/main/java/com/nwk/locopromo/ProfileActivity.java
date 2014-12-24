@@ -1,9 +1,10 @@
 package com.nwk.locopromo;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import timber.log.Timber;
 
 
@@ -41,6 +43,12 @@ public class ProfileActivity extends ActionBarActivity {
 
     @InjectView(R.id.profile_picture)
     ImageView profilePicture;
+
+    @InjectView(R.id.progress)
+    CircularProgressBar progressBar;
+
+    @InjectView(R.id.placeholder)
+    TextView placeholder;
 
     RedeemHistoryListViewAdapter adapter;
     @Override
@@ -75,6 +83,7 @@ public class ProfileActivity extends ActionBarActivity {
             @Override
             public void done(List<ParseObject> promotions, ParseException e) {
                 Timber.d("Size: " + promotions.size());
+                progressBar.setVisibility(View.GONE);
                 if (e == null) {
                     List<OldPromotion> promotionList = new ArrayList<OldPromotion>();
                     for (ParseObject object : promotions) {
@@ -94,6 +103,14 @@ public class ProfileActivity extends ActionBarActivity {
                     }
                     adapter.setPromotions(promotionList);
                     adapter.notifyDataSetChanged();
+
+                    if(promotionList.size()>0) {
+                        placeholder.setVisibility(View.GONE);
+                    }else{
+                        placeholder.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    placeholder.setVisibility(View.VISIBLE);
                 }
             }
         });

@@ -61,7 +61,7 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:textSize="18sp"
-                android:text="@string/placeholder"
+                android:text="@string/placeholder_general"
                 android:layout_gravity="center"
                 android:id="@+id/placeholder"
                 android:visibility="invisible"/>
