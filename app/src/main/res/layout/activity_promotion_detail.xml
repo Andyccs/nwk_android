@@ -31,9 +31,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:layout_alignBottom="@id/image"
-                    android:layout_alignParentTop="true"
                     android:background="#88000000"
                     android:clickable="true" />
 
@@ -43,6 +42,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/image"
                     android:padding="8dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/primary_text_default_material_dark"
                     android:textSize="@dimen/large_font_size"
                     tools:text="Summer Discount Paradise - Reduction in T-Shirt and Crop Tops" />
@@ -70,7 +71,8 @@
                     android:padding="4dp"
                     android:paddingBottom="4dp"
                     android:text="Location: Jurong Point, Level 2, #225"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:id="@+id/location"/>
 
                 <TextView
                     android:id="@+id/text1"

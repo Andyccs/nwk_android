@@ -73,7 +73,7 @@ public class Retail {
         this.logo_url = logo_url;
     }
 
-    public String getLocation_level() {
+    public String getLocationLevel() {
         return location_level;
     }
 
@@ -81,7 +81,7 @@ public class Retail {
         this.location_level = location_level;
     }
 
-    public String getLocation_unit() {
+    public String getLocationUnit() {
         return location_unit;
     }
 

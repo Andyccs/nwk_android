@@ -2,8 +2,10 @@ package com.nwk.locopromo;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.model.PromotionDiscount;
 import com.nwk.locopromo.model.PromotionGeneral;
 import com.nwk.locopromo.model.PromotionReduction;
+import com.nwk.locopromo.model.Retail;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.nwk.locopromo.widget.PaperButton;
 import com.squareup.picasso.Picasso;
@@ -22,10 +25,9 @@ import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.parceler.Parcels;
 
-import java.util.Calendar;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import icepick.Icicle;
 
 public class PromotionDetailActivity extends ActionBarActivity {
     @InjectView(R.id.title)
@@ -55,7 +57,18 @@ public class PromotionDetailActivity extends ActionBarActivity {
     @InjectView(R.id.offer_expired_layout)
     LinearLayout offerExpiredLayout;
 
-    private Promotion mPromotion;
+    @InjectView(R.id.location)
+    TextView location;
+
+    Promotion mPromotion;
+    Retail retail;
+
+    @Icicle
+    Parcelable promotionParcelable;
+
+    @Icicle
+    Parcelable retailParcelable;
+
     private String grabId;
     boolean canGrab = true;
 
@@ -67,9 +80,16 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Bundle bundle = getIntent().getExtras();
-        mPromotion = Parcels.unwrap(bundle.getParcelable("promotion"));
+        if(promotionParcelable==null||retailParcelable==null){
+            Bundle bundle = getIntent().getExtras();
+            promotionParcelable = bundle.getParcelable("promotion");
+            retailParcelable = bundle.getParcelable("retail");
+        }
+        mPromotion = Parcels.unwrap(promotionParcelable);
+        retail = Parcels.unwrap(retailParcelable);
+
         initializePromotion();
 
         final View.OnClickListener claimOffer = new View.OnClickListener() {
@@ -93,62 +113,80 @@ public class PromotionDetailActivity extends ActionBarActivity {
     }
 
     private void initializePromotion() {
-        if (mPromotion != null) {
-            mTitle.setText(mPromotion.getTitle());
-            mDescription.setText(mPromotion.getDescription());
+        mTitle.setText(mPromotion.getTitle());
+        mDescription.setText(mPromotion.getDescription());
 
-            getSupportActionBar().setTitle(mPromotion.getTitle());
+        getSupportActionBar().setTitle(mPromotion.getTitle());
 
-            DateTime expiry = new DateTime(mPromotion.getCreatedAt());
-            expiry = expiry.plusMinutes(30);
-            if(expiry.isBeforeNow()){
-                mOfferExpired.setVisibility(View.GONE);
-                mCountDown.setVisibility(View.GONE);
-                offerExpiredLayout.setVisibility(View.GONE);
-            }else{
-                Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
-                PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
-                        .appendDays()
-                        .appendSuffix("d", "d")
-                        .appendSeparator(" ")
-                        .appendMinutes()
-                        .appendSuffix("m", "m")
-                        .appendSeparator(" ")
-                        .appendSeconds()
-                        .appendSuffix("s", "s")
-                        .toFormatter();
-                String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
-                mCountDown.setText(expiryIntervalString);
-            }
-
-            String text1 = null, text2 = "";
-
-            if(mPromotion instanceof PromotionReduction) {
-                PromotionReduction pr = (PromotionReduction) mPromotion;
-                text1 = "$" + pr.getOriginalPrice();
-                text2 = "$" + pr.getDiscountPrice();
-            }
-            else if(mPromotion instanceof PromotionDiscount) {
-                PromotionDiscount pd = (PromotionDiscount) mPromotion;
-                text1 = null;
-                text2 = pd.getDiscount() + "%";
-            }
-            else if(mPromotion instanceof PromotionGeneral) {
-                text1 = null;
-                text2 = "" + ((PromotionGeneral) mPromotion).getPrice();
-            }
-            Picasso.with(this)
-                    .load(mPromotion.getImageUrl())
-                    .into(mImage);
-
-            if (text1 != null) {
-                mText1.setVisibility(View.VISIBLE);
-                mText1.setText(text1);
-                mText1.setPaintFlags(mText1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            } else {
-                mText1.setVisibility(View.GONE);
-            }
-            mText2.setText(text2);
+        // set expiry time
+        DateTime expiry = new DateTime(mPromotion.getCreatedAt());
+        expiry = expiry.plusMinutes(30);
+        if(expiry.isBeforeNow()){
+            mOfferExpired.setVisibility(View.GONE);
+            mCountDown.setVisibility(View.GONE);
+            offerExpiredLayout.setVisibility(View.GONE);
+        }else{
+            Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
+            PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
+                    .appendDays()
+                    .appendSuffix("d", "d")
+                    .appendSeparator(" ")
+                    .appendMinutes()
+                    .appendSuffix("m", "m")
+                    .appendSeparator(" ")
+                    .appendSeconds()
+                    .appendSuffix("s", "s")
+                    .toFormatter();
+            String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
+            mCountDown.setText(expiryIntervalString);
         }
+
+        //set price
+        String text1 = null, text2 = "";
+        if(mPromotion instanceof PromotionReduction) {
+            PromotionReduction pr = (PromotionReduction) mPromotion;
+            text1 = "$" + pr.getOriginalPrice();
+            text2 = "$" + pr.getDiscountPrice();
+        }
+        else if(mPromotion instanceof PromotionDiscount) {
+            PromotionDiscount pd = (PromotionDiscount) mPromotion;
+            text1 = null;
+            text2 = pd.getDiscount() + "%";
+        }
+        else if(mPromotion instanceof PromotionGeneral) {
+            text1 = null;
+            text2 = "" + ((PromotionGeneral) mPromotion).getPrice();
+        }
+        if (text1 != null) {
+            mText1.setVisibility(View.VISIBLE);
+            mText1.setText(text1);
+            mText1.setPaintFlags(mText1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            mText1.setVisibility(View.GONE);
+        }
+        mText2.setText(text2);
+
+        //set image
+        Picasso.with(this)
+                .load(mPromotion.getImageUrl())
+                .into(mImage);
+
+        //set location
+        location.setText("Location: Level "+retail.getLocationLevel()+", #"+retail.getLocationUnit());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

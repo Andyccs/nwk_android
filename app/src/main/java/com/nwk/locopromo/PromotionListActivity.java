@@ -1,6 +1,8 @@
 package com.nwk.locopromo;
 
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -48,8 +50,10 @@ public class PromotionListActivity extends ActionBarActivity {
 
     PromotionListViewAdapter adapter;
 
+    Retail retail;
+
     @Icicle
-    int retailId;
+    Parcelable retailParcelable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +63,18 @@ public class PromotionListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_promotion_list);
         ButterKnife.inject(this);
 
+        if(retailParcelable==null) {
+            Object retailObject = getIntent().getExtras().get("retail");
+            retailParcelable = (Parcelable) retailObject;
+            retail = Parcels.unwrap((android.os.Parcelable) retailObject);
+        }else{
+            retail = Parcels.unwrap(retailParcelable);
+        }
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_CUSTOM|ActionBar.DISPLAY_HOME_AS_UP);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        adapter = new PromotionListViewAdapter(this);
+        adapter = new PromotionListViewAdapter(this,retail);
         promotionList.setAdapter(adapter);
 
         swipeRefreshLayout.setColorSchemeColors(R.color.color_red_accent);
@@ -73,16 +85,11 @@ public class PromotionListActivity extends ActionBarActivity {
                 initializeData();
             }
         });
-        if(retailId==0) {
-            Object retailObject = getIntent().getExtras().get("retail");
-            Retail retail = Parcels.unwrap((android.os.Parcelable) retailObject);
-            retailId = retail.getId();
-        }
         initializeData();
     }
 
     private void initializeData() {
-        ((PromoApplication)getApplication()).getService().listPromotionsByRetail(retailId,new Callback<List<Promotion>>() {
+        ((PromoApplication)getApplication()).getService().listPromotionsByRetail(retail.getId(),new Callback<List<Promotion>>() {
             @Override
             public void success(List<Promotion> promotions, Response response) {
                 adapter.setPromotions(promotions);
@@ -142,6 +149,10 @@ public class PromotionListActivity extends ActionBarActivity {
                 }
             });
             item.expandActionView();
+            return true;
+        }
+        else if(id == android.R.id.home){
+            finish();
             return true;
         }
 

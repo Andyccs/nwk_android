@@ -10,26 +10,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.OldPromotion;
 import com.nwk.locopromo.PromotionDetailActivity;
 import com.nwk.locopromo.R;
 import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.model.PromotionDiscount;
 import com.nwk.locopromo.model.PromotionGeneral;
 import com.nwk.locopromo.model.PromotionReduction;
-import com.ocpsoft.pretty.time.PrettyTime;
+import com.nwk.locopromo.model.Retail;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.DurationFieldType;
 import org.joda.time.Interval;
-import org.joda.time.ReadablePeriod;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.parceler.Parcels;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -42,9 +37,11 @@ import timber.log.Timber;
 public class PromotionListViewAdapter extends BaseAdapter {
     private List<Promotion> promotions;
     private Context context;
+    private Retail retail;
 
-    public PromotionListViewAdapter(Context context) {
+    public PromotionListViewAdapter(Context context, Retail retail) {
         this.context = context;
+        this.retail = retail;
     }
 
     @Override
@@ -140,6 +137,7 @@ public class PromotionListViewAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Intent intent = new Intent(context, PromotionDetailActivity.class);
                     intent.putExtra("promotion",Parcels.wrap(promotion));
+                    intent.putExtra("retail",Parcels.wrap(retail));
                     context.startActivity(intent);
                 }
             });
