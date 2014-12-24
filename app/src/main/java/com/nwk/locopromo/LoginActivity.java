@@ -8,6 +8,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -25,6 +26,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.nwk.locopromo.model.CredentialPreferences;
+import com.nwk.locopromo.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -252,6 +256,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         private final String mEmail;
         private final String mPassword;
+        private User user;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -271,6 +276,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
             if (success) {
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+
+                //TODO replace this
+                CredentialPreferences.saveCredential(getApplicationContext(),1,"andyccs","andyccs@gmail.com","http://twimgs.com/informationweek/galleries/automated/879/01_Steve-Jobs_full.jpg",999);
+
                 startActivity(intent);
                 finish();
             } else {
