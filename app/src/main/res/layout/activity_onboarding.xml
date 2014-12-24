@@ -55,6 +55,17 @@
                 style="@style/MyProgressBarStyle"
                 android:layout_gravity="center" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:textSize="18sp"
+                android:text="@string/placeholder"
+                android:layout_gravity="center"
+                android:id="@+id/placeholder"
+                android:visibility="invisible"/>
+
             <GridView
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"

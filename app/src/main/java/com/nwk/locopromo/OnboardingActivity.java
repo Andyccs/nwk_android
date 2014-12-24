@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.RetailRectangleGridViewAdapter;
 import com.nwk.locopromo.model.Retail;
@@ -53,6 +54,9 @@ public class OnboardingActivity extends ActionBarActivity {
     @InjectView(R.id.progress)
     CircularProgressBar progressBar;
 
+    @InjectView(R.id.placeholder)
+    TextView placeholder;
+
     RetailRectangleGridViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +79,20 @@ public class OnboardingActivity extends ActionBarActivity {
             @Override
             public void success(Wrapper<List<Retail>> retails, Response response) {
                 Timber.d("Size: " + retails.getResults().size());
-                adapter.addItems(retails.getResults());
                 progressBar.setVisibility(View.GONE);
+                if(retails.getResults().size()>0) {
+                    adapter.addItems(retails.getResults());
+                    placeholder.setVisibility(View.GONE);
+                }else{
+                    placeholder.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Timber.e(error.getMessage());
                 progressBar.setVisibility(View.GONE);
+                placeholder.setVisibility(View.VISIBLE);
             }
         });
 

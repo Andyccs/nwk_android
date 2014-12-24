@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
 import com.nwk.locopromo.model.Retail;
@@ -40,6 +41,9 @@ public class MainPromotionFragment extends Fragment {
 
     @InjectView(R.id.progress)
     View mProgress;
+
+    @InjectView(R.id.placeholder)
+    TextView placeholder;
 
     private RetailSquareGridViewAdapter mGridAdapter;
 
@@ -86,15 +90,23 @@ public class MainPromotionFragment extends Fragment {
             @Override
             public void success(Wrapper<List<Retail>> retails, Response response) {
                 Timber.d("Size: " + retails.getResults().size());
-                mGridAdapter.setPromotionList(retails.getResults());
                 mProgress.setVisibility(View.GONE);
-                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                 mSwipeRefreshLayout.setRefreshing(false);
+                mGridAdapter.setPromotionList(retails.getResults());
+                mGridAdapter.notifyDataSetChanged();
+                if(retails.getResults().size()>0) {
+                    placeholder.setVisibility(View.GONE);
+                }else{
+                    placeholder.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Timber.e(error.getMessage());
+                mProgress.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setRefreshing(false);
+                placeholder.setVisibility(View.VISIBLE);
             }
         });
 

@@ -18,4 +18,6 @@
     <string name="title_activity_redeem_detail">RedeemDetailActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
 
+    <string name="placeholder">Please come back again later for more deals.</string>
+
 </resources>
