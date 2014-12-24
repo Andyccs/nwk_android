@@ -63,14 +63,20 @@ public class MainPromotionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_promotion, container, false);
         ButterKnife.inject(this, view);
 
+        mGridAdapter = new RetailSquareGridViewAdapter(getActivity());
+        mGridView.setAdapter(mGridAdapter);
+
+
         mSwipeRefreshLayout.setColorSchemeColors(R.color.color_red_accent);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(true);
                 initializeData();
             }
         });
         mSwipeRefreshLayout.setRefreshing(true);
+        initializeData();
 
         return view;
     }
@@ -80,9 +86,10 @@ public class MainPromotionFragment extends Fragment {
             @Override
             public void success(Wrapper<List<Retail>> retails, Response response) {
                 Timber.d("Size: " + retails.getResults().size());
-                mGridAdapter.addItems(retails.getResults());
+                mGridAdapter.setPromotionList(retails.getResults());
                 mProgress.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -91,26 +98,6 @@ public class MainPromotionFragment extends Fragment {
             }
         });
 
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mGridAdapter = new RetailSquareGridViewAdapter(getActivity());
-        mGridView.setAdapter(mGridAdapter);
-
-        initializeData();
-
-//        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(getActivity(), PromotionListActivity.class);
-//                //TODO add extra intent here
-//                startActivity(intent);
-//            }
-//        };
-
-//        mGridView.setOnItemClickListener(onItemClickListener);
     }
 
     @Override
