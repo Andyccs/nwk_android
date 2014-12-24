@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.PromotionListViewAdapter;
 import com.nwk.locopromo.model.OldPromotion;
@@ -47,6 +48,9 @@ public class PromotionListActivity extends ActionBarActivity {
 
     @InjectView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @InjectView(R.id.placeholder)
+    TextView placeholder;
 
     PromotionListViewAdapter adapter;
 
@@ -93,14 +97,22 @@ public class PromotionListActivity extends ActionBarActivity {
             @Override
             public void success(List<Promotion> promotions, Response response) {
                 adapter.setPromotions(promotions);
+                adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setRefreshing(false);
+                if(promotions.size()>0){
+                    placeholder.setVisibility(View.GONE);
+                }else{
+                    placeholder.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
+                Timber.e(error.getMessage());
+                progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
+                placeholder.setVisibility(View.VISIBLE);
             }
         });
 
