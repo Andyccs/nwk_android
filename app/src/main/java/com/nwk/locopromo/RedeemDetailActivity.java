@@ -69,7 +69,7 @@ public class RedeemDetailActivity extends ActionBarActivity {
                     break;
                 case 3:
                     text1 = null;
-                    text2 = "" + promotion.getOriginalPrice();
+                    text2 = "$" + promotion.getOriginalPrice();
             }
             Picasso.with(this)
                     .load(promotion.getImage())
