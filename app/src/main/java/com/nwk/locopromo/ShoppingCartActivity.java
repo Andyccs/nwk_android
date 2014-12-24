@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.ShoppingCartListViewAdapter;
 import com.nwk.locopromo.model.OldPromotion;
@@ -33,6 +35,9 @@ public class ShoppingCartActivity extends ActionBarActivity {
     @InjectView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @InjectView(R.id.placeholder)
+    TextView placeholder;
+
     ShoppingCartListViewAdapter adapter;
 
     @Override
@@ -54,7 +59,6 @@ public class ShoppingCartActivity extends ActionBarActivity {
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
                 initializeData();
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
         initializeData();
@@ -67,8 +71,10 @@ public class ShoppingCartActivity extends ActionBarActivity {
         promotionQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> promotions, ParseException e) {
-                Timber.d("Size: " + promotions.size());
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 if (e == null) {
+                    Timber.d("Size: " + promotions.size());
                     List<OldPromotion> promotionList = new ArrayList<OldPromotion>();
                     for (ParseObject object : promotions) {
                         OldPromotion promotion = new OldPromotion();
@@ -86,11 +92,32 @@ public class ShoppingCartActivity extends ActionBarActivity {
                         promotionList.add(promotion);
                     }
                     adapter.setPromotions(promotionList);
-                    progressBar.setVisibility(View.GONE);
-                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+                    adapter.notifyDataSetChanged();
+
+                    if(promotionList.size()>0) {
+                        placeholder.setVisibility(View.GONE);
+                    }else{
+                        placeholder.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    placeholder.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

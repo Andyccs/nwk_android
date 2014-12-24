@@ -19,6 +19,7 @@
     <string name="title_activity_profile">ProfileActivity</string>
 
     <string name="placeholder_general">Please come back again later for more deals.</string>
+    <string name="placeholder_shopping_cart">You haven\'t grab any promotion yet. Grab some deals today! </string>
     <string name="placeholder_history">You haven\'t received any point yet. Grab some deals today! </string>
 
 </resources>
