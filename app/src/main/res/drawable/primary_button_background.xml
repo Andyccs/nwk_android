@@ -10,7 +10,7 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/dialog_button_radius" />
-            <solid android:color="@color/deep_purple_800" />
+            <solid android:color="@color/primary_button_pressed_color" />
         </shape>
     </item>
     <item>

@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +17,6 @@ import com.nwk.locopromo.model.PromotionGeneral;
 import com.nwk.locopromo.model.PromotionReduction;
 import com.nwk.locopromo.model.Retail;
 import com.nwk.locopromo.widget.AspectRatioImageView;
-import com.nwk.locopromo.widget.PaperButton;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -52,7 +52,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
     View mOfferExpired;
 
     @InjectView(R.id.grab_button)
-    PaperButton mGrabButton;
+    Button mGrabButton;
 
     @InjectView(R.id.offer_expired_layout)
     LinearLayout offerExpiredLayout;
