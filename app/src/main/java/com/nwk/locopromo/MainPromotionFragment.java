@@ -2,21 +2,18 @@ package com.nwk.locopromo;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
-import com.nwk.locopromo.model.Retail;
-import com.nwk.locopromo.model.Wrapper;
+import com.nwk.core.model.Retail;
+import com.nwk.core.model.Wrapper;
 
 import java.util.List;
 

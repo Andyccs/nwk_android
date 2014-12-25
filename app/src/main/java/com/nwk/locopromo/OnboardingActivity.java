@@ -3,20 +3,14 @@ package com.nwk.locopromo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.RetailRectangleGridViewAdapter;
-import com.nwk.locopromo.model.Retail;
-import com.nwk.locopromo.model.Wrapper;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+import com.nwk.core.model.Retail;
+import com.nwk.core.model.Wrapper;
 
 import java.util.List;
 

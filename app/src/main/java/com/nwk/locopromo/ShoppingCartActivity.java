@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.ShoppingCartListViewAdapter;
-import com.nwk.locopromo.model.OldPromotion;
+import com.nwk.core.model.OldPromotion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

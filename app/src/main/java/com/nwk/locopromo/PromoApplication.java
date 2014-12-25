@@ -4,9 +4,9 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nwk.locopromo.api.BackendService;
-import com.nwk.locopromo.model.Promotion;
-import com.nwk.locopromo.serializer.PromotionSerializer;
+import com.nwk.core.api.BackendService;
+import com.nwk.core.model.Promotion;
+import com.nwk.core.serializer.PromotionSerializer;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 

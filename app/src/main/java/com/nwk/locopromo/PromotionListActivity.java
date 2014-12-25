@@ -13,8 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.PromotionListViewAdapter;
-import com.nwk.locopromo.model.Promotion;
-import com.nwk.locopromo.model.Retail;
+import com.nwk.core.model.Promotion;
+import com.nwk.core.model.Retail;
 
 import org.parceler.Parcels;
 

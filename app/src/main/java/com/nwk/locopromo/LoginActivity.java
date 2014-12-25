@@ -8,7 +8,6 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,8 +26,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.CredentialPreferences;
-import com.nwk.locopromo.model.User;
+import com.nwk.core.model.CredentialPreferences;
+import com.nwk.core.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

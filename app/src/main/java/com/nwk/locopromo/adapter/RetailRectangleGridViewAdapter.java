@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.R;
-import com.nwk.locopromo.model.Retail;
+import com.nwk.core.model.Retail;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -17,7 +17,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import timber.log.Timber;
 
 
 public class RetailRectangleGridViewAdapter extends BaseAdapter {

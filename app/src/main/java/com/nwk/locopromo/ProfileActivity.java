@@ -10,8 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.RedeemHistoryListViewAdapter;
-import com.nwk.locopromo.model.CredentialPreferences;
-import com.nwk.locopromo.model.OldPromotion;
+import com.nwk.core.model.CredentialPreferences;
+import com.nwk.core.model.OldPromotion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

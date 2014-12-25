@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.OldPromotion;
+import com.nwk.core.model.OldPromotion;
 import com.nwk.locopromo.R;
 import com.squareup.picasso.Picasso;
 

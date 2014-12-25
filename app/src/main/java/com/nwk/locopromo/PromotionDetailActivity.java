@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nwk.locopromo.model.Promotion;
-import com.nwk.locopromo.model.PromotionDiscount;
-import com.nwk.locopromo.model.PromotionGeneral;
-import com.nwk.locopromo.model.PromotionReduction;
-import com.nwk.locopromo.model.Retail;
+import com.nwk.core.model.Promotion;
+import com.nwk.core.model.PromotionDiscount;
+import com.nwk.core.model.PromotionGeneral;
+import com.nwk.core.model.PromotionReduction;
+import com.nwk.core.model.Retail;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
