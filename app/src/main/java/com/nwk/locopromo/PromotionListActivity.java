@@ -88,6 +88,7 @@ public class PromotionListActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        swipeRefreshLayout.setRefreshing(true);
         initializeData();
     }
 
@@ -109,6 +110,8 @@ public class PromotionListActivity extends ActionBarActivity {
             @Override
             public void failure(RetrofitError error) {
                 Timber.e(error.getMessage());
+                adapter.setPromotions(null);
+                adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
                 placeholder.setVisibility(View.VISIBLE);

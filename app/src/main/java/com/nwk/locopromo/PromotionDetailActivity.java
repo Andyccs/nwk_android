@@ -112,6 +112,12 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshExpiryTime();
+    }
+
     private void initializePromotion() {
         mTitle.setText(mPromotion.getTitle());
         mDescription.setText(mPromotion.getDescription());
@@ -119,27 +125,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(mPromotion.getTitle());
 
         // set expiry time
-        DateTime expiry = new DateTime(mPromotion.getCreatedAt());
-        expiry = expiry.plusMinutes(30);
-        if(expiry.isBeforeNow()){
-            mOfferExpired.setVisibility(View.GONE);
-            mCountDown.setVisibility(View.GONE);
-            offerExpiredLayout.setVisibility(View.GONE);
-        }else{
-            Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
-            PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
-                    .appendDays()
-                    .appendSuffix("d", "d")
-                    .appendSeparator(" ")
-                    .appendMinutes()
-                    .appendSuffix("m", "m")
-                    .appendSeparator(" ")
-                    .appendSeconds()
-                    .appendSuffix("s", "s")
-                    .toFormatter();
-            String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
-            mCountDown.setText(expiryIntervalString);
-        }
+        refreshExpiryTime();
 
         //set price
         String text1 = null, text2 = "";
@@ -173,6 +159,30 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
         //set location
         location.setText("Location: Level "+retail.getLocationLevel()+", #"+retail.getLocationUnit());
+    }
+
+    private void refreshExpiryTime() {
+        DateTime expiry = new DateTime(mPromotion.getCreatedAt());
+        expiry = expiry.plusMinutes(30);
+        if(expiry.isBeforeNow()){
+            mOfferExpired.setVisibility(View.GONE);
+            mCountDown.setVisibility(View.GONE);
+            offerExpiredLayout.setVisibility(View.GONE);
+        }else{
+            Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
+            PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
+                    .appendDays()
+                    .appendSuffix("d", "d")
+                    .appendSeparator(" ")
+                    .appendMinutes()
+                    .appendSuffix("m", "m")
+                    .appendSeparator(" ")
+                    .appendSeconds()
+                    .appendSuffix("s", "s")
+                    .toFormatter();
+            String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
+            mCountDown.setText(expiryIntervalString);
+        }
     }
 
     @Override
