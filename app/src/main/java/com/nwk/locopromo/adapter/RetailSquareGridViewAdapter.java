@@ -13,11 +13,8 @@ import android.widget.TextView;
 import com.nwk.locopromo.PromotionListActivity;
 import com.nwk.locopromo.R;
 import com.nwk.locopromo.model.Retail;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.squareup.picasso.Picasso;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -25,7 +22,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import timber.log.Timber;
 
 
 public class RetailSquareGridViewAdapter extends BaseAdapter {
@@ -74,7 +70,7 @@ public class RetailSquareGridViewAdapter extends BaseAdapter {
         }
 
         if (retail != null) {
-            viewHolder.title.setText(retail.getShop_name());
+            viewHolder.title.setText(retail.getShopName());
 
             Picasso.with(mContext)
                     .load(retail.getLogo_url())

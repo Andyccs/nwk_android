@@ -71,6 +71,11 @@ public class OnboardingActivity extends ActionBarActivity {
         adapter = new RetailRectangleGridViewAdapter(this);
         retailList.setAdapter(adapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initializeData();
     }
 

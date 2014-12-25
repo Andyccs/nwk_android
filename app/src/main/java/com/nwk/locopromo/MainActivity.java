@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.nwk.locopromo.model.CredentialPreferences;
 import com.nwk.locopromo.state.ShopCategory;
 import com.nwk.locopromo.state.ViewType;
 import com.nwk.locopromo.widget.SelectableButton;
@@ -145,9 +146,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        //TODO if this is user's first time, then
-        Intent intent = new Intent(this, OnboardingActivity.class);
-        startActivity(intent);
+        //TODO remove this in production
+        CredentialPreferences.saveFirstTime(this,true);
     }
 
     @Override
@@ -155,6 +155,13 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
         renderFragment();
         selectButton();
+
+        //TODO if this is user's first time, then
+        if(CredentialPreferences.getFirstTime(this)) {
+            Intent intent = new Intent(this, OnboardingActivity.class);
+            startActivity(intent);
+            CredentialPreferences.saveFirstTime(this,false);
+        }
     }
 
     private void renderFragment() {

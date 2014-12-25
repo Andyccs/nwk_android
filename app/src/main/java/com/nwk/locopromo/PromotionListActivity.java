@@ -2,7 +2,6 @@ package com.nwk.locopromo;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -14,19 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.PromotionListViewAdapter;
-import com.nwk.locopromo.model.OldPromotion;
 import com.nwk.locopromo.model.Promotion;
 import com.nwk.locopromo.model.Retail;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -74,9 +66,11 @@ public class PromotionListActivity extends ActionBarActivity {
         }else{
             retail = Parcels.unwrap(retailParcelable);
         }
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_CUSTOM|ActionBar.DISPLAY_HOME_AS_UP);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(retail.getShopName());
 
         adapter = new PromotionListViewAdapter(this,retail);
         promotionList.setAdapter(adapter);
@@ -89,6 +83,11 @@ public class PromotionListActivity extends ActionBarActivity {
                 initializeData();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initializeData();
     }
 

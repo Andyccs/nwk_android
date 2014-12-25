@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.nwk.locopromo.R;
 import com.nwk.locopromo.model.Retail;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -71,7 +69,7 @@ public class RetailRectangleGridViewAdapter extends BaseAdapter {
         }
 
         if (retail != null) {
-            viewHolder.title.setText(retail.getShop_name());
+            viewHolder.title.setText(retail.getShopName());
 
             Picasso.with(mContext)
                     .load(retail.getLogo_url())

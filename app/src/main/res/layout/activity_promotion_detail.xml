@@ -152,6 +152,6 @@
             android:layout_weight="1"
             app:paper_color="@color/primary_button_background_color"
             app:paper_text="Checking..."
-            app:paper_text_color="@android:color/white" />
+            app:paper_text_color="@color/primary_button_text_color" />
     </LinearLayout>
 </RelativeLayout>

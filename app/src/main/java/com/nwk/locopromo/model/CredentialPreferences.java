@@ -13,6 +13,7 @@ public class CredentialPreferences {
     public static final String PREFS_EMAIL_KEY = "__EMAIL__";
     public static final String PREFS_PICTURE_KEY = "__PICTURE__";
     public static final String PREFS_POINT_KEY = "__POINT__";
+    public static final String PREFS_FIRST_TIME = "__FIRST__";
 
     public static void saveCredential(Context context, int pk, String username, String email, String picture, int point){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -23,6 +24,18 @@ public class CredentialPreferences {
         editor.putInt(PREFS_POINT_KEY, point);
         editor.putInt(PREFS_PRIMARY_KEY,pk);
         editor.commit();
+    }
+
+    public static void saveFirstTime(Context context, boolean isFirstTime){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(PREFS_FIRST_TIME,isFirstTime);
+        editor.commit();
+    }
+
+    public static boolean getFirstTime(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREFS_FIRST_TIME,false);
     }
 
     public static int getPrimaryKey(Context context){

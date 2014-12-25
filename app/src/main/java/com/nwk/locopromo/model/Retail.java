@@ -49,7 +49,7 @@ public class Retail {
         this.user = user;
     }
 
-    public String getShop_name() {
+    public String getShopName() {
         return shop_name;
     }
 
