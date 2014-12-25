@@ -6,10 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.w3c.dom.Text;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 
 public class ClaimActivity extends ActionBarActivity {
@@ -17,9 +24,20 @@ public class ClaimActivity extends ActionBarActivity {
     @InjectView(R.id.claim_qr_code)
     Button claimQRCodeButton;
 
+    @InjectView(R.id.textView)
+    TextView helloWorld;
+
     @OnClick(R.id.claim_qr_code)
     public void onClickQRCodeButton(){
-//        Intent intent = new Intent(this,)
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setPrompt("");
+        integrator.setResultDisplayDuration(0);
+        integrator.setScanningRectangle(500,500);
+//        integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
+//        integrator.setCameraId(0);  // Use a specific camera of the device
+        integrator.initiateScan();
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +69,16 @@ public class ClaimActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        if(scanResult!=null){
+            String content = scanResult.getContents();
+            Timber.d(content);
+            helloWorld.setText(content);
+        }
     }
 }
