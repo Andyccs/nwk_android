@@ -29,15 +29,8 @@ public class RetailRectangleGridViewAdapter extends BaseAdapter {
         mPromotionList = new ArrayList<Retail>();
     }
 
-    public void addItems(List list) {
-        Timber.d("Size: " + list.size());
-
-            mPromotionList.addAll(list);
-            notifyDataSetChanged();
-    }
-
-    public void clearItems(){
-        mPromotionList = new ArrayList<Retail>();
+    public void setPromotionList(List<Retail> mPromotionList) {
+        this.mPromotionList = mPromotionList;
     }
 
     @Override

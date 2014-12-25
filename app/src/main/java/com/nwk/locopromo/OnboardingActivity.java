@@ -85,8 +85,10 @@ public class OnboardingActivity extends ActionBarActivity {
             public void success(Wrapper<List<Retail>> retails, Response response) {
                 Timber.d("Size: " + retails.getResults().size());
                 progressBar.setVisibility(View.GONE);
+                adapter.setPromotionList(retails.getResults());
+                adapter.notifyDataSetChanged();
+
                 if(retails.getResults().size()>0) {
-                    adapter.addItems(retails.getResults());
                     placeholder.setVisibility(View.GONE);
                 }else{
                     placeholder.setVisibility(View.VISIBLE);

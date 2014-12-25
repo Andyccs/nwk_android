@@ -79,10 +79,15 @@ public class MainPromotionFragment extends Fragment {
                 initializeData();
             }
         });
-        mSwipeRefreshLayout.setRefreshing(true);
-        initializeData();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSwipeRefreshLayout.setRefreshing(true);
+        initializeData();
     }
 
     private void initializeData() {
