@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.nwk.core.model.CredentialPreferences;
@@ -23,6 +24,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import icepick.Icepick;
 import icepick.Icicle;
+import timber.log.Timber;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -88,6 +90,9 @@ public class MainActivity extends ActionBarActivity {
         selectButton();
     }
 
+    @InjectView(R.id.category_bar)
+    RelativeLayout categoryBar;
+
     @Icicle
     ShopCategory shopCategory;
 
@@ -106,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
         actionBar.hide();
 
         if(viewType==null){
-            viewType = ViewType.FAVORITE_SHOP;
+            viewType = ViewType.ALL_SHOP;
             shopCategory = ShopCategory.FOOD;
         }
 
@@ -121,19 +126,24 @@ public class MainActivity extends ActionBarActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Timber.d("item " + i + " in spinner is clicked");
                 switch (i){
                     case 0:
                         viewType = ViewType.ALL_SHOP;
                         shopCategory = ShopCategory.FOOD;
+                        categoryBar.setVisibility(View.VISIBLE);
+                        break;
                     case 1:
                         viewType = ViewType.SHOP_WITH_PROMOTION;
                         shopCategory = ShopCategory.FOOD;
+                        categoryBar.setVisibility(View.VISIBLE);
+                        break;
                     case 2:
-                        viewType = ViewType.ALL_PROMOTION;
-                    case 3:
                         viewType = ViewType.FAVORITE_SHOP;
-                        shopCategory = ShopCategory.FOOD;
+                        categoryBar.setVisibility(View.GONE);
+                        break;
                 }
+                Timber.d("set viewType to: "+viewType);
                 renderFragment();
                 selectButton();
             }
@@ -164,6 +174,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void renderFragment() {
+        Timber.d("creating fragment for "+viewType+" and "+ shopCategory);
         Fragment fragment = MainActivityFragmentFactory.createFragment(viewType, shopCategory);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()

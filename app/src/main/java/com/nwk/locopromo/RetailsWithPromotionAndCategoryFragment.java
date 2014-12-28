@@ -12,8 +12,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.nwk.core.api.BackendService;
-import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
 import com.nwk.core.model.Retail;
+import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import retrofit.client.Response;
 import timber.log.Timber;
 
 
-public class MainPromotionFragment extends Fragment {
+public class RetailsWithPromotionAndCategoryFragment extends Fragment {
 
     @InjectView(R.id.grid_view)
     GridView mGridView;
@@ -48,12 +48,12 @@ public class MainPromotionFragment extends Fragment {
 
     private String category;
 
-    public MainPromotionFragment() {
+    public RetailsWithPromotionAndCategoryFragment() {
 
     }
 
-    public static MainPromotionFragment newInstance(String category) {
-        MainPromotionFragment fragment = new MainPromotionFragment();
+    public static RetailsWithPromotionAndCategoryFragment newInstance(String category) {
+        RetailsWithPromotionAndCategoryFragment fragment = new RetailsWithPromotionAndCategoryFragment();
         Bundle args = new Bundle();
         args.putString("category",category);
         fragment.setArguments(args);
@@ -85,13 +85,14 @@ public class MainPromotionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         category = getArguments().getString("category");
         if(category == null ||(
                 !category.equals(BackendService.Category.OTHER)&&
                 !category.equals(BackendService.Category.FASHION)&&
                 !category.equals(BackendService.Category.FOOD)&&
                 !category.equals(BackendService.Category.LIFESTYLE))){
-            throw new IllegalArgumentException("Category of MainPromotionFragment must be provided," +
+            throw new IllegalArgumentException("Category of AllRetailsWithCategoryFragment must be provided," +
                     "and it must be one of OTHER, FASION, FOOD, or LIFESTYLE\n" +
                     "Category: "+category);
         }
@@ -125,6 +126,7 @@ public class MainPromotionFragment extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 Timber.e(error.getMessage());
+                mGridAdapter.setPromotionList(null);
                 mProgress.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 placeholder.setVisibility(View.VISIBLE);

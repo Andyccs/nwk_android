@@ -32,4 +32,6 @@ public interface BackendService {
     @GET("/retails/{pk}/all_promotions")
     void listPromotionsByRetail(@Path("pk") int primaryKey, Callback<List<Promotion>> promotions);
 
+    @GET("/consumers/{user_url}/favorite_shops/")
+    void listConsumerFavoriteRetails(@Path("user_url") String userUrl, Callback<List<Retail>> promotions);
 }

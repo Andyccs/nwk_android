@@ -6,6 +6,8 @@ import com.nwk.core.api.BackendService;
 import com.nwk.locopromo.state.ShopCategory;
 import com.nwk.locopromo.state.ViewType;
 
+import timber.log.Timber;
+
 /**
  * Created by Andy on 12/9/2014.
  */
@@ -14,25 +16,30 @@ public class MainActivityFragmentFactory {
     }
 
     public static Fragment createFragment(ViewType viewType, ShopCategory shopCategory){
-        if(viewType == ViewType.ALL_PROMOTION){
-            return MainPromotionFragment.newInstance(BackendService.Category.OTHER);
-        }else{
+        if(viewType == ViewType.FAVORITE_SHOP){
+            Timber.d("favorite shop view type");
+            Timber.d("view type: "+viewType);
+            return FavoriteRetailsFragment.newInstance();
+        }
+        else if(viewType == ViewType.SHOP_WITH_PROMOTION){
+            //no API currently
+        }
+        else if(viewType == ViewType.ALL_SHOP){
             if(shopCategory == ShopCategory.FOOD){
-                return MainPromotionFragment.newInstance(BackendService.Category.FOOD);
+                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.FOOD);
             }
             else if(shopCategory == ShopCategory.FASHION){
-                return MainPromotionFragment.newInstance(BackendService.Category.FASHION);
+                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.FASHION);
             }
             else if(shopCategory == ShopCategory.LIFESTYLE){
-                return MainPromotionFragment.newInstance(BackendService.Category.LIFESTYLE);
+                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.LIFESTYLE);
             }
             else if(shopCategory == ShopCategory.OTHER){
-                return MainPromotionFragment.newInstance(BackendService.Category.OTHER);
-            }
-            else{
-                return MainPromotionFragment.newInstance(BackendService.Category.FOOD);
+                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.OTHER);
             }
         }
+
+        return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.FOOD);
 
     }
 }
