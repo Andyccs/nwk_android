@@ -150,6 +150,11 @@ public class MainActivity extends ActionBarActivity {
         //TODO remove this in production
         CredentialPreferences.saveFirstTime(this,true);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         //TODO if this is user's first time, then
         if(CredentialPreferences.getFirstTime(this)) {
             Intent intent = new Intent(this, OnboardingActivity.class);

@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.nwk.core.api.BackendService;
 import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
 import com.nwk.core.model.Retail;
-import com.nwk.core.model.Wrapper;
 
 import java.util.List;
 
@@ -46,13 +46,16 @@ public class MainPromotionFragment extends Fragment {
 
     private Context context;
 
+    private String category;
+
     public MainPromotionFragment() {
 
     }
 
-    public static MainPromotionFragment newInstance() {
+    public static MainPromotionFragment newInstance(String category) {
         MainPromotionFragment fragment = new MainPromotionFragment();
         Bundle args = new Bundle();
+        args.putString("category",category);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +70,6 @@ public class MainPromotionFragment extends Fragment {
         mGridAdapter = new RetailSquareGridViewAdapter(getActivity());
         mGridView.setAdapter(mGridAdapter);
 
-
         mSwipeRefreshLayout.setColorSchemeColors(R.color.color_red_accent);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -81,6 +83,23 @@ public class MainPromotionFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        category = getArguments().getString("category");
+        if(category == null ||(
+                !category.equals(BackendService.Category.OTHER)&&
+                !category.equals(BackendService.Category.FASHION)&&
+                !category.equals(BackendService.Category.FOOD)&&
+                !category.equals(BackendService.Category.LIFESTYLE))){
+            throw new IllegalArgumentException("Category of MainPromotionFragment must be provided," +
+                    "and it must be one of OTHER, FASION, FOOD, or LIFESTYLE\n" +
+                    "Category: "+category);
+        }
+
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mSwipeRefreshLayout.setRefreshing(true);
@@ -88,7 +107,7 @@ public class MainPromotionFragment extends Fragment {
     }
 
     private void initializeData() {
-        ((PromoApplication)(getActivity().getApplication())).getService().listRetails(new Callback<List<Retail>>() {
+        ((PromoApplication)(getActivity().getApplication())).getService().listRetails(category, new Callback<List<Retail>>() {
             @Override
             public void success(List<Retail> retails, Response response) {
                 Timber.d("Size: " + retails.size());
@@ -96,9 +115,9 @@ public class MainPromotionFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mGridAdapter.setPromotionList(retails);
                 mGridAdapter.notifyDataSetChanged();
-                if(retails.size()>0) {
+                if (retails.size() > 0) {
                     placeholder.setVisibility(View.GONE);
-                }else{
+                } else {
                     placeholder.setVisibility(View.VISIBLE);
                 }
             }

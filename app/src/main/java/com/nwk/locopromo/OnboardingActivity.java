@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.nwk.locopromo.adapter.RetailRectangleGridViewAdapter;
 import com.nwk.core.model.Retail;
-import com.nwk.core.model.Wrapper;
 
 import java.util.List;
 
@@ -74,7 +73,7 @@ public class OnboardingActivity extends ActionBarActivity {
     }
 
     private void initializeData() {
-        ((PromoApplication)(getApplication())).getService().listRetails(new Callback<List<Retail>>() {
+        ((PromoApplication)(getApplication())).getService().listRetails(null, new Callback<List<Retail>>() {
             @Override
             public void success(List<Retail> retails, Response response) {
                 Timber.d("Size: " + retails.size());
@@ -82,9 +81,9 @@ public class OnboardingActivity extends ActionBarActivity {
                 adapter.setPromotionList(retails);
                 adapter.notifyDataSetChanged();
 
-                if(retails.size()>0) {
+                if (retails.size() > 0) {
                     placeholder.setVisibility(View.GONE);
-                }else{
+                } else {
                     placeholder.setVisibility(View.VISIBLE);
                 }
             }

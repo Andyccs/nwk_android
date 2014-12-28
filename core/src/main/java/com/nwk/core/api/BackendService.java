@@ -10,13 +10,21 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by Andy on 12/22/2014.
  */
 public interface BackendService {
+    public interface Category{
+        public static final String FOOD = "FOOD";
+        public static final String FASHION = "FASHION";
+        public static final String LIFESTYLE = "LIFESTYLE";
+        public static final String OTHER = "OTHER";
+    }
+
     @GET("/retails")
-    void listRetails(Callback<List<Retail>> retails);
+    void listRetails(@Query("category") String category, Callback<List<Retail>> retails);
 
     @GET("/consumers?user_url={user_url}")
     Consumers getConsumerByUrl(@Path("user_url") String userUrl);
