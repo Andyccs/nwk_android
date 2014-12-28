@@ -16,7 +16,7 @@ import retrofit.http.Path;
  */
 public interface BackendService {
     @GET("/retails")
-    void listRetails(Callback<Wrapper<List<Retail>>> retails);
+    void listRetails(Callback<List<Retail>> retails);
 
     @GET("/consumers?user_url={user_url}")
     Consumers getConsumerByUrl(@Path("user_url") String userUrl);

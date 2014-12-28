@@ -88,15 +88,15 @@ public class MainPromotionFragment extends Fragment {
     }
 
     private void initializeData() {
-        ((PromoApplication)(getActivity().getApplication())).getService().listRetails(new Callback<Wrapper<List<Retail>>>() {
+        ((PromoApplication)(getActivity().getApplication())).getService().listRetails(new Callback<List<Retail>>() {
             @Override
-            public void success(Wrapper<List<Retail>> retails, Response response) {
-                Timber.d("Size: " + retails.getResults().size());
+            public void success(List<Retail> retails, Response response) {
+                Timber.d("Size: " + retails.size());
                 mProgress.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
-                mGridAdapter.setPromotionList(retails.getResults());
+                mGridAdapter.setPromotionList(retails);
                 mGridAdapter.notifyDataSetChanged();
-                if(retails.getResults().size()>0) {
+                if(retails.size()>0) {
                     placeholder.setVisibility(View.GONE);
                 }else{
                     placeholder.setVisibility(View.VISIBLE);

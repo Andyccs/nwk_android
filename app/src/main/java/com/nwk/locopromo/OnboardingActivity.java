@@ -74,15 +74,15 @@ public class OnboardingActivity extends ActionBarActivity {
     }
 
     private void initializeData() {
-        ((PromoApplication)(getApplication())).getService().listRetails(new Callback<Wrapper<List<Retail>>>() {
+        ((PromoApplication)(getApplication())).getService().listRetails(new Callback<List<Retail>>() {
             @Override
-            public void success(Wrapper<List<Retail>> retails, Response response) {
-                Timber.d("Size: " + retails.getResults().size());
+            public void success(List<Retail> retails, Response response) {
+                Timber.d("Size: " + retails.size());
                 progressBar.setVisibility(View.GONE);
-                adapter.setPromotionList(retails.getResults());
+                adapter.setPromotionList(retails);
                 adapter.notifyDataSetChanged();
 
-                if(retails.getResults().size()>0) {
+                if(retails.size()>0) {
                     placeholder.setVisibility(View.GONE);
                 }else{
                     placeholder.setVisibility(View.VISIBLE);
