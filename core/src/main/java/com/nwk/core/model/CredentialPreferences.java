@@ -9,13 +9,14 @@ import android.preference.PreferenceManager;
  */
 public class CredentialPreferences {
     public static final String PREFS_PRIMARY_KEY = "__PRIMARY__";
+    public static final String PREFS_USER_URL = "__USERURL__";
     public static final String PREFS_USERNAME_KEY = "__USERNAME__";
     public static final String PREFS_EMAIL_KEY = "__EMAIL__";
     public static final String PREFS_PICTURE_KEY = "__PICTURE__";
     public static final String PREFS_POINT_KEY = "__POINT__";
     public static final String PREFS_FIRST_TIME = "__FIRST__";
 
-    public static void saveCredential(Context context, int pk, String username, String email, String picture, int point){
+    public static void saveCredential(Context context, String userUrl, int pk, String username, String email, String picture, int point){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PREFS_USERNAME_KEY,username);
@@ -23,6 +24,7 @@ public class CredentialPreferences {
         editor.putString(PREFS_PICTURE_KEY,picture);
         editor.putInt(PREFS_POINT_KEY, point);
         editor.putInt(PREFS_PRIMARY_KEY,pk);
+        editor.putString(PREFS_USER_URL, userUrl);
         editor.commit();
     }
 
@@ -62,4 +64,11 @@ public class CredentialPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(PREFS_POINT_KEY, -1);
     }
+
+
+    public static String getUserUrl(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREFS_USER_URL,null);
+    }
 }
+

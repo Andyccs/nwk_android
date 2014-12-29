@@ -186,14 +186,16 @@ public class PromotionListActivity extends ActionBarActivity {
         Timber.d("creating task to favorite retails");
         favoriteTask = new UserFavoriteTask(
                 ""+ CredentialPreferences.getPrimaryKey(getApplicationContext()),
-                ""+retail.getId());
+                ""+retail.getId(),
+                CredentialPreferences.getUserUrl(getApplicationContext()));
         favoriteTask.execute();
     }
 
     private void unfavoriteRetail(MenuItem item){
         unfavoriteTask = new UserUnfavoriteTask(
                 ""+ CredentialPreferences.getPrimaryKey(getApplicationContext()),
-                ""+retail.getId());
+                ""+retail.getId(),
+                CredentialPreferences.getUserUrl(getApplicationContext()));
         unfavoriteTask.execute();
     }
 
@@ -282,10 +284,11 @@ public class PromotionListActivity extends ActionBarActivity {
 
     public class UserFavoriteTask extends AsyncTask<Void, Void, Boolean> {
 
-        String consumerPrimaryKey, retailUrl;
-        UserFavoriteTask(String consumerPrimaryKey, String retailUrl) {
+        String consumerPrimaryKey, retailUrl,userUrl;
+        UserFavoriteTask(String consumerPrimaryKey, String retailUrl, String userUrl) {
             this.consumerPrimaryKey = consumerPrimaryKey;
             this.retailUrl = retailUrl;
+            this.userUrl = userUrl;
         }
 
         @Override
@@ -303,7 +306,7 @@ public class PromotionListActivity extends ActionBarActivity {
             BackendService service = ((PromoApplication)getApplication()).getService();
             service.updateFavoriteRetailsOfConsumer(
                     consumerPrimaryKey,
-                    FavoriteRetailsUtil.getUserUrl("10"),
+                    userUrl,
                     newRetailList
             );
 
@@ -321,10 +324,11 @@ public class PromotionListActivity extends ActionBarActivity {
 
     public class UserUnfavoriteTask extends AsyncTask<Void, Void, Boolean> {
 
-        String consumerPrimaryKey, retailUrl;
-        UserUnfavoriteTask(String consumerPrimaryKey, String retailUrl) {
+        String consumerPrimaryKey, retailUrl,userUrl;
+        UserUnfavoriteTask(String consumerPrimaryKey, String retailUrl, String userUrl) {
             this.consumerPrimaryKey = consumerPrimaryKey;
             this.retailUrl = retailUrl;
+            this.userUrl = userUrl;
         }
 
         @Override
@@ -340,7 +344,7 @@ public class PromotionListActivity extends ActionBarActivity {
             BackendService service = ((PromoApplication)getApplication()).getService();
             service.updateFavoriteRetailsOfConsumer(
                     consumerPrimaryKey,
-                    FavoriteRetailsUtil.getUserUrl("10"),
+                    userUrl,
                     newRetailList
             );
 

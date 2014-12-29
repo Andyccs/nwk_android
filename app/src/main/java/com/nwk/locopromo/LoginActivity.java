@@ -283,7 +283,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
 
                 //TODO replace this
-                CredentialPreferences.saveCredential(getApplicationContext(),1,"andyccs","andyccs@gmail.com","http://twimgs.com/informationweek/galleries/automated/879/01_Steve-Jobs_full.jpg",999);
+                CredentialPreferences.saveCredential(getApplicationContext(),"http://192.168.0.105:8000/nwk/users/10/",1,"andyccs","andyccs@gmail.com","http://twimgs.com/informationweek/galleries/automated/879/01_Steve-Jobs_full.jpg",999);
 
                 startActivity(intent);
                 finish();

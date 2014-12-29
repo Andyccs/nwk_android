@@ -42,8 +42,8 @@ public interface BackendService {
                                      Callback<List<Retail>> promotions);
 
     @FormUrlEncoded
-    @PUT("/consumers/{user_url}/")
-    Consumers updateFavoriteRetailsOfConsumer(@Path("user_url") String userUrl,
+    @PUT("/consumers/{customer_url}/")
+    Consumers updateFavoriteRetailsOfConsumer(@Path("customer_url") String customerUrl,
                                        @Field("user") String user,
                                        @Field("favorite_shops") List<String> favoriteShopsCallback);
 
@@ -59,4 +59,7 @@ public interface BackendService {
                         @Field("promotion") String promotionUrl,
                         @Field("is_approved") String isApproved,
                         Callback<GrabPromotion> grabPromotionCallback);
+
+    @GET("/consumers/{customer_url}/grab_history/")
+    void getGrabHistory(@Path("customer_url") String customerUrl,Callback<List<GrabPromotion>> grabPromotionListCallback);
 }

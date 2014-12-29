@@ -47,6 +47,7 @@ public class OnboardingActivity extends ActionBarActivity {
     public void clickNextButton(){
         new UserFavoriteTask(
                 ""+CredentialPreferences.getPrimaryKey(getApplicationContext()),
+                CredentialPreferences.getUserUrl(getApplicationContext()),
                 adapter.getSelectedRetails()).execute();
     }
 
@@ -109,10 +110,12 @@ public class OnboardingActivity extends ActionBarActivity {
 
         String consumerPrimaryKey;
         List<String> retailUrls;
+        String userUrl;
 
-        UserFavoriteTask(String consumerPrimaryKey, List<String> retailUrls) {
+        UserFavoriteTask(String consumerPrimaryKey, String userUrl, List<String> retailUrls) {
             this.consumerPrimaryKey = consumerPrimaryKey;
             this.retailUrls = retailUrls;
+            this.userUrl = userUrl;
         }
 
         @Override
@@ -128,7 +131,7 @@ public class OnboardingActivity extends ActionBarActivity {
             BackendService service = ((PromoApplication)getApplication()).getService();
             service.updateFavoriteRetailsOfConsumer(
                     consumerPrimaryKey,
-                    FavoriteRetailsUtil.getUserUrl("10"),
+                    userUrl,
                     newRetailList
             );
 
