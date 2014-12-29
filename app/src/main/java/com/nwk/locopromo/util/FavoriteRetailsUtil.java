@@ -1,11 +1,7 @@
 package com.nwk.locopromo.util;
 
-import android.app.Activity;
-import android.content.Context;
-
 import com.nwk.core.api.BackendService;
 import com.nwk.core.model.Consumers;
-import com.nwk.core.model.Retail;
 import com.nwk.locopromo.Constant;
 import com.nwk.locopromo.PromoApplication;
 
@@ -18,12 +14,20 @@ import timber.log.Timber;
  * Created by andyccs on 28/12/14.
  */
 public class FavoriteRetailsUtil {
-    public static String getUserString(String userPrimaryKey){
+    public static String getUserUrl(String userPrimaryKey){
         return "/nwk/users/"+userPrimaryKey+"/";
     }
 
-    public static String getRetailString(String retailPrimaryKey){
+    public static String getRetailUrl(String retailPrimaryKey){
         return "/nwk/retails/"+retailPrimaryKey+"/";
+    }
+
+    public static String getConsumerUrl(String consumerPrimaryKey){
+        return "/nwk/consumers/"+consumerPrimaryKey+"/";
+    }
+
+    public static String getPromotionUrl(String promotionPrimaryKey){
+        return "/nwk/promotions/"+promotionPrimaryKey+"/";
     }
 
     public static Integer getRetailPrimaryKeyByUrl(String retailUrl){
@@ -51,7 +55,7 @@ public class FavoriteRetailsUtil {
         }
         //add new retails to original key
         for(String pk : retailPrimaryKeys){
-            retails.add(FavoriteRetailsUtil.getRetailString(pk));
+            retails.add(FavoriteRetailsUtil.getRetailUrl(pk));
         }
 
         return retails;
@@ -69,7 +73,7 @@ public class FavoriteRetailsUtil {
 
         //add new retails to original key
         for(int i=0;i<retails.size();i++){
-            if(retails.get(i).contains(FavoriteRetailsUtil.getRetailString(retailPrimaryKeys))){
+            if(retails.get(i).contains(FavoriteRetailsUtil.getRetailUrl(retailPrimaryKeys))){
                 retails.remove(i);
                 break;
             }

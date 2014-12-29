@@ -303,7 +303,7 @@ public class PromotionListActivity extends ActionBarActivity {
             BackendService service = ((PromoApplication)getApplication()).getService();
             service.updateFavoriteRetailsOfConsumer(
                     consumerPrimaryKey,
-                    FavoriteRetailsUtil.getUserString("10"),
+                    FavoriteRetailsUtil.getUserUrl("10"),
                     newRetailList
             );
 
@@ -340,7 +340,7 @@ public class PromotionListActivity extends ActionBarActivity {
             BackendService service = ((PromoApplication)getApplication()).getService();
             service.updateFavoriteRetailsOfConsumer(
                     consumerPrimaryKey,
-                    FavoriteRetailsUtil.getUserString("10"),
+                    FavoriteRetailsUtil.getUserUrl("10"),
                     newRetailList
             );
 

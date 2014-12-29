@@ -15,15 +15,12 @@ import com.nwk.locopromo.adapter.RetailRectangleGridViewAdapter;
 import com.nwk.core.model.Retail;
 import com.nwk.locopromo.util.FavoriteRetailsUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
-import icepick.Icepick;
-import icepick.Icicle;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -131,7 +128,7 @@ public class OnboardingActivity extends ActionBarActivity {
             BackendService service = ((PromoApplication)getApplication()).getService();
             service.updateFavoriteRetailsOfConsumer(
                     consumerPrimaryKey,
-                    FavoriteRetailsUtil.getUserString("10"),
+                    FavoriteRetailsUtil.getUserUrl("10"),
                     newRetailList
             );
 
