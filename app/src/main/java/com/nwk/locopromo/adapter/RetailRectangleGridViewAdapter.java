@@ -13,6 +13,7 @@ import com.nwk.core.model.Retail;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -23,9 +24,12 @@ public class RetailRectangleGridViewAdapter extends BaseAdapter {
     private List<Retail> mPromotionList;
     private Context mContext;
 
+    private Hashtable<Integer,Boolean> selected;
+
     public RetailRectangleGridViewAdapter(Context context) {
         mContext = context;
         mPromotionList = new ArrayList<Retail>();
+        selected = new Hashtable<>();
     }
 
     public void setPromotionList(List<Retail> mPromotionList) {
@@ -49,8 +53,8 @@ public class RetailRectangleGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Retail retail = (Retail) getItem(i);
-        ViewHolder viewHolder;
+        final Retail retail = (Retail) getItem(i);
+        final ViewHolder viewHolder;
 
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.shop_rectangle_item, null);
@@ -61,13 +65,40 @@ public class RetailRectangleGridViewAdapter extends BaseAdapter {
         }
 
         if (retail != null) {
+            selected.put(retail.getId(),false);
+
             viewHolder.title.setText(retail.getShopName());
 
             Picasso.with(mContext)
                     .load(retail.getLogo_url())
                     .into(viewHolder.image);
+
+            viewHolder.like.setVisibility(View.INVISIBLE);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(selected.get(retail.getId())) {
+                        viewHolder.like.setVisibility(View.INVISIBLE);
+                        selected.put(retail.getId(),false);
+                    }else{
+                        viewHolder.like.setVisibility(View.VISIBLE);
+                        selected.put(retail.getId(),true);
+                    }
+                }
+            });
         }
         return view;
+    }
+
+    public List<String> getSelectedRetails(){
+        List<String> results = new ArrayList<>();
+        for(Integer i : selected.keySet()){
+            if(selected.get(i)){
+                results.add(""+i);
+            }
+        }
+        return results;
     }
 
     public static class ViewHolder {
@@ -76,6 +107,9 @@ public class RetailRectangleGridViewAdapter extends BaseAdapter {
 
         @InjectView(R.id.title)
         TextView title;
+
+        @InjectView(R.id.like)
+        ImageView like;
 
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);
