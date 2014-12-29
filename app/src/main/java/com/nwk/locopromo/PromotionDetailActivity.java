@@ -1,15 +1,19 @@
 package com.nwk.locopromo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.PromotionDiscount;
@@ -28,6 +32,7 @@ import org.parceler.Parcels;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import icepick.Icicle;
+import timber.log.Timber;
 
 public class PromotionDetailActivity extends ActionBarActivity {
     @InjectView(R.id.title)
@@ -95,20 +100,45 @@ public class PromotionDetailActivity extends ActionBarActivity {
         final View.OnClickListener claimOffer = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (grabId != null) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(PromotionDetailActivity.this);
-//                    View v = LayoutInflater.from(PromotionDetailActivity.this).inflate(R.layout.claim_promotion_layout, null);
-//                    AlertDialog dialog = builder.create();
-//                    dialog.setView(v);
-//                    dialog.show();
-//
-//                    ImageView imageView = (ImageView) dialog.findViewById(R.id.image);
-//                    String url = getQrCodeUrl(grabId);
-//                    Timber.d("Url: " + url);
-//                    Picasso.with(PromotionDetailActivity.this).load(url).into(imageView);
-//                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(PromotionDetailActivity.this);
+//                View v = LayoutInflater.from(PromotionDetailActivity.this).inflate(R.layout.grab_promotion_dialog_box, null);
+                builder
+                        .setTitle("Confirm Grab")
+                        .setMessage("Do you wish to grab this promotion? The timer will start after you press OK. ")
+                        .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                refreshExpiryTime();
+                            }
+                        })
+                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //grab promotion
+
+                                //400, if user has grab the promotion, put a toast
+
+                                //dismiss dialog
+                                dialog.dismiss();
+
+                                //finish activity
+                                finish();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+
+//                dialog.setView(v);
+                dialog.show();
+
+//                ImageView imageView = (ImageView) dialog.findViewById(R.id.image);
+//                String url = getQrCodeUrl(grabId);
+//                Timber.d("Url: " + url);
+//                Picasso.with(PromotionDetailActivity.this).load(url).into(imageView);
             }
         };
+
+        mGrabButton.setOnClickListener(claimOffer);
 
     }
 
@@ -123,9 +153,6 @@ public class PromotionDetailActivity extends ActionBarActivity {
         mDescription.setText(mPromotion.getDescription());
 
         getSupportActionBar().setTitle(mPromotion.getTitle());
-
-        // set expiry time
-        refreshExpiryTime();
 
         //set price
         String text1 = null, text2 = "";
@@ -168,6 +195,12 @@ public class PromotionDetailActivity extends ActionBarActivity {
             mOfferExpired.setVisibility(View.GONE);
             mCountDown.setVisibility(View.GONE);
             offerExpiredLayout.setVisibility(View.GONE);
+            mGrabButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(),"Promotion expired",Toast.LENGTH_LONG).show();
+                }
+            });
         }else{
             Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
             PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
@@ -183,20 +216,5 @@ public class PromotionDetailActivity extends ActionBarActivity {
             String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
             mCountDown.setText(expiryIntervalString);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if(id == android.R.id.home){
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
