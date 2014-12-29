@@ -8,18 +8,24 @@ import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nwk.core.api.BackendService;
+import com.nwk.core.model.CredentialPreferences;
+import com.nwk.core.model.GrabPromotion;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.PromotionDiscount;
 import com.nwk.core.model.PromotionGeneral;
 import com.nwk.core.model.PromotionReduction;
 import com.nwk.core.model.Retail;
+import com.nwk.locopromo.util.FavoriteRetailsUtil;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
@@ -32,6 +38,9 @@ import org.parceler.Parcels;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import icepick.Icicle;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 public class PromotionDetailActivity extends ActionBarActivity {
@@ -64,6 +73,9 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
     @InjectView(R.id.location)
     TextView location;
+
+    @InjectView(R.id.parent)
+    RelativeLayout parent;
 
     Promotion mPromotion;
     Retail retail;
@@ -101,7 +113,6 @@ public class PromotionDetailActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(PromotionDetailActivity.this);
-//                View v = LayoutInflater.from(PromotionDetailActivity.this).inflate(R.layout.grab_promotion_dialog_box, null);
                 builder
                         .setTitle("Confirm Grab")
                         .setMessage("Do you wish to grab this promotion? The timer will start after you press OK. ")
@@ -114,27 +125,40 @@ public class PromotionDetailActivity extends ActionBarActivity {
                         })
                         .setPositiveButton("OK",new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //grab promotion
-
-                                //400, if user has grab the promotion, put a toast
-
+                            public void onClick(final DialogInterface dialog, int which) {
                                 //dismiss dialog
                                 dialog.dismiss();
 
-                                //finish activity
-                                finish();
+                                //grab promotion
+                                final View progress = LayoutInflater.from(getApplicationContext()).inflate(R.layout.loading_with_black_mask,null);
+                                parent.addView(progress);
+
+                                BackendService service = ((PromoApplication)getApplication()).getService();
+                                service.grabPromotions(
+                                        FavoriteRetailsUtil.getConsumerUrl(
+                                                ""+CredentialPreferences.getPrimaryKey(getApplicationContext())),
+                                        FavoriteRetailsUtil.getPromotionUrl(""+mPromotion.getId()),
+                                        BackendService.isApproved.WAITING,
+                                        new Callback<GrabPromotion>() {
+                                            @Override
+                                            public void success(GrabPromotion grabPromotion, Response response) {
+                                                Toast.makeText(getApplicationContext(),"Grabbed",Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void failure(RetrofitError error) {
+                                                parent.removeView(progress);
+                                                Toast.makeText(getApplicationContext(),"Cannot grab promotion",Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                );
                             }
                         });
                 AlertDialog dialog = builder.create();
 
-//                dialog.setView(v);
                 dialog.show();
 
-//                ImageView imageView = (ImageView) dialog.findViewById(R.id.image);
-//                String url = getQrCodeUrl(grabId);
-//                Timber.d("Url: " + url);
-//                Picasso.with(PromotionDetailActivity.this).load(url).into(imageView);
             }
         };
 
@@ -216,5 +240,20 @@ public class PromotionDetailActivity extends ActionBarActivity {
             String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
             mCountDown.setText(expiryIntervalString);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

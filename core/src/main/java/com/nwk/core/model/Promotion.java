@@ -29,6 +29,9 @@ public class Promotion {
     @SerializedName("created_at")
     String createdAt;
 
+    @SerializedName("id")
+    Integer id;
+
     public String getRetail() {
         return retail;
     }
@@ -75,5 +78,13 @@ public class Promotion {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
