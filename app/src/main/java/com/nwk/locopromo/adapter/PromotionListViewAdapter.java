@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nwk.locopromo.PromotionDetailActivity;
 import com.nwk.locopromo.R;
@@ -85,6 +86,12 @@ public class PromotionListViewAdapter extends BaseAdapter {
             expiry = expiry.plusMinutes(30);
             if(expiry.isBeforeNow()){
                 viewHolder.expiry.setText("Expired");
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context,"The promotion has expired",Toast.LENGTH_LONG).show();
+                    }
+                });
             }else{
                 Timber.d("Promotion Created At: "+new DateTime(promotion.getCreatedAt()));
                 Timber.d("Current Time: "+DateTime.now());
@@ -103,6 +110,15 @@ public class PromotionListViewAdapter extends BaseAdapter {
                 String expiryIntervalString = daysHoursMinutes.print(interval.toPeriod());
                 Timber.d("Expiry in: "+ expiryIntervalString);
                 viewHolder.expiry.setText("Offer expires in: " + expiryIntervalString);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, PromotionDetailActivity.class);
+                        intent.putExtra("promotion",Parcels.wrap(promotion));
+                        intent.putExtra("retail",Parcels.wrap(retail));
+                        context.startActivity(intent);
+                    }
+                });
             }
 
 
@@ -132,15 +148,7 @@ public class PromotionListViewAdapter extends BaseAdapter {
             }
             viewHolder.price.setText(text2);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, PromotionDetailActivity.class);
-                    intent.putExtra("promotion",Parcels.wrap(promotion));
-                    intent.putExtra("retail",Parcels.wrap(retail));
-                    context.startActivity(intent);
-                }
-            });
+
         }
         return view;
     }
