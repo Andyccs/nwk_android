@@ -60,6 +60,8 @@ public class PromotionListActivity extends ActionBarActivity {
 
     UserFavoriteTask favoriteTask;
 
+    UserUnfavoriteTask unfavoriteTask;
+
     @Icicle
     boolean favorite;
 
@@ -189,7 +191,10 @@ public class PromotionListActivity extends ActionBarActivity {
     }
 
     private void unfavoriteRetail(MenuItem item){
-
+        unfavoriteTask = new UserUnfavoriteTask(
+                ""+ CredentialPreferences.getPrimaryKey(getApplicationContext()),
+                ""+retail.getId());
+        unfavoriteTask.execute();
     }
 
     private void setFavoriteUI(final MenuItem item, boolean isloading) {
@@ -199,6 +204,7 @@ public class PromotionListActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 setUnFavoriteUI(item);
+                unfavoriteRetail(item);
             }
         });
 
@@ -294,10 +300,6 @@ public class PromotionListActivity extends ActionBarActivity {
                             consumerPrimaryKey,
                             addedRetailList);
 
-            for(String s : newRetailList){
-                Timber.d(s);
-            }
-
             BackendService service = ((PromoApplication)getApplication()).getService();
             service.updateFavoriteRetailsOfConsumer(
                     consumerPrimaryKey,
@@ -313,16 +315,44 @@ public class PromotionListActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(final Boolean success) {
             Timber.d("showing favorite button and clickable");
+            setFavoriteUI(menu.findItem(R.id.action_favorite),false);
+        }
+    }
 
-            MenuItem menuItem = menu.findItem(R.id.action_favorite);
-            MenuItemCompat.getActionView(menuItem).setClickable(true);
+    public class UserUnfavoriteTask extends AsyncTask<Void, Void, Boolean> {
 
-            ProgressBar progressBar = (ProgressBar) MenuItemCompat.getActionView(menuItem).findViewById(R.id.progress);
-            progressBar.setVisibility(View.GONE);
+        String consumerPrimaryKey, retailUrl;
+        UserUnfavoriteTask(String consumerPrimaryKey, String retailUrl) {
+            this.consumerPrimaryKey = consumerPrimaryKey;
+            this.retailUrl = retailUrl;
+        }
 
-            ImageView favoriteImage = (ImageView) MenuItemCompat.getActionView(menuItem).findViewById(R.id.favorite_image);
-            favoriteImage.setVisibility(View.VISIBLE);
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Timber.d("executing favorite retail task");
 
+            List<String> newRetailList =
+                    FavoriteRetailsUtil.getStringForRemoveFavoriteRetail(
+                            (PromoApplication) getApplication(),
+                            consumerPrimaryKey,
+                            retailUrl);
+
+            BackendService service = ((PromoApplication)getApplication()).getService();
+            service.updateFavoriteRetailsOfConsumer(
+                    consumerPrimaryKey,
+                    FavoriteRetailsUtil.getUserString("10"),
+                    newRetailList
+            );
+
+            favorite = false;
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            Timber.d("showing favorite button and clickable");
+            setUnFavoriteUI(menu.findItem(R.id.action_favorite));
         }
     }
 }

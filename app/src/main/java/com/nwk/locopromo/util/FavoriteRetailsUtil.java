@@ -57,9 +57,9 @@ public class FavoriteRetailsUtil {
         return retails;
     }
 
-    public static List<String> getStringForRemoveFavoriteRetail(Activity context, String userPrimaryKey, String retailPrimaryKeys){
+    public static List<String> getStringForRemoveFavoriteRetail(PromoApplication context, String userPrimaryKey, String retailPrimaryKeys){
         //get user original favorite shops
-        BackendService service = ((PromoApplication)context.getApplication()).getService();
+        BackendService service = context.getService();
         Consumers consumers = service.getConsumerByUrl(userPrimaryKey);
         List<String> retails = consumers.getFavoriteShops();
 
@@ -69,7 +69,7 @@ public class FavoriteRetailsUtil {
 
         //add new retails to original key
         for(int i=0;i<retails.size();i++){
-            if(retails.get(i).equals(FavoriteRetailsUtil.getRetailString(retailPrimaryKeys))){
+            if(retails.get(i).contains(FavoriteRetailsUtil.getRetailString(retailPrimaryKeys))){
                 retails.remove(i);
                 break;
             }
