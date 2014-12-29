@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nwk.core.api.BackendService;
+import com.nwk.core.model.Consumers;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.locopromo.adapter.PromotionListViewAdapter;
 import com.nwk.core.model.Promotion;
@@ -58,6 +59,9 @@ public class PromotionListActivity extends ActionBarActivity {
     Retail retail;
 
     UserFavoriteTask favoriteTask;
+
+    @Icicle
+    boolean favorite;
 
     @Icicle
     Parcelable retailParcelable;
@@ -141,6 +145,10 @@ public class PromotionListActivity extends ActionBarActivity {
         MenuItem menuItem = menu.findItem(R.id.action_favorite);
 
         //TODO check if the shop has been favorite
+        favorite = false;
+
+        new CheckUserFavoriteRetailTask(
+                ""+ CredentialPreferences.getPrimaryKey(getApplicationContext())).execute();
 
         return true;
     }
@@ -155,25 +163,13 @@ public class PromotionListActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
             Timber.d("clicking favorite button");
-            MenuItemCompat.setActionView(item,R.layout.action_favorite);
-
-            MenuItemCompat.getActionView(item).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MenuItemCompat.collapseActionView(item);
-                    MenuItemCompat.setActionView(item,null);
-                }
-            });
-
-            Timber.d("disabling the clicking and expand action view");
-
-//            MenuItemCompat.getActionView(item).setClickable(false);
-
-            Timber.d("creating task to favorite retails");
-            favoriteTask = new UserFavoriteTask(
-                    ""+CredentialPreferences.getPrimaryKey(getApplicationContext()),
-                    ""+retail.getId());
-            favoriteTask.execute();
+            if(favorite){
+                setUnFavoriteUI(item);
+                unfavoriteRetail(item);
+            }else {
+                setFavoriteUI(item,true);
+                favoriteRetail(item);
+            }
             return true;
         }
         else if(id == android.R.id.home){
@@ -184,10 +180,98 @@ public class PromotionListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void favoriteRetail(final MenuItem item) {
+        Timber.d("creating task to favorite retails");
+        favoriteTask = new UserFavoriteTask(
+                ""+ CredentialPreferences.getPrimaryKey(getApplicationContext()),
+                ""+retail.getId());
+        favoriteTask.execute();
+    }
+
+    private void unfavoriteRetail(MenuItem item){
+
+    }
+
+    private void setFavoriteUI(final MenuItem item, boolean isloading) {
+        MenuItemCompat.setActionView(item, R.layout.action_favorite);
+
+        MenuItemCompat.getActionView(item).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setUnFavoriteUI(item);
+            }
+        });
+
+        if(!isloading){
+            MenuItemCompat.getActionView(item).setClickable(true);
+
+            ProgressBar progressBar = (ProgressBar) MenuItemCompat.getActionView(item).findViewById(R.id.progress);
+            progressBar.setVisibility(View.GONE);
+
+            ImageView favoriteImage = (ImageView) MenuItemCompat.getActionView(item).findViewById(R.id.favorite_image);
+            favoriteImage.setVisibility(View.VISIBLE);
+        }else{
+            MenuItemCompat.getActionView(item).setClickable(false);
+        }
+
+    }
+
+    private void setUnFavoriteUI(MenuItem item){
+        MenuItemCompat.setActionView(item, null);
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Icepick.saveInstanceState(this, outState);
+    }
+
+    public class CheckUserFavoriteRetailTask extends AsyncTask<Void,Void,Void>{
+
+        String consumerPrimaryKey, retailUrl;
+        CheckUserFavoriteRetailTask(String consumerPrimaryKey) {
+            this.consumerPrimaryKey = consumerPrimaryKey;
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            Timber.d("checking user favorite shops");
+            BackendService service = ((PromoApplication)getApplication()).getService();
+            Consumers consumers = service.getConsumerByUrl(consumerPrimaryKey);
+            List<String> favoriteRetails = consumers.getFavoriteShops();
+
+            Timber.d("number of favorite retails: "+favoriteRetails.size());
+
+            if(favoriteRetails==null||favoriteRetails.size()==0){
+                favorite = false;
+                return null;
+            }
+
+            List<Integer> favoriteRetailsPK = new ArrayList<>(favoriteRetails.size());
+
+            for(String url : favoriteRetails){
+                Integer pk = FavoriteRetailsUtil.getRetailPrimaryKeyByUrl(url);
+                favoriteRetailsPK.add(pk);
+                Timber.d("primary key: "+pk);
+
+            }
+
+            if(favoriteRetailsPK.contains(retail.getId())){
+                favorite = true;
+                Timber.d("favorite is true");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            MenuItem menuItem = menu.findItem(R.id.action_favorite);
+            if(favorite){
+                setFavoriteUI(menuItem,false);
+            }else{
+                setUnFavoriteUI(menuItem);
+            }
+        }
     }
 
     public class UserFavoriteTask extends AsyncTask<Void, Void, Boolean> {
@@ -220,6 +304,8 @@ public class PromotionListActivity extends ActionBarActivity {
                     FavoriteRetailsUtil.getUserString("10"),
                     newRetailList
             );
+
+            favorite = true;
 
             return true;
         }
