@@ -8,7 +8,10 @@ import com.nwk.core.model.Wrapper;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -26,12 +29,20 @@ public interface BackendService {
     @GET("/retails")
     void listRetails(@Query("category") String category, Callback<List<Retail>> retails);
 
-    @GET("/consumers?user_url={user_url}")
+    @GET("/consumers/{user_url}")
     Consumers getConsumerByUrl(@Path("user_url") String userUrl);
 
     @GET("/retails/{pk}/all_promotions")
     void listPromotionsByRetail(@Path("pk") int primaryKey, Callback<List<Promotion>> promotions);
 
     @GET("/consumers/{user_url}/favorite_shops/")
-    void listConsumerFavoriteRetails(@Path("user_url") String userUrl, Callback<List<Retail>> promotions);
+    void listConsumerFavoriteRetails(@Path("user_url") String userUrl,
+                                     Callback<List<Retail>> promotions);
+
+    @FormUrlEncoded
+    @PUT("/consumers/{user_url}/")
+    Consumers updateFavoriteRetailsOfConsumer(@Path("user_url") String userUrl,
+                                       @Field("user") String user,
+                                       @Field("favorite_shops") List<String> favoriteShops);
+
 }

@@ -1,5 +1,6 @@
 package com.nwk.locopromo;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.MenuItemCompat;
@@ -9,15 +10,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nwk.core.api.BackendService;
+import com.nwk.core.model.CredentialPreferences;
 import com.nwk.locopromo.adapter.PromotionListViewAdapter;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.Retail;
+import com.nwk.locopromo.util.FavoriteRetailsUtil;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -44,9 +51,13 @@ public class PromotionListActivity extends ActionBarActivity {
     @InjectView(R.id.placeholder)
     TextView placeholder;
 
+    Menu menu;
+
     PromotionListViewAdapter adapter;
 
     Retail retail;
+
+    UserFavoriteTask favoriteTask;
 
     @Icicle
     Parcelable retailParcelable;
@@ -126,22 +137,11 @@ public class PromotionListActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_promotion_list, menu);
 
+        this.menu = menu;
         MenuItem menuItem = menu.findItem(R.id.action_favorite);
 
         //TODO check if the shop has been favorite
-        MenuItemCompat.setOnActionExpandListener(menuItem, new MenuItemCompat.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                //favorite the shop
-                return false;
-            }
 
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                //unfavorite the shop
-                return false;
-            }
-        });
         return true;
     }
 
@@ -154,15 +154,26 @@ public class PromotionListActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
-            item.setActionView(R.layout.action_favorite);
-            item.getActionView().setOnClickListener(new View.OnClickListener() {
+            Timber.d("clicking favorite button");
+            MenuItemCompat.setActionView(item,R.layout.action_favorite);
+
+            MenuItemCompat.getActionView(item).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    item.collapseActionView();
-                    item.setActionView(null);
+                    MenuItemCompat.collapseActionView(item);
+                    MenuItemCompat.setActionView(item,null);
                 }
             });
-            item.expandActionView();
+
+            Timber.d("disabling the clicking and expand action view");
+
+//            MenuItemCompat.getActionView(item).setClickable(false);
+
+            Timber.d("creating task to favorite retails");
+            favoriteTask = new UserFavoriteTask(
+                    ""+CredentialPreferences.getPrimaryKey(getApplicationContext()),
+                    ""+retail.getId());
+            favoriteTask.execute();
             return true;
         }
         else if(id == android.R.id.home){
@@ -177,5 +188,55 @@ public class PromotionListActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Icepick.saveInstanceState(this, outState);
+    }
+
+    public class UserFavoriteTask extends AsyncTask<Void, Void, Boolean> {
+
+        String consumerPrimaryKey, retailUrl;
+        UserFavoriteTask(String consumerPrimaryKey, String retailUrl) {
+            this.consumerPrimaryKey = consumerPrimaryKey;
+            this.retailUrl = retailUrl;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Timber.d("executing favorite retail task");
+            List<String> addedRetailList = new ArrayList<>();
+            addedRetailList.add(retailUrl);
+
+            List<String> newRetailList =
+                    FavoriteRetailsUtil.getStringForAddFavoriteRetails(
+                            (PromoApplication)getApplication(),
+                            consumerPrimaryKey,
+                            addedRetailList);
+
+            for(String s : newRetailList){
+                Timber.d(s);
+            }
+
+            BackendService service = ((PromoApplication)getApplication()).getService();
+            service.updateFavoriteRetailsOfConsumer(
+                    consumerPrimaryKey,
+                    FavoriteRetailsUtil.getUserString("10"),
+                    newRetailList
+            );
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            Timber.d("showing favorite button and clickable");
+
+            MenuItem menuItem = menu.findItem(R.id.action_favorite);
+            MenuItemCompat.getActionView(menuItem).setClickable(true);
+
+            ProgressBar progressBar = (ProgressBar) MenuItemCompat.getActionView(menuItem).findViewById(R.id.progress);
+            progressBar.setVisibility(View.GONE);
+
+            ImageView favoriteImage = (ImageView) MenuItemCompat.getActionView(menuItem).findViewById(R.id.favorite_image);
+            favoriteImage.setVisibility(View.VISIBLE);
+
+        }
     }
 }

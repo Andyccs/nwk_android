@@ -6,10 +6,16 @@
     android:padding="8dp"
     android:background="@drawable/action_bar_button_background">
     <ImageView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/like_white">
-
+        android:src="@drawable/like_white"
+        android:visibility="gone"
+        android:id="@+id/favorite_image">
     </ImageView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="32dp"
+        android:layout_height="32dp"/>
 </LinearLayout>

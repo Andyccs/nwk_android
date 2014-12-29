@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.util.List;
+
 /**
  * Created by Andy on 12/22/2014.
  */
@@ -18,6 +20,9 @@ public class Consumers {
 
     @SerializedName("point")
     Integer point;
+
+    @SerializedName("favorite_shops")
+    List<String> favoriteShops;
 
     public String getUser() {
         return user;
@@ -41,5 +46,13 @@ public class Consumers {
 
     public void setPoint(Integer point) {
         this.point = point;
+    }
+
+    public List<String> getFavoriteShops() {
+        return favoriteShops;
+    }
+
+    public void setFavoriteShops(List<String> favoriteShops) {
+        this.favoriteShops = favoriteShops;
     }
 }
