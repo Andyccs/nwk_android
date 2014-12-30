@@ -1,8 +1,8 @@
 package com.nwk.locopromo.util;
 
+import com.nwk.core.Constant;
 import com.nwk.core.api.BackendService;
 import com.nwk.core.model.Consumers;
-import com.nwk.locopromo.Constant;
 import com.nwk.locopromo.PromoApplication;
 
 import java.util.ArrayList;

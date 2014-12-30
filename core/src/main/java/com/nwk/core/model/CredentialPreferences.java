@@ -37,7 +37,7 @@ public class CredentialPreferences {
 
     public static boolean getFirstTime(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREFS_FIRST_TIME,false);
+        return prefs.getBoolean(PREFS_FIRST_TIME,true);
     }
 
     public static int getPrimaryKey(Context context){

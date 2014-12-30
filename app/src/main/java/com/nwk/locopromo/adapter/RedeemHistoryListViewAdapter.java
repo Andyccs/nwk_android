@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nwk.core.model.GrabPromotion;
-import com.nwk.core.model.OldPromotion;
 import com.nwk.locopromo.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

@@ -2,8 +2,6 @@ package com.nwk.core.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.parceler.Parcel;
-
 /**
  * Created by Andy on 12/22/2014.
  */

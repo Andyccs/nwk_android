@@ -4,7 +4,6 @@ import com.nwk.core.model.Consumers;
 import com.nwk.core.model.GrabPromotion;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.Retail;
-import com.nwk.core.model.Wrapper;
 
 import java.util.List;
 

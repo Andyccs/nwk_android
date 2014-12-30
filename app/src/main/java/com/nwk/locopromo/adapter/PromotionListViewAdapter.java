@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nwk.locopromo.PromotionDetailActivity;
-import com.nwk.locopromo.R;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.PromotionDiscount;
 import com.nwk.core.model.PromotionGeneral;
 import com.nwk.core.model.PromotionReduction;
 import com.nwk.core.model.Retail;
+import com.nwk.locopromo.PromotionDetailActivity;
+import com.nwk.locopromo.R;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;

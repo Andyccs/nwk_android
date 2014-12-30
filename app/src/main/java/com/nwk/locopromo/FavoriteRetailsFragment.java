@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.nwk.core.api.BackendService;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.Retail;
 import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;

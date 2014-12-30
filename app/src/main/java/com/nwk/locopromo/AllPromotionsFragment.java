@@ -8,16 +8,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.nwk.core.api.BackendService;
 import com.nwk.core.model.Promotion;
-import com.nwk.core.model.Retail;
 import com.nwk.locopromo.adapter.AllPromotionListViewAdapter;
-import com.nwk.locopromo.adapter.PromotionListViewAdapter;
-import com.nwk.locopromo.adapter.RetailSquareGridViewAdapter;
 
 import java.util.List;
 

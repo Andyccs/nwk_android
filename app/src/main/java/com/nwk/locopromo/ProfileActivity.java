@@ -10,17 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nwk.core.api.BackendService;
+import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.GrabPromotion;
 import com.nwk.locopromo.adapter.RedeemHistoryListViewAdapter;
-import com.nwk.core.model.CredentialPreferences;
-import com.nwk.core.model.OldPromotion;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -29,7 +23,6 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import timber.log.Timber;
 
 
 public class ProfileActivity extends ActionBarActivity {

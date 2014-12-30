@@ -1,9 +1,9 @@
 package com.nwk.locopromo;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.nwk.core.api.BackendService;
 import com.nwk.core.model.CredentialPreferences;
-import com.nwk.locopromo.adapter.RetailRectangleGridViewAdapter;
 import com.nwk.core.model.Retail;
+import com.nwk.locopromo.adapter.RetailRectangleGridViewAdapter;
 import com.nwk.locopromo.util.FavoriteRetailsUtil;
 
 import java.util.List;

@@ -18,9 +18,9 @@ import android.widget.TextView;
 import com.nwk.core.api.BackendService;
 import com.nwk.core.model.Consumers;
 import com.nwk.core.model.CredentialPreferences;
-import com.nwk.locopromo.adapter.PromotionListViewAdapter;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.Retail;
+import com.nwk.locopromo.adapter.PromotionListViewAdapter;
 import com.nwk.locopromo.util.FavoriteRetailsUtil;
 
 import org.parceler.Parcels;

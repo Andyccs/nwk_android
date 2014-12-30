@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nwk.locopromo.R;
 import com.nwk.core.model.Retail;
+import com.nwk.locopromo.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

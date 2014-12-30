@@ -2,9 +2,7 @@ package com.nwk.core.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.joda.time.DateTime;
 import org.parceler.Parcel;
-import org.parceler.Transient;
 
 /**
  * Created by Andy on 12/23/2014.
