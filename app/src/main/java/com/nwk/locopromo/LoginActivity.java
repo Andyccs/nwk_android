@@ -25,14 +25,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.nwk.core.Constant;
+import com.nwk.core.api.Oauth2Util;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit.client.ApacheClient;
 
 
 /**
@@ -270,7 +274,17 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            return true;
+            try {
+                String accessToken = Oauth2Util.getToken(
+                        new ApacheClient(), Constant.TOKEN_END_POINT,
+                        "andyccs", "andyccs",
+                        Constant.CLIENT_ID, Constant.CLIENT_SECRET);
+                ((PromoApplication) getApplication()).setService(accessToken);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         @Override

@@ -32,8 +32,6 @@ public class ClaimActivity extends ActionBarActivity {
         integrator.setPrompt("");
         integrator.setResultDisplayDuration(0);
         integrator.setScanningRectangle(500,500);
-//        integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
-//        integrator.setCameraId(0);  // Use a specific camera of the device
         integrator.initiateScan();
 
     }
