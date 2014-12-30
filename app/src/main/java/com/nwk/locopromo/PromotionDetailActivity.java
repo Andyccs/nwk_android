@@ -24,7 +24,7 @@ import com.nwk.core.model.PromotionDiscount;
 import com.nwk.core.model.PromotionGeneral;
 import com.nwk.core.model.PromotionReduction;
 import com.nwk.core.model.Retail;
-import com.nwk.locopromo.util.FavoriteRetailsUtil;
+import com.nwk.core.api.UrlUtil;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
@@ -133,9 +133,9 @@ public class PromotionDetailActivity extends ActionBarActivity {
 
                                 BackendService service = ((PromoApplication)getApplication()).getService();
                                 service.grabPromotions(
-                                        FavoriteRetailsUtil.getConsumerUrl(
-                                                ""+CredentialPreferences.getCustomerPrimaryKey(getApplicationContext())),
-                                        FavoriteRetailsUtil.getPromotionUrl(""+mPromotion.getId()),
+                                        UrlUtil.getConsumerUrl(
+                                                "" + CredentialPreferences.getCustomerPrimaryKey(getApplicationContext())),
+                                        UrlUtil.getPromotionUrl("" + mPromotion.getId()),
                                         BackendService.isApproved.WAITING,
                                         new Callback<GrabPromotion>() {
                                             @Override

@@ -3,11 +3,14 @@ package com.nwk.core.api;
 import android.content.Context;
 
 import com.nwk.core.Constant;
+import com.nwk.core.model.Consumer;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.Token;
+import com.nwk.core.model.User;
 
 import java.io.IOException;
 
+import retrofit.RestAdapter;
 import retrofit.client.ApacheClient;
 import timber.log.Timber;
 
@@ -32,12 +35,22 @@ public class LoginUtil {
         CredentialPreferences.saveToken(context,token.getAccessToken(),token.getRefreshToken());
         CredentialPreferences.saveFirstTime(context,true);
 
-        //TODO replace this
+        ApiRequestInterceptor interceptor = new ApiRequestInterceptor(token.getAccessToken());
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constant.END_POINT)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setRequestInterceptor(interceptor)
+                .build();
+        UserService service = restAdapter.create(UserService.class);
+
+        Consumer consumer = service.getConsumerByUsername(username);
+        User user = service.getUserById(""+UrlUtil.getUserPrimaryKeyByUrl(consumer.getUser()));
+
         CredentialPreferences.saveUserCredential(
-                context, "http://192.168.0.105:8000/nwk/users/10/",
-                1, "andyccs", "andyccs@gmail.com",
-                "http://twimgs.com/informationweek/galleries/automated/879/01_Steve-Jobs_full.jpg",
-                999
+                context, consumer.getUser(),
+                consumer.getId(), user.getUsername(), user.getEmail(),
+                consumer.getPicture(),
+                consumer.getPoint()
         );
 
         return true;

@@ -14,7 +14,7 @@ public class GrabPromotion {
     Integer id;
 
     @SerializedName("consumer")
-    Consumers consumer;
+    Consumer consumer;
 
     @SerializedName("promotion")
     Promotion promotion;
@@ -39,11 +39,11 @@ public class GrabPromotion {
         this.id = id;
     }
 
-    public Consumers getConsumer() {
+    public Consumer getConsumer() {
         return consumer;
     }
 
-    public void setConsumer(Consumers consumer) {
+    public void setConsumer(Consumer consumer) {
         this.consumer = consumer;
     }
 

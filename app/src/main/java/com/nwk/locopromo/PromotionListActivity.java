@@ -16,7 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nwk.core.api.BackendService;
-import com.nwk.core.model.Consumers;
+import com.nwk.core.api.UrlUtil;
+import com.nwk.core.model.Consumer;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.Retail;
@@ -244,7 +245,7 @@ public class PromotionListActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params) {
             Timber.d("checking user favorite shops");
             BackendService service = ((PromoApplication)getApplication()).getService();
-            Consumers consumers = service.getConsumerByUrl(consumerPrimaryKey);
+            Consumer consumers = service.getConsumerByUrl(consumerPrimaryKey);
             List<String> favoriteRetails = consumers.getFavoriteShops();
 
             Timber.d("number of favorite retails: "+favoriteRetails.size());
@@ -257,7 +258,7 @@ public class PromotionListActivity extends ActionBarActivity {
             List<Integer> favoriteRetailsPK = new ArrayList<>(favoriteRetails.size());
 
             for(String url : favoriteRetails){
-                Integer pk = FavoriteRetailsUtil.getRetailPrimaryKeyByUrl(url);
+                Integer pk = UrlUtil.getRetailPrimaryKeyByUrl(url);
                 favoriteRetailsPK.add(pk);
                 Timber.d("primary key: "+pk);
 

@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Andy on 12/22/2014.
  */
 @Parcel
-public class Consumers {
+public class Consumer {
 
     @SerializedName("user")
     String user;
@@ -23,6 +23,9 @@ public class Consumers {
 
     @SerializedName("favorite_shops")
     List<String> favoriteShops;
+
+    @SerializedName("id")
+    Integer id;
 
     public String getUser() {
         return user;
@@ -54,5 +57,13 @@ public class Consumers {
 
     public void setFavoriteShops(List<String> favoriteShops) {
         this.favoriteShops = favoriteShops;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

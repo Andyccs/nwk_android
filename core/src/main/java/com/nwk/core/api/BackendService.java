@@ -1,6 +1,6 @@
 package com.nwk.core.api;
 
-import com.nwk.core.model.Consumers;
+import com.nwk.core.model.Consumer;
 import com.nwk.core.model.GrabPromotion;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.Retail;
@@ -34,7 +34,7 @@ public interface BackendService {
     void getRetail(@Path("retail_url") String retailUrl, Callback<Retail> retailCallback);
 
     @GET("/consumers/{user_url}")
-    Consumers getConsumerByUrl(@Path("user_url") String userUrl);
+    Consumer getConsumerByUrl(@Path("user_url") String userUrl);
 
     @GET("/retails/{pk}/all_promotions")
     void listPromotionsByRetail(@Path("pk") int primaryKey, Callback<List<Promotion>> promotionsCallback);
@@ -45,7 +45,7 @@ public interface BackendService {
 
     @FormUrlEncoded
     @PUT("/consumers/{customer_url}/")
-    Consumers updateFavoriteRetailsOfConsumer(@Path("customer_url") String customerUrl,
+    Consumer updateFavoriteRetailsOfConsumer(@Path("customer_url") String customerUrl,
                                        @Field("user") String user,
                                        @Field("favorite_shops") List<String> favoriteShopsCallback);
 

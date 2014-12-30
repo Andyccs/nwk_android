@@ -12,19 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nwk.core.api.BackendService;
+import com.nwk.core.api.UrlUtil;
 import com.nwk.core.model.GrabPromotion;
 import com.nwk.core.model.Retail;
 import com.nwk.locopromo.PromoApplication;
 import com.nwk.locopromo.R;
 import com.nwk.locopromo.RedeemDetailActivity;
 import com.nwk.locopromo.util.DateTimeUtil;
-import com.nwk.locopromo.util.FavoriteRetailsUtil;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -34,7 +31,6 @@ import butterknife.InjectView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import timber.log.Timber;
 
 /**
  * Created by Andy on 12/14/2014.
@@ -103,7 +99,7 @@ public class ShoppingCartListViewAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         Integer retailPrimaryKey =
-                                FavoriteRetailsUtil.getRetailPrimaryKeyByUrl(
+                                UrlUtil.getRetailPrimaryKeyByUrl(
                                         grabPromotion.getPromotion().getRetail());
                         BackendService service = ((PromoApplication)((Activity)context).getApplication()).getService();
                         service.getRetail("" + retailPrimaryKey, new Callback<Retail>() {

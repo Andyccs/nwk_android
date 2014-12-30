@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nwk.core.api.BackendService;
+import com.nwk.core.api.UrlUtil;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.PromotionDiscount;
 import com.nwk.core.model.PromotionGeneral;
@@ -20,7 +21,6 @@ import com.nwk.core.model.Retail;
 import com.nwk.locopromo.PromoApplication;
 import com.nwk.locopromo.PromotionDetailActivity;
 import com.nwk.locopromo.R;
-import com.nwk.locopromo.util.FavoriteRetailsUtil;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -119,7 +119,7 @@ public class AllPromotionListViewAdapter extends BaseAdapter {
                     public void onClick(View view) {
                         BackendService service = ((PromoApplication)context.getApplication()).getService();
                         service.getRetail(
-                                ""+FavoriteRetailsUtil.getRetailPrimaryKeyByUrl(promotion.getRetail()),
+                                ""+ UrlUtil.getRetailPrimaryKeyByUrl(promotion.getRetail()),
                                 new Callback<Retail>() {
                                     @Override
                                     public void success(Retail retail, Response response) {
