@@ -21,8 +21,8 @@ public class MainActivityFragmentFactory {
             Timber.d("view type: "+viewType);
             return FavoriteRetailsFragment.newInstance();
         }
-        else if(viewType == ViewType.SHOP_WITH_PROMOTION){
-            //no API currently
+        else if(viewType == ViewType.ALL_PROMOTION){
+            return AllPromotionsFragment.newInstance();
         }
         else if(viewType == ViewType.ALL_SHOP){
             if(shopCategory == ShopCategory.FOOD){

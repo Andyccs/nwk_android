@@ -7,7 +7,7 @@
 
     <string-array name="main_activity_spinner">
         <item>All Shops</item>
-        <item>All Shops with Promotions</item>
+        <item>All Promotions</item>
         <item>My Favourite Shops</item>
     </string-array>
 

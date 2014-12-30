@@ -31,6 +31,9 @@ public interface BackendService {
     @GET("/retails")
     void listRetails(@Query("category") String category, Callback<List<Retail>> retailsCallback);
 
+    @GET("/retails/{retail_url}")
+    void getRetail(@Path("retail_url") String retailUrl, Callback<Retail> retailCallback);
+
     @GET("/consumers/{user_url}")
     Consumers getConsumerByUrl(@Path("user_url") String userUrl);
 
@@ -62,4 +65,7 @@ public interface BackendService {
 
     @GET("/consumers/{customer_url}/grab_history/")
     void getGrabHistory(@Path("customer_url") String customerUrl,Callback<List<GrabPromotion>> grabPromotionListCallback);
+
+    @GET("/promotions/")
+    void getAllPromotions(Callback<List<Promotion>> promotionsCallback);
 }

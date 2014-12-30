@@ -134,9 +134,8 @@ public class MainActivity extends ActionBarActivity {
                         categoryBar.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        viewType = ViewType.SHOP_WITH_PROMOTION;
-                        shopCategory = ShopCategory.FOOD;
-                        categoryBar.setVisibility(View.VISIBLE);
+                        viewType = ViewType.ALL_PROMOTION;
+                        categoryBar.setVisibility(View.GONE);
                         break;
                     case 2:
                         viewType = ViewType.FAVORITE_SHOP;
@@ -157,15 +156,14 @@ public class MainActivity extends ActionBarActivity {
         renderFragment();
         selectButton();
 
-        //TODO remove this in production
-        CredentialPreferences.saveFirstTime(this,true);
+        //uncomment this to test OnboardingActivity
+//        CredentialPreferences.saveFirstTime(this,true);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //TODO if this is user's first time, then
         if(CredentialPreferences.getFirstTime(this)) {
             Intent intent = new Intent(this, OnboardingActivity.class);
             startActivity(intent);
