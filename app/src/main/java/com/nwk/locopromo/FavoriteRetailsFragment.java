@@ -90,7 +90,7 @@ public class FavoriteRetailsFragment extends Fragment {
 
     private void initializeData() {
         ((PromoApplication)(getActivity().getApplication())).getService().listConsumerFavoriteRetails(
-                ""+CredentialPreferences.getPrimaryKey(getActivity().getApplicationContext()),
+                ""+CredentialPreferences.getCustomerPrimaryKey(getActivity().getApplicationContext()),
                 new Callback<List<Retail>>() {
                     @Override
                     public void success(List<Retail> retails, Response response) {

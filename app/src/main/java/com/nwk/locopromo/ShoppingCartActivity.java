@@ -9,20 +9,19 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.nwk.core.model.OldPromotion;
+import com.nwk.core.api.BackendService;
+import com.nwk.core.model.CredentialPreferences;
+import com.nwk.core.model.GrabPromotion;
 import com.nwk.locopromo.adapter.ShoppingCartListViewAdapter;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
-import timber.log.Timber;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class ShoppingCartActivity extends ActionBarActivity {
@@ -65,45 +64,33 @@ public class ShoppingCartActivity extends ActionBarActivity {
     }
 
     private void initializeData() {
-        //TODO remove this part
-        ParseQuery<ParseObject> promotionQuery = ParseQuery.getQuery("Promotion");
-        promotionQuery.include("retail");
-        promotionQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> promotions, ParseException e) {
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                if (e == null) {
-                    Timber.d("Size: " + promotions.size());
-                    List<OldPromotion> promotionList = new ArrayList<OldPromotion>();
-                    for (ParseObject object : promotions) {
-                        OldPromotion promotion = new OldPromotion();
-                        promotion.setId(object.getObjectId());
-                        promotion.setTitle(object.getString("title"));
-                        promotion.setDescription(object.getString("description"));
-                        promotion.setImage(object.getParseFile("image").getUrl());
-                        promotion.setQuantity(object.getInt("quantity"));
-                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
-                        promotion.setDiscountPrice(object.getInt("discountPrice"));
-                        promotion.setOriginalPrice(object.getInt("originalPrice"));
-                        promotion.setPercentage(object.getInt("percentage"));
-                        promotion.setType(object.getInt("type"));
-                        promotion.setRetail(object.getParseObject("retail").getObjectId());
-                        promotionList.add(promotion);
-                    }
-                    adapter.setPromotions(promotionList);
-                    adapter.notifyDataSetChanged();
+        BackendService service = ((PromoApplication)getApplication()).getService();
+        service.getGrabCart(
+                ""+ CredentialPreferences.getCustomerPrimaryKey(getApplicationContext()),
+                new Callback<List<GrabPromotion>>() {
+                    @Override
+                    public void success(List<GrabPromotion> grabPromotions, Response response) {
+                        progressBar.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
 
-                    if(promotionList.size()>0) {
-                        placeholder.setVisibility(View.GONE);
-                    }else{
+                        adapter.setGrabPromotions(grabPromotions);
+                        adapter.notifyDataSetChanged();
+
+                        if (grabPromotions.size() > 0) {
+                            placeholder.setVisibility(View.GONE);
+                        } else {
+                            placeholder.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                        progressBar.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(false);
                         placeholder.setVisibility(View.VISIBLE);
                     }
-                }else{
-                    placeholder.setVisibility(View.VISIBLE);
                 }
-            }
-        });
+        );
     }
 
     @Override

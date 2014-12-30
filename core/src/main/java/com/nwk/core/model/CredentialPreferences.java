@@ -87,7 +87,7 @@ public class CredentialPreferences {
         return prefs.getBoolean(PREFS_FIRST_TIME,true);
     }
 
-    public static int getPrimaryKey(Context context){
+    public static int getCustomerPrimaryKey(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(PREFS_PRIMARY_KEY,-1);
     }

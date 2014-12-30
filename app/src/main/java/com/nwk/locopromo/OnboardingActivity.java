@@ -46,7 +46,7 @@ public class OnboardingActivity extends ActionBarActivity {
     @OnClick(R.id.next_button)
     public void clickNextButton(){
         new UserFavoriteTask(
-                ""+CredentialPreferences.getPrimaryKey(getApplicationContext()),
+                ""+CredentialPreferences.getCustomerPrimaryKey(getApplicationContext()),
                 CredentialPreferences.getUserUrl(getApplicationContext()),
                 adapter.getSelectedRetails()).execute();
     }

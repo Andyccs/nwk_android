@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.nwk.core.model.GrabPromotion;
 import com.nwk.locopromo.R;
+import com.nwk.locopromo.util.DateTimeUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -59,12 +61,16 @@ public class RedeemHistoryListViewAdapter extends BaseAdapter {
         if (promotions.get(i) != null) {
             final GrabPromotion promotion = promotions.get(i);
 
-            //TODO integrate to backend
-//            viewHolder.title.setText(promotion.getTitle());
-//
-//            Picasso.with(context)
-//                    .load(promotion.getImage())
-//                    .into(viewHolder.image);
+            viewHolder.title.setText(promotion.getPromotion().getTitle());
+
+            viewHolder.title.setText(promotion.getPoint());
+
+            Picasso.with(context)
+                    .load(promotion.getPromotion().getImageUrl())
+                    .into(viewHolder.image);
+
+            String redeemBy = DateTimeUtil.toDayMonthYearHourMinute(promotion.getRedeemTime());
+            viewHolder.redeemTime.setText(redeemBy);
         }
 
         view.setClickable(false);

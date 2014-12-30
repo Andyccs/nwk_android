@@ -51,7 +51,8 @@
                 android:layout_width="14sp"
                 android:src="@drawable/marker"
                 android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"/>
+                android:layout_marginBottom="2dp"
+                android:visibility="invisible"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

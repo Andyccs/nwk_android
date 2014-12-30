@@ -7,11 +7,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nwk.core.model.CredentialPreferences;
+import com.nwk.core.model.GrabPromotion;
 import com.nwk.core.model.OldPromotion;
+import com.nwk.core.model.Retail;
+import com.nwk.locopromo.util.DateTimeUtil;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -30,7 +38,21 @@ public class RedeemDetailActivity extends ActionBarActivity {
     @InjectView(R.id.image)
     AspectRatioImageView mImage;
 
-    private OldPromotion mPromotion;
+    @InjectView(R.id.venue)
+    TextView venue;
+
+    @InjectView(R.id.grab_id)
+    TextView grabId;
+
+    @InjectView(R.id.email_address)
+    TextView emailAddress;
+
+    @InjectView(R.id.redeem_time)
+    TextView redeemTime;
+
+    private GrabPromotion mPromotion;
+
+    private Retail mRetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,46 +65,56 @@ public class RedeemDetailActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         Bundle bundle = getIntent().getExtras();
-        mPromotion = Parcels.unwrap(bundle.getParcelable("promotion"));
+        mPromotion = Parcels.unwrap(bundle.getParcelable("grabPromotion"));
+        mRetail = Parcels.unwrap(bundle.getParcelable("retail"));
         initializePromotion(mPromotion);
     }
 
 
-    private void initializePromotion(OldPromotion promotion) {
-        if (promotion != null) {
-            mTitle.setText(promotion.getTitle());
+    private void initializePromotion(GrabPromotion promotion) {
+        mTitle.setText(promotion.getPromotion().getTitle());
 
-            getSupportActionBar().setTitle(promotion.getTitle());
+        getSupportActionBar().setTitle(promotion.getPromotion().getTitle());
 
-            int type = promotion.getType();
+//        int type = promotion.getType();
+//
+//        String text1 = null, text2 = "";
+//
+//        switch (type) {
+//            case 1:
+//                text1 = "$" + promotion.getOriginalPrice();
+//                text2 = "$" + promotion.getDiscountPrice();
+//                break;
+//            case 2:
+//                text1 = null;
+//                text2 = promotion.getPercentage() + "%";
+//                break;
+//            case 3:
+//                text1 = null;
+//                text2 = "$" + promotion.getOriginalPrice();
+//        }
+        Picasso.with(this)
+                .load(promotion.getPromotion().getImageUrl())
+                .into(mImage);
 
-            String text1 = null, text2 = "";
+//        if (text1 != null) {
+//            mText1.setVisibility(View.VISIBLE);
+//            mText1.setText(text1);
+//            mText1.setPaintFlags(mText1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//        } else {
+//            mText1.setVisibility(View.GONE);
+//        }
+//        mText2.setText(text2);
 
-            switch (type) {
-                case 1:
-                    text1 = "$" + promotion.getOriginalPrice();
-                    text2 = "$" + promotion.getDiscountPrice();
-                    break;
-                case 2:
-                    text1 = null;
-                    text2 = promotion.getPercentage() + "%";
-                    break;
-                case 3:
-                    text1 = null;
-                    text2 = "$" + promotion.getOriginalPrice();
-            }
-            Picasso.with(this)
-                    .load(promotion.getImage())
-                    .into(mImage);
+        venue.setText("Location: Level "+mRetail.getLocationLevel()+", #"+mRetail.getLocationUnit());
 
-            if (text1 != null) {
-                mText1.setVisibility(View.VISIBLE);
-                mText1.setText(text1);
-                mText1.setPaintFlags(mText1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            } else {
-                mText1.setVisibility(View.GONE);
-            }
-            mText2.setText(text2);
-        }
+        emailAddress.setText(CredentialPreferences.getEmail(this));
+
+        grabId.setText("grab id: "+promotion.getId());
+
+
+        String redeemBy = DateTimeUtil.toDayMonthYearHourMinute(promotion.getRedeemTime());
+
+        redeemTime.setText("Redeem by " + redeemBy);
     }
 }

@@ -150,7 +150,7 @@ public class PromotionListActivity extends ActionBarActivity {
         favorite = false;
 
         new CheckUserFavoriteRetailTask(
-                ""+ CredentialPreferences.getPrimaryKey(getApplicationContext())).execute();
+                ""+ CredentialPreferences.getCustomerPrimaryKey(getApplicationContext())).execute();
 
         return true;
     }
@@ -185,7 +185,7 @@ public class PromotionListActivity extends ActionBarActivity {
     private void favoriteRetail(final MenuItem item) {
         Timber.d("creating task to favorite retails");
         favoriteTask = new UserFavoriteTask(
-                ""+ CredentialPreferences.getPrimaryKey(getApplicationContext()),
+                ""+ CredentialPreferences.getCustomerPrimaryKey(getApplicationContext()),
                 ""+retail.getId(),
                 CredentialPreferences.getUserUrl(getApplicationContext()));
         favoriteTask.execute();
@@ -193,7 +193,7 @@ public class PromotionListActivity extends ActionBarActivity {
 
     private void unfavoriteRetail(MenuItem item){
         unfavoriteTask = new UserUnfavoriteTask(
-                ""+ CredentialPreferences.getPrimaryKey(getApplicationContext()),
+                ""+ CredentialPreferences.getCustomerPrimaryKey(getApplicationContext()),
                 ""+retail.getId(),
                 CredentialPreferences.getUserUrl(getApplicationContext()));
         unfavoriteTask.execute();

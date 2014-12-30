@@ -76,7 +76,7 @@ public class ProfileActivity extends ActionBarActivity {
     private void initializeData() {
         BackendService service = ((PromoApplication)getApplication()).getService();
         service.getGrabHistory(
-                ""+CredentialPreferences.getPrimaryKey(this),
+                ""+CredentialPreferences.getCustomerPrimaryKey(this),
                 new Callback<List<GrabPromotion>>() {
                     @Override
                     public void success(List<GrabPromotion> grabPromotions, Response response) {

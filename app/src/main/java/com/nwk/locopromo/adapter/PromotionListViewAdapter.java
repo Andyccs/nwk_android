@@ -98,8 +98,8 @@ public class PromotionListViewAdapter extends BaseAdapter {
                 Timber.d("Expiry Time: "+expiry);
                 Interval interval = new Interval(DateTime.now().getMillis(),expiry.getMillis());
                 PeriodFormatter daysHoursMinutes = new PeriodFormatterBuilder()
-                        .appendDays()
-                        .appendSuffix("d", "d")
+                        .appendHours()
+                        .appendSuffix("h", "h")
                         .appendSeparator(" ")
                         .appendMinutes()
                         .appendSuffix("m", "m")

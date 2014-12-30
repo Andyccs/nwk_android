@@ -39,6 +39,10 @@ public class PromotionSerializer implements JsonSerializer<Promotion>, JsonDeser
             p = new GsonBuilder()
                     .create()
                     .fromJson(json, PromotionDiscount.class);
+        }else{
+            p = new GsonBuilder()
+                    .create()
+                    .fromJson(json, Promotion.class);
         }
         return p;
     }

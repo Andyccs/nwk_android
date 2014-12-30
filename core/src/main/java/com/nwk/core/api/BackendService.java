@@ -65,6 +65,9 @@ public interface BackendService {
     @GET("/consumers/{customer_url}/grab_history/")
     void getGrabHistory(@Path("customer_url") String customerUrl,Callback<List<GrabPromotion>> grabPromotionListCallback);
 
+    @GET("/consumers/{customer_url}/grab_cart")
+    void getGrabCart(@Path("customer_url") String customerUrl, Callback<List<GrabPromotion>> grabPromotionCallback);
+
     @GET("/promotions/")
     void getAllPromotions(Callback<List<Promotion>> promotionsCallback);
 }

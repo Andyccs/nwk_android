@@ -53,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:orientation="horizontal"
-                android:padding="4dp">
+                android:paddingLeft="8dp"
+                android:paddingBottom="0dp">
 
                 <ImageView
                     android:layout_height="14sp"
@@ -70,7 +71,8 @@
                     android:padding="4dp"
                     android:paddingBottom="4dp"
                     android:text="Location: Jurong Point, Level 2, #225"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:id="@+id/venue"/>
 
                 <TextView
                     android:id="@+id/text1"
@@ -92,6 +94,15 @@
                     tools:text="$100" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Redeem by 31 December 2014, 00:23"
+                android:orientation="horizontal"
+                android:layout_marginLeft="26dp"
+                android:id="@+id/redeem_time"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,12 +121,12 @@
 
 
             <TextView
-                android:id="@+id/pid"
+                android:id="@+id/grab_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:layout_gravity="center_horizontal"
-                android:text="pid: X576"/>
+                android:text="grab id: asdf"/>
 
             <TextView
                 android:id="@+id/description"

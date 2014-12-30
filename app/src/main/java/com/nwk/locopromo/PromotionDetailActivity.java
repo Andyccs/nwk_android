@@ -134,7 +134,7 @@ public class PromotionDetailActivity extends ActionBarActivity {
                                 BackendService service = ((PromoApplication)getApplication()).getService();
                                 service.grabPromotions(
                                         FavoriteRetailsUtil.getConsumerUrl(
-                                                ""+CredentialPreferences.getPrimaryKey(getApplicationContext())),
+                                                ""+CredentialPreferences.getCustomerPrimaryKey(getApplicationContext())),
                                         FavoriteRetailsUtil.getPromotionUrl(""+mPromotion.getId()),
                                         BackendService.isApproved.WAITING,
                                         new Callback<GrabPromotion>() {

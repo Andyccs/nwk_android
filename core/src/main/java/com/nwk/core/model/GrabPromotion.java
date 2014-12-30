@@ -14,10 +14,10 @@ public class GrabPromotion {
     Integer id;
 
     @SerializedName("consumer")
-    String consumerUrl;
+    Consumers consumer;
 
     @SerializedName("promotion")
-    String promotionUrl;
+    Promotion promotion;
 
     @SerializedName("redeem_time")
     String redeemTime;
@@ -39,20 +39,20 @@ public class GrabPromotion {
         this.id = id;
     }
 
-    public String getConsumerUrl() {
-        return consumerUrl;
+    public Consumers getConsumer() {
+        return consumer;
     }
 
-    public void setConsumerUrl(String consumerUrl) {
-        this.consumerUrl = consumerUrl;
+    public void setConsumer(Consumers consumer) {
+        this.consumer = consumer;
     }
 
-    public String getPromotionUrl() {
-        return promotionUrl;
+    public Promotion getPromotion() {
+        return promotion;
     }
 
-    public void setPromotionUrl(String promotionUrl) {
-        this.promotionUrl = promotionUrl;
+    public void setPromotion(Promotion promotion) {
+        this.promotion = promotion;
     }
 
     public String getRedeemTime() {
