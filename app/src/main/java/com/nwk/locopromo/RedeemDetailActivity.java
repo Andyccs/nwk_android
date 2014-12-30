@@ -1,25 +1,24 @@
 package com.nwk.locopromo;
 
-import android.graphics.Paint;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.WriterException;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.GrabPromotion;
-import com.nwk.core.model.OldPromotion;
 import com.nwk.core.model.Retail;
 import com.nwk.locopromo.util.DateTimeUtil;
+import com.nwk.locopromo.util.QRCode;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,6 +49,9 @@ public class RedeemDetailActivity extends ActionBarActivity {
     @InjectView(R.id.redeem_time)
     TextView redeemTime;
 
+    @InjectView(R.id.qrcode)
+    ImageView qrcode;
+
     private GrabPromotion mPromotion;
 
     private Retail mRetail;
@@ -71,7 +73,7 @@ public class RedeemDetailActivity extends ActionBarActivity {
     }
 
 
-    private void initializePromotion(GrabPromotion promotion) {
+    private void initializePromotion(final GrabPromotion promotion) {
         mTitle.setText(promotion.getPromotion().getTitle());
 
         getSupportActionBar().setTitle(promotion.getPromotion().getTitle());
@@ -112,9 +114,31 @@ public class RedeemDetailActivity extends ActionBarActivity {
 
         grabId.setText("grab id: "+promotion.getId());
 
-
         String redeemBy = DateTimeUtil.toDayMonthYearHourMinute(promotion.getRedeemTime());
 
         redeemTime.setText("Redeem by " + redeemBy);
+
+        Runnable generateQRCodeRunnable = new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    final Bitmap bitmap = QRCode.generate(300, 300, "" + promotion.getId());
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            qrcode.setImageBitmap(bitmap);
+                        }
+                    });
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread generateQrCodeThread = new Thread(generateQRCodeRunnable);
+        generateQrCodeThread.run();
     }
 }
