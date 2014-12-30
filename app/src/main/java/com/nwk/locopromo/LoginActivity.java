@@ -92,6 +92,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
+        if(LoginUtil.isLoggedInBefore(this)) {
+            ((PromoApplication) getApplication()).setService(
+                    CredentialPreferences.getAccessToken(getApplicationContext())
+            );
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     private void populateAutoComplete() {

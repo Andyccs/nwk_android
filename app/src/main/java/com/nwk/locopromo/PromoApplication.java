@@ -29,9 +29,9 @@ public class PromoApplication extends Application {
         CalligraphyConfig.initDefault("fonts/Roboto-Medium.ttf", R.attr.fontPath);
 
         Timber.plant(new Timber.DebugTree());
-        Parse.initialize(this, "t0LKj3AP9JFjwRZNfUQun9DLgHnepOc24FvhrQeo", "DhhFgeimW4YYScVOuLIuZ9wA07LAHIEhWQQLiFgW");
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-        Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
+//        Parse.initialize(this, "t0LKj3AP9JFjwRZNfUQun9DLgHnepOc24FvhrQeo", "DhhFgeimW4YYScVOuLIuZ9wA07LAHIEhWQQLiFgW");
+//        ParseInstallation.getCurrentInstallation().saveInBackground();
+//        Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
 
     }
 
