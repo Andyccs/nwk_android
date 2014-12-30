@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nwk.core.model.GrabPromotion;
 import com.nwk.core.model.OldPromotion;
 import com.nwk.locopromo.R;
 import com.squareup.picasso.Picasso;
@@ -21,7 +22,7 @@ import butterknife.InjectView;
  * Created by Andy on 12/14/2014.
  */
 public class RedeemHistoryListViewAdapter extends BaseAdapter {
-    private List<OldPromotion> promotions;
+    private List<GrabPromotion> promotions;
     private Context context;
 
     public RedeemHistoryListViewAdapter(Context context) {
@@ -58,12 +59,14 @@ public class RedeemHistoryListViewAdapter extends BaseAdapter {
         }
 
         if (promotions.get(i) != null) {
-            final OldPromotion promotion = promotions.get(i);
-            viewHolder.title.setText(promotion.getTitle());
+            final GrabPromotion promotion = promotions.get(i);
 
-            Picasso.with(context)
-                    .load(promotion.getImage())
-                    .into(viewHolder.image);
+            //TODO integrate to backend
+//            viewHolder.title.setText(promotion.getTitle());
+//
+//            Picasso.with(context)
+//                    .load(promotion.getImage())
+//                    .into(viewHolder.image);
         }
 
         view.setClickable(false);
@@ -71,7 +74,7 @@ public class RedeemHistoryListViewAdapter extends BaseAdapter {
         return view;
     }
 
-    public void setPromotions(List<OldPromotion> promotions) {
+    public void setPromotions(List<GrabPromotion> promotions) {
         this.promotions = promotions;
     }
 
@@ -81,6 +84,12 @@ public class RedeemHistoryListViewAdapter extends BaseAdapter {
 
         @InjectView(R.id.promotion_title)
         TextView title;
+
+        @InjectView(R.id.point)
+        TextView point;
+
+        @InjectView(R.id.redeem_time)
+        TextView redeemTime;
 
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);

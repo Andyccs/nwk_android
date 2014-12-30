@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nwk.core.api.BackendService;
+import com.nwk.core.model.GrabPromotion;
 import com.nwk.locopromo.adapter.RedeemHistoryListViewAdapter;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.OldPromotion;
@@ -24,6 +26,9 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 
@@ -76,44 +81,30 @@ public class ProfileActivity extends ActionBarActivity {
 
 
     private void initializeData() {
-        //TODO remove this part
-        ParseQuery<ParseObject> promotionQuery = ParseQuery.getQuery("Promotion");
-        promotionQuery.include("retail");
-        promotionQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> promotions, ParseException e) {
-                Timber.d("Size: " + promotions.size());
-                progressBar.setVisibility(View.GONE);
-                if (e == null) {
-                    List<OldPromotion> promotionList = new ArrayList<OldPromotion>();
-                    for (ParseObject object : promotions) {
-                        OldPromotion promotion = new OldPromotion();
-                        promotion.setId(object.getObjectId());
-                        promotion.setTitle(object.getString("title"));
-                        promotion.setDescription(object.getString("description"));
-                        promotion.setImage(object.getParseFile("image").getUrl());
-                        promotion.setQuantity(object.getInt("quantity"));
-                        promotion.setTimeExpiry(object.getDate("timeExpiry"));
-                        promotion.setDiscountPrice(object.getInt("discountPrice"));
-                        promotion.setOriginalPrice(object.getInt("originalPrice"));
-                        promotion.setPercentage(object.getInt("percentage"));
-                        promotion.setType(object.getInt("type"));
-                        promotion.setRetail(object.getParseObject("retail").getObjectId());
-                        promotionList.add(promotion);
-                    }
-                    adapter.setPromotions(promotionList);
-                    adapter.notifyDataSetChanged();
+        BackendService service = ((PromoApplication)getApplication()).getService();
+        service.getGrabHistory(
+                ""+CredentialPreferences.getPrimaryKey(this),
+                new Callback<List<GrabPromotion>>() {
+                    @Override
+                    public void success(List<GrabPromotion> grabPromotions, Response response) {
+                        progressBar.setVisibility(View.GONE);
+                        adapter.setPromotions(grabPromotions);
+                        adapter.notifyDataSetChanged();
 
-                    if(promotionList.size()>0) {
-                        placeholder.setVisibility(View.GONE);
-                    }else{
+                        if(grabPromotions.size()>0) {
+                            placeholder.setVisibility(View.GONE);
+                        }else{
+                            placeholder.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progressBar.setVisibility(View.GONE);
                         placeholder.setVisibility(View.VISIBLE);
                     }
-                }else{
-                    placeholder.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+                });
+
     }
 
     @Override

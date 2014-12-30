@@ -7,7 +7,6 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/like_white"
         android:scaleType="centerCrop"
         android:layout_weight="2"
         android:id="@+id/promotion_image"
