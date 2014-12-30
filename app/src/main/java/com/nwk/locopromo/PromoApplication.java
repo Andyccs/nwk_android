@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nwk.core.Constant;
 import com.nwk.core.api.BackendService;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.serializer.PromotionSerializer;
@@ -29,12 +30,11 @@ public class PromoApplication extends Application {
         ParseInstallation.getCurrentInstallation().saveInBackground();
         Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
 
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Promotion.class, new PromotionSerializer())
                 .create();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://192.168.1.186:8000/nwk/")
+                .setEndpoint(Constant.END_POINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter(gson))
                 .build();
