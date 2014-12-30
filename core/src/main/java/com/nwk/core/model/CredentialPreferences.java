@@ -15,8 +15,10 @@ public class CredentialPreferences {
     public static final String PREFS_PICTURE_KEY = "__PICTURE__";
     public static final String PREFS_POINT_KEY = "__POINT__";
     public static final String PREFS_FIRST_TIME = "__FIRST__";
+    public static final String PREFS_ACCESS_TOKEN = "__ACCESS_TOKEN__";
+    public static final String PREFS_REFRESH_TOKEN = "__REFRESH_TOKEN";
 
-    public static void saveCredential(Context context, String userUrl, int pk, String username, String email, String picture, int point){
+    public static void saveUserCredential(Context context, String userUrl, int pk, String username, String email, String picture, int point){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PREFS_USERNAME_KEY,username);
@@ -33,6 +35,51 @@ public class CredentialPreferences {
         final SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(PREFS_FIRST_TIME,isFirstTime);
         editor.commit();
+    }
+
+    public static void saveToken(Context context, String accessToken, String refreshToken){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(PREFS_ACCESS_TOKEN,accessToken);
+        editor.putString(PREFS_REFRESH_TOKEN,refreshToken);
+        editor.commit();
+    }
+
+    public static void clearUserCredential(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(PREFS_USERNAME_KEY);
+        editor.remove(PREFS_EMAIL_KEY);
+        editor.remove(PREFS_PICTURE_KEY);
+        editor.remove(PREFS_POINT_KEY);
+        editor.remove(PREFS_PRIMARY_KEY);
+        editor.remove(PREFS_USER_URL);
+        editor.commit();
+    }
+
+    public static void clearFirstTime(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(PREFS_FIRST_TIME);
+        editor.commit();
+    }
+
+    public static void clearToken(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(PREFS_ACCESS_TOKEN);
+        editor.remove(PREFS_REFRESH_TOKEN);
+        editor.commit();
+    }
+
+    public static String getAccessToken(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREFS_ACCESS_TOKEN,null);
+    }
+
+    public static String getRefreshToken(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREFS_REFRESH_TOKEN,null);
     }
 
     public static boolean getFirstTime(Context context){

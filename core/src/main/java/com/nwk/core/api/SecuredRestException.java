@@ -18,20 +18,17 @@ package com.nwk.core.api;
  */
 public class SecuredRestException extends RuntimeException {
 
-	public SecuredRestException() {
-		super();
-	}
-
-	public SecuredRestException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public SecuredRestException(String message) {
+    int status;
+	public SecuredRestException(String message,int status) {
 		super(message);
+        this.status = status;
 	}
 
-	public SecuredRestException(Throwable cause) {
-		super(cause);
-	}
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

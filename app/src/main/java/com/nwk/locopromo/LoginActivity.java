@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nwk.core.Constant;
+import com.nwk.core.api.LoginUtil;
 import com.nwk.core.api.Oauth2Util;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.User;
@@ -264,7 +265,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         private final String mEmail;
         private final String mPassword;
-        private User user;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -273,13 +273,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
             try {
-                String accessToken = Oauth2Util.getToken(
-                        new ApacheClient(), Constant.TOKEN_END_POINT,
-                        "andyccs", "andyccs",
-                        Constant.CLIENT_ID, Constant.CLIENT_SECRET);
-                ((PromoApplication) getApplication()).setService(accessToken);
+                boolean loggedIn = LoginUtil.login(getApplicationContext(),"andyccs","andyccs");
+                if(!loggedIn) return false;
+                ((PromoApplication) getApplication()).setService(
+                        CredentialPreferences.getAccessToken(getApplicationContext())
+                );
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -294,10 +293,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
             if (success) {
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-
-                //TODO replace this
-                CredentialPreferences.saveCredential(getApplicationContext(),"http://192.168.0.105:8000/nwk/users/10/",1,"andyccs","andyccs@gmail.com","http://twimgs.com/informationweek/galleries/automated/879/01_Steve-Jobs_full.jpg",999);
-
                 startActivity(intent);
                 finish();
             } else {
