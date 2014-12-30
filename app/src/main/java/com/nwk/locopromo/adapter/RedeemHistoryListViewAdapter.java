@@ -63,7 +63,7 @@ public class RedeemHistoryListViewAdapter extends BaseAdapter {
 
             viewHolder.title.setText(promotion.getPromotion().getTitle());
 
-            viewHolder.title.setText(promotion.getPoint());
+            viewHolder.point.setText(""+promotion.getPoint());
 
             Picasso.with(context)
                     .load(promotion.getPromotion().getImageUrl())

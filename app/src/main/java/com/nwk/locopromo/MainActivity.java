@@ -156,9 +156,6 @@ public class MainActivity extends ActionBarActivity {
         renderFragment();
         selectButton();
 
-        //uncomment this to test OnboardingActivity
-//        CredentialPreferences.saveFirstTime(this,true);
-
     }
 
     @Override
