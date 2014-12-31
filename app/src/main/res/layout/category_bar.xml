@@ -16,6 +16,8 @@
             android:text="Food"
             android:id="@+id/category_food"
             android:layout_weight="2"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             custom:position="left"/>
         <com.nwk.locopromo.widget.SelectableButton
             android:layout_width="wrap_content"
@@ -23,6 +25,8 @@
             android:text="Fashion"
             android:id="@+id/category_fashion"
             android:layout_weight="2"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             custom:position="middle"/>
         <com.nwk.locopromo.widget.SelectableButton
             android:layout_width="wrap_content"
@@ -30,6 +34,8 @@
             android:text="Lifestyle"
             android:id="@+id/category_lifestyle"
             android:layout_weight="2"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             custom:position="middle"/>
         <com.nwk.locopromo.widget.SelectableButton
             android:layout_width="wrap_content"
@@ -37,6 +43,8 @@
             android:text="Other"
             android:id="@+id/category_other"
             android:layout_weight="2"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             custom:position="right"/>
     </LinearLayout>
 </RelativeLayout>
