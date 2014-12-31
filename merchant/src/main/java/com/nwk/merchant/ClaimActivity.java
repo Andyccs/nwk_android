@@ -62,6 +62,10 @@ public class ClaimActivity extends ActionBarActivity {
             //grab_id:customer_id:promotion_id
             String content = scanResult.getContents();
             String[] splited = content.split(":");
+            if(splited.length!=3){
+                status.setText("Failed!");
+                return;
+            }
 
             Timber.d(content);
 
