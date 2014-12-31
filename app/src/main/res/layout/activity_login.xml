@@ -53,6 +53,15 @@
                 android:background="@drawable/primary_button_background"
                 android:textColor="@color/primary_button_text_color"/>
 
+            <Button android:id="@+id/sign_up_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Register"
+                android:textStyle="bold"
+                android:background="@drawable/secondary_button_background"
+                android:textColor="@color/secondary_button_text_color"/>
         </LinearLayout>
     </ScrollView>
 
