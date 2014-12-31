@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nwk.core.api.BackendService;
+import com.nwk.core.api.UrlUtil;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.GrabPromotion;
 import com.nwk.core.model.Promotion;
@@ -24,7 +25,6 @@ import com.nwk.core.model.PromotionDiscount;
 import com.nwk.core.model.PromotionGeneral;
 import com.nwk.core.model.PromotionReduction;
 import com.nwk.core.model.Retail;
-import com.nwk.core.api.UrlUtil;
 import com.nwk.locopromo.widget.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 

@@ -1,7 +1,6 @@
 package com.nwk.core.api;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.nwk.core.model.Token;
 
 import org.apache.commons.io.IOUtils;
@@ -10,13 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.RequestInterceptor;
 import retrofit.client.Client;
 import retrofit.client.Header;
 import retrofit.client.Request;
 import retrofit.client.Response;
 import retrofit.mime.FormUrlEncodedTypedOutput;
-import timber.log.Timber;
 
 public class Oauth2Util {
 

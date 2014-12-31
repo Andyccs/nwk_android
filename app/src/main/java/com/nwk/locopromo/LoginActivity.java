@@ -25,11 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.nwk.core.Constant;
 import com.nwk.core.api.LoginUtil;
-import com.nwk.core.api.Oauth2Util;
-import com.nwk.core.model.CredentialPreferences;
-import com.nwk.core.model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +33,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import retrofit.client.ApacheClient;
 
 
 /**

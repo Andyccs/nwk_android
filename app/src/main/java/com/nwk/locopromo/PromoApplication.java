@@ -12,8 +12,6 @@ import com.nwk.core.model.Promotion;
 import com.nwk.core.serializer.PromotionSerializer;
 
 import retrofit.RestAdapter;
-import retrofit.client.ApacheClient;
-import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;

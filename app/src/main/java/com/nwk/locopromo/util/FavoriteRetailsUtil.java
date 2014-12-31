@@ -1,6 +1,5 @@
 package com.nwk.locopromo.util;
 
-import com.nwk.core.Constant;
 import com.nwk.core.api.BackendService;
 import com.nwk.core.api.UrlUtil;
 import com.nwk.core.model.Consumer;
@@ -8,8 +7,6 @@ import com.nwk.locopromo.PromoApplication;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 /**
  * Created by andyccs on 28/12/14.
