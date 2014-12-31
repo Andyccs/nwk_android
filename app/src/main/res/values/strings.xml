@@ -9,6 +9,8 @@
         <item>All Shops</item>
         <item>All Promotions</item>
         <item>My Favourite Shops</item>
+        <item>Level 1</item>
+        <item>Level 2</item>
     </string-array>
 
     <string name="title_activity_promotion_list">PromotionListActivity</string>

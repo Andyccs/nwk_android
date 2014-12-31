@@ -78,35 +78,9 @@ public class RedeemDetailActivity extends ActionBarActivity {
 
         getSupportActionBar().setTitle(promotion.getPromotion().getTitle());
 
-//        int type = promotion.getType();
-//
-//        String text1 = null, text2 = "";
-//
-//        switch (type) {
-//            case 1:
-//                text1 = "$" + promotion.getOriginalPrice();
-//                text2 = "$" + promotion.getDiscountPrice();
-//                break;
-//            case 2:
-//                text1 = null;
-//                text2 = promotion.getPercentage() + "%";
-//                break;
-//            case 3:
-//                text1 = null;
-//                text2 = "$" + promotion.getOriginalPrice();
-//        }
         Picasso.with(this)
                 .load(promotion.getPromotion().getImageUrl())
                 .into(mImage);
-
-//        if (text1 != null) {
-//            mText1.setVisibility(View.VISIBLE);
-//            mText1.setText(text1);
-//            mText1.setPaintFlags(mText1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//        } else {
-//            mText1.setVisibility(View.GONE);
-//        }
-//        mText2.setText(text2);
 
         venue.setText("Location: Level "+mRetail.getLocationLevel()+", #"+mRetail.getLocationUnit());
 

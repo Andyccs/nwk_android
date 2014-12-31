@@ -29,7 +29,8 @@ public interface BackendService {
     }
 
     @GET("/retails")
-    void listRetails(@Query("category") String category, Callback<List<Retail>> retailsCallback);
+    void listRetails(@Query("category") String category, @Query("level") String level,
+                     Callback<List<Retail>> retailsCallback);
 
     @GET("/retails/{retail_url}")
     void getRetail(@Path("retail_url") String retailUrl, Callback<Retail> retailCallback);

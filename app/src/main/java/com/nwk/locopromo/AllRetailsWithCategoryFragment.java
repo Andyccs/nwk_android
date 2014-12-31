@@ -108,7 +108,8 @@ public class AllRetailsWithCategoryFragment extends Fragment {
     }
 
     private void initializeData() {
-        ((PromoApplication)(getActivity().getApplication())).getService().listRetails(category, new Callback<List<Retail>>() {
+        ((PromoApplication)(getActivity().getApplication())).getService().listRetails(
+                category, null, new Callback<List<Retail>>() {
             @Override
             public void success(List<Retail> retails, Response response) {
                 Timber.d("Size: " + retails.size());

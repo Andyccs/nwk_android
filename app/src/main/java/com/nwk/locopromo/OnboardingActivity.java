@@ -80,7 +80,8 @@ public class OnboardingActivity extends ActionBarActivity {
     }
 
     private void initializeData() {
-        ((PromoApplication)(getApplication())).getService().listRetails(null, new Callback<List<Retail>>() {
+        ((PromoApplication)(getApplication())).getService().listRetails(
+                null, null, new Callback<List<Retail>>() {
             @Override
             public void success(List<Retail> retails, Response response) {
                 Timber.d("Size: " + retails.size());
