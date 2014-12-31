@@ -48,8 +48,11 @@ public class LoginActivity extends ActionBarActivity {
     @InjectView(R.id.login_progress)
     View mLoginFormView;
 
-    @InjectView(R.id.email_sign_in_button)
-    Button mEmailSignInButton;
+    @InjectView(R.id.sign_in_button)
+    Button mSignInButton;
+
+    @InjectView(R.id.sign_up_button)
+    Button mSignUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class LoginActivity extends ActionBarActivity {
             }
         });
 
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        mSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -203,7 +206,7 @@ public class LoginActivity extends ActionBarActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                boolean loggedIn = LoginUtil.login(getApplicationContext(), mUsername,mPassword);
+                boolean loggedIn = LoginUtil.login(getApplicationContext(), mUsername,mPassword, LoginUtil.Role.CONSUMER);
                 if(!loggedIn) return false;
                 return true;
             } catch (IOException e) {

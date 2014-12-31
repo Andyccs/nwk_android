@@ -65,7 +65,7 @@ public class Retail {
         this.mall = mall;
     }
 
-    public String getLogo_url() {
+    public String getLogoUrl() {
         return logo_url;
     }
 

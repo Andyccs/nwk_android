@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="material_teal_500">#009688</color>
+    <color name="material_teal_700">#00796b</color>
+    <color name="material_pink_A200">#ff4081</color>
+    <color name="material_red_A700">#e00032</color>
+    <color name="material_yellow_A200">#ffff00</color>
+
+    <color name="color_red_accent">#e05850</color>
+    <color name="deep_purple_500">#5950A1</color>
+    <color name="deep_purple_800">#4527a0</color>
+
+    <color name="background">#ffe9e4d6</color>
+
+    <color name="orange_800">#ef6c00</color>
+
+    <color name="primary_button_text_color">#ffffff</color>
+    <color name="primary_button_background_color">#55BAE2</color>
+    <color name="primary_button_pressed_color">#3b829e</color>
+
+    <color name="secondary_button_text_color">#9B9B9B</color>
+    <color name="secondary_button_background_color">#F3F3F3</color>
+    <color name="secondary_button_stroke_color">#a4a4a4</color>
+    <color name="secondary_button_pressed_color">#c8c8c8</color>
+
+
+    <color name="pressed_state_color">#33999999</color>
+    <color name="review_green">#ff669900</color>
+    <color name="text_light">#66000000</color>
+
+    <color name="step_pager_previous_tab_color">#44e91e63</color>
+    <color name="step_pager_selected_tab_color">#e91e63</color>
+    <color name="step_pager_selected_last_tab_color">#ff3f51b5</color>
+    <color name="step_pager_next_tab_color">#10000000</color>
+
+    <color name="promotion_item_title">#1589C9</color>
+    <color name="promotion_item_secondary">#9B9B9B</color>
+    <color name="promotion_item_price">#F1812D</color>
+
+</resources>

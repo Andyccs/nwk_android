@@ -70,7 +70,7 @@ public class RetailRectangleGridViewAdapter extends BaseAdapter {
             viewHolder.title.setText(retail.getShopName());
 
             Picasso.with(mContext)
-                    .load(retail.getLogo_url())
+                    .load(retail.getLogoUrl())
                     .into(viewHolder.image);
 
             viewHolder.like.setVisibility(View.INVISIBLE);

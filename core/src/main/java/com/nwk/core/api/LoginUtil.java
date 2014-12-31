@@ -5,6 +5,7 @@ import android.content.Context;
 import com.nwk.core.Constant;
 import com.nwk.core.model.Consumer;
 import com.nwk.core.model.CredentialPreferences;
+import com.nwk.core.model.Retail;
 import com.nwk.core.model.Token;
 import com.nwk.core.model.User;
 
@@ -19,7 +20,11 @@ import timber.log.Timber;
  */
 public class LoginUtil {
 
-    public static boolean login(Context context, String username, String password) throws IOException {
+    public static enum Role{
+        CONSUMER, RETAIL
+    }
+
+    public static boolean login(Context context, String username, String password,Role role) throws IOException {
         Token token = null;
         Timber.d("logging in");
         try {
@@ -43,15 +48,29 @@ public class LoginUtil {
                 .build();
         UserService service = restAdapter.create(UserService.class);
 
-        Consumer consumer = service.getConsumerByUsername(username);
-        User user = service.getUserById(""+UrlUtil.getUserPrimaryKeyByUrl(consumer.getUser()));
+        if(role==Role.CONSUMER) {
+            Consumer consumer = service.getConsumerByUsername(username);
+            User user = service.getUserById("" + UrlUtil.getUserPrimaryKeyByUrl(consumer.getUser()));
 
-        CredentialPreferences.saveUserCredential(
-                context, consumer.getUser(),
-                consumer.getId(), user.getUsername(), user.getEmail(),
-                consumer.getPicture(),
-                consumer.getPoint()
-        );
+            CredentialPreferences.saveUserCredential(
+                    context, consumer.getUser(),
+                    consumer.getId(), user.getUsername(), user.getEmail(),
+                    consumer.getPicture(),
+                    consumer.getPoint()
+            );
+        }
+        else if(role==Role.RETAIL){
+            Retail retail = service.getRetailByUsername(username);
+            User user = service.getUserById("" + UrlUtil.getUserPrimaryKeyByUrl(retail.getUser()));
+
+            //TODO make another Credentail Preferences for Retail
+            CredentialPreferences.saveUserCredential(
+                    context, retail.getUser(),
+                    retail.getId(), user.getUsername(), user.getEmail(),
+                    retail.getLogoUrl(),
+                    0
+            );
+        }
 
         return true;
     }
