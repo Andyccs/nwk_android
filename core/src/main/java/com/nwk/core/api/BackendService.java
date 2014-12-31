@@ -29,7 +29,7 @@ public interface BackendService {
     }
 
     @GET("/retails")
-    void listRetails(@Query("category") String category, @Query("level") String level,
+    void listRetails(@Query("category") String category, @Query("location_level") String level,
                      Callback<List<Retail>> retailsCallback);
 
     @GET("/retails/{retail_url}")

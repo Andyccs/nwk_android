@@ -141,6 +141,14 @@ public class MainActivity extends ActionBarActivity {
                         viewType = ViewType.FAVORITE_SHOP;
                         categoryBar.setVisibility(View.GONE);
                         break;
+                    case 3:
+                        viewType = ViewType.Level1;
+                        shopCategory = ShopCategory.FOOD;
+                        break;
+                    case 4:
+                        viewType = ViewType.Level2;
+                        shopCategory = ShopCategory.FOOD;
+                        break;
                 }
                 Timber.d("set viewType to: "+viewType);
                 renderFragment();

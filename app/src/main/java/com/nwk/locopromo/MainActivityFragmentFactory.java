@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import com.nwk.core.api.BackendService;
 import com.nwk.locopromo.state.ShopCategory;
 import com.nwk.locopromo.state.ViewType;
+import com.nwk.locopromo.widget.LevelRetailsWithCategoryFragment;
 
 import timber.log.Timber;
 
@@ -25,21 +26,34 @@ public class MainActivityFragmentFactory {
             return AllPromotionsFragment.newInstance();
         }
         else if(viewType == ViewType.ALL_SHOP){
-            if(shopCategory == ShopCategory.FOOD){
-                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.FOOD);
-            }
-            else if(shopCategory == ShopCategory.FASHION){
-                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.FASHION);
-            }
-            else if(shopCategory == ShopCategory.LIFESTYLE){
-                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.LIFESTYLE);
-            }
-            else if(shopCategory == ShopCategory.OTHER){
-                return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.OTHER);
-            }
+            return AllRetailsWithCategoryFragment.newInstance(getCategoryByShopCategory(shopCategory));
+        }
+        else if(viewType == ViewType.Level1){
+            return LevelRetailsWithCategoryFragment.newInstance(getCategoryByShopCategory(shopCategory),1);
+        }
+        else if(viewType == ViewType.Level2){
+            return LevelRetailsWithCategoryFragment.newInstance(getCategoryByShopCategory(shopCategory),2);
+
         }
 
         return AllRetailsWithCategoryFragment.newInstance(BackendService.Category.FOOD);
 
+    }
+
+    private static String getCategoryByShopCategory(ShopCategory shopCategory){
+
+        if(shopCategory == ShopCategory.FOOD){
+            return BackendService.Category.FOOD;
+        }
+        else if(shopCategory == ShopCategory.FASHION){
+            return BackendService.Category.FASHION;
+        }
+        else if(shopCategory == ShopCategory.LIFESTYLE){
+            return BackendService.Category.LIFESTYLE;
+        }
+        else if(shopCategory == ShopCategory.OTHER){
+            return BackendService.Category.OTHER;
+        }
+        return null;
     }
 }
