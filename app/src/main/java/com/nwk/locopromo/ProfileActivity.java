@@ -3,6 +3,7 @@ package com.nwk.locopromo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nwk.core.api.BackendService;
+import com.nwk.core.api.LoginUtil;
 import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.GrabPromotion;
 import com.nwk.locopromo.adapter.RedeemHistoryListViewAdapter;
@@ -101,6 +103,14 @@ public class ProfileActivity extends ActionBarActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_profile_activity, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -110,6 +120,11 @@ public class ProfileActivity extends ActionBarActivity {
         if(id == android.R.id.home){
             finish();
             return true;
+        }
+        else if(id == R.id.action_sign_out){
+            LoginUtil.logout(this);
+            setResult(MainActivity.RESULT_SIGN_OUT);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

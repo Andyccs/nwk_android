@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
     @OnClick(R.id.profile)
     public void clickProfile(){
         Intent intent = new Intent(this,ProfileActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_SIGN_OUT);
     }
 
     @InjectView(R.id.category_food)
@@ -206,5 +206,17 @@ public class MainActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Icepick.saveInstanceState(this, outState);
+    }
+
+    public static final int REQUEST_SIGN_OUT = 1;
+    public static final int RESULT_SIGN_OUT = 1;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_SIGN_OUT){
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

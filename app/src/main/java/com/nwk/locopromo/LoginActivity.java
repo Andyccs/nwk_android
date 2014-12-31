@@ -33,6 +33,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import timber.log.Timber;
 
 
 /**
@@ -88,6 +89,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         });
 
         if(LoginUtil.isLoggedInBefore(this)) {
+            Timber.d("This user logged in before");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
