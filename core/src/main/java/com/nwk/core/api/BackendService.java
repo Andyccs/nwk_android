@@ -2,6 +2,7 @@ package com.nwk.core.api;
 
 import com.nwk.core.model.Consumer;
 import com.nwk.core.model.GrabPromotion;
+import com.nwk.core.model.GrabPromotionNotInclude;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.model.Retail;
 
@@ -61,6 +62,15 @@ public interface BackendService {
                         @Field("promotion") String promotionUrl,
                         @Field("is_approved") String isApproved,
                         Callback<GrabPromotion> grabPromotionCallback);
+
+    @FormUrlEncoded
+    @PUT("/grab_promotions/{grab_id}/")
+    void approvePromotions(@Path("grab_id") String grabId,
+                           @Field("consumer") String consumerUrl,
+                           @Field("promotion") String promotionUrl,
+                           @Field("is_approved") String isApproved,
+                           Callback<GrabPromotionNotInclude> grabPromotionCallback);
+
 
     @GET("/consumers/{customer_url}/grab_history/")
     void getGrabHistory(@Path("customer_url") String customerUrl,Callback<List<GrabPromotion>> grabPromotionListCallback);

@@ -3,17 +3,24 @@ package com.nwk.merchant;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.nwk.core.api.BackendService;
+import com.nwk.core.api.UrlUtil;
+import com.nwk.core.model.GrabPromotionNotInclude;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import timber.log.Timber;
 
 
@@ -22,8 +29,11 @@ public class ClaimActivity extends ActionBarActivity {
     @InjectView(R.id.claim_qr_code)
     Button claimQRCodeButton;
 
-    @InjectView(R.id.textView)
-    TextView helloWorld;
+    @InjectView(R.id.status)
+    TextView status;
+
+    @InjectView(R.id.main_layout)
+    RelativeLayout main;
 
     @OnClick(R.id.claim_qr_code)
     public void onClickQRCodeButton(){
@@ -44,37 +54,43 @@ public class ClaimActivity extends ActionBarActivity {
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_claim, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(scanResult!=null){
+            //grab_id:customer_id:promotion_id
             String content = scanResult.getContents();
+            String[] splited = content.split(":");
+
             Timber.d(content);
-            helloWorld.setText(content);
+
+            final View v = LayoutInflater.from(this).inflate(R.layout.loading_with_black_mask,null);
+            main.addView(v);
+
+            BackendService service = ((MerchantApplication)getApplication()).getService();
+            service.approvePromotions(
+                    splited[0],
+                    UrlUtil.getConsumerUrl(splited[1]),
+                    UrlUtil.getPromotionUrl(splited[2]),
+                    BackendService.isApproved.YES,
+                    new Callback<GrabPromotionNotInclude>() {
+                        @Override
+                        public void success(GrabPromotionNotInclude grabPromotion, Response response) {
+                            main.removeView(v);
+                            status.setText("Success!");
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            main.removeView(v);
+                            status.setText("Failed!");
+                            Timber.e(error.getMessage());
+                        }
+                    }
+            );
+
+            status.setText(content);
         }
     }
 }

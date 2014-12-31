@@ -93,9 +93,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         });
 
         if(LoginUtil.isLoggedInBefore(this)) {
-            ((PromoApplication) getApplication()).setService(
-                    CredentialPreferences.getAccessToken(getApplicationContext())
-            );
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -285,9 +282,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             try {
                 boolean loggedIn = LoginUtil.login(getApplicationContext(),"andyccs","andyccs");
                 if(!loggedIn) return false;
-                ((PromoApplication) getApplication()).setService(
-                        CredentialPreferences.getAccessToken(getApplicationContext())
-                );
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();

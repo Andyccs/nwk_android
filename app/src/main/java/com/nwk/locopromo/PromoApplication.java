@@ -7,10 +7,9 @@ import com.google.gson.GsonBuilder;
 import com.nwk.core.Constant;
 import com.nwk.core.api.ApiRequestInterceptor;
 import com.nwk.core.api.BackendService;
+import com.nwk.core.model.CredentialPreferences;
 import com.nwk.core.model.Promotion;
 import com.nwk.core.serializer.PromotionSerializer;
-import com.parse.Parse;
-import com.parse.ParseInstallation;
 
 import retrofit.RestAdapter;
 import retrofit.client.ApacheClient;
@@ -29,13 +28,15 @@ public class PromoApplication extends Application {
         CalligraphyConfig.initDefault("fonts/Roboto-Medium.ttf", R.attr.fontPath);
 
         Timber.plant(new Timber.DebugTree());
-//        Parse.initialize(this, "t0LKj3AP9JFjwRZNfUQun9DLgHnepOc24FvhrQeo", "DhhFgeimW4YYScVOuLIuZ9wA07LAHIEhWQQLiFgW");
-//        ParseInstallation.getCurrentInstallation().saveInBackground();
-//        Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
 
     }
 
     public BackendService getService() {
+        if(service==null){
+            setService(
+                    CredentialPreferences.getAccessToken(getApplicationContext())
+            );
+        }
         return service;
     }
 

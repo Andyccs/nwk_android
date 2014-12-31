@@ -123,7 +123,10 @@ public class RedeemDetailActivity extends ActionBarActivity {
             public void run() {
 
                 try {
-                    final Bitmap bitmap = QRCode.generate(300, 300, "" + promotion.getId());
+                    final Bitmap bitmap = QRCode.generate(300, 300,
+                            "" + promotion.getId()+":"
+                                    +CredentialPreferences.getCustomerPrimaryKey(getApplicationContext())+":"
+                                    +promotion.getPromotion().getId());
 
                     runOnUiThread(new Runnable() {
                         @Override
