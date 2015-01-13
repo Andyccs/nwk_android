@@ -12,6 +12,7 @@ import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -46,9 +47,8 @@ public interface BackendService {
                                      Callback<List<Retail>> promotions);
 
     @FormUrlEncoded
-    @PUT("/consumers/{customer_url}/")
+    @PATCH("/consumers/{customer_url}/")
     Consumer updateFavoriteRetailsOfConsumer(@Path("customer_url") String customerUrl,
-                                       @Field("user") String user,
                                        @Field("favorite_shops") List<String> favoriteShopsCallback);
 
     public interface isApproved{
