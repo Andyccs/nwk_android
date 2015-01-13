@@ -43,12 +43,12 @@ public class RetailSquareGridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mPromotionList.size();
+        return mPromotionList==null?0:mPromotionList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mPromotionList.get(i);
+        return mPromotionList==null?null:mPromotionList.get(i);
     }
 
     @Override
